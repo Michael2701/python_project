@@ -1,2 +1,17 @@
+# Ignore Logs
+logs
+*.log
+
+# Ignore the build directory
+/dist
+
+# The file containing environment variables 
+.env
+
+# Ignore IDE specific files
+.vscode/
+
+
 __pycache__/
 gitkraken-amd64.deb
+App/__pycache__/__main__.cpython-36.pyc
