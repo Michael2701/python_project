@@ -14,7 +14,7 @@ class UserController:
         self.msg = Message()
         self.master = master
 
-        self.display_create_user_button()
+        # self.display_create_user_button()
 
     def display_users(self):
         users = self.model.get_all_users()
@@ -69,14 +69,14 @@ class UserController:
 
     def create_user(self, data):
         if(self.model.create_user(data) == 1):
-            self.msg.info("User created")
             self.display_users()
+            self.msg.info("User created")
         else:
             self.msg.warning("Warning. User not created")
 
     def delete_user(self, rowid):
         if(self.model.delete_user_by_id(rowid) == 1):
-            self.msg.info("User deleted")
             self.display_users()
+            self.msg.info("User deleted")
         else:
             self.msg.warning("Warning. User not deleted")

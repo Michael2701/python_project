@@ -15,6 +15,7 @@ class Window (Frame):
 
         self.create_menu()
         self.create_file_cascade()
+        self.create_user_cascade()
         self.create_edit_cascade()
         self.create_help_cascade()
 
@@ -25,9 +26,14 @@ class Window (Frame):
     def create_file_cascade(self):
         self.file = Menu(self.menu, tearoff=0)
         self.file.add_command(label='Open')
-        self.file.add_command(label='Show Users', command=self.uctrl.display_users)
         self.file.add_command(label='Exit', command=lambda:exit())
         self.menu.add_cascade(label='File', menu=self.file)
+
+    def create_user_cascade(self):
+        self.user = Menu(self.menu, tearoff=0)
+        self.user.add_command(label='Show Users', command=self.uctrl.display_users)
+        self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
+        self.menu.add_cascade(label='User', menu=self.user)
 
     def create_edit_cascade(self):
         self.edit = Menu(self.menu, tearoff=0)
