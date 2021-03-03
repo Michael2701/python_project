@@ -4,30 +4,38 @@ from App.Controllers.UserController import UserController
 class Window (Frame):
     def __init__(self, master = None):
         Frame.__init__(self,master)
+        self.uctrl = UserController(self)
 
         self.master = master
         self.init_window()
-        self.user_gui = UserController(self)
 
     def init_window(self):
         self.master.title("Genetic App")
         self.pack(fill=BOTH, expand=1)
 
-        menu = Menu(self.master)
-        self.master.config(menu=menu)
+        self.create_menu()
+        self.create_file_cascade()
+        self.create_edit_cascade()
+        self.create_help_cascade()
 
-        file = Menu(menu, tearoff=0)
-        file.add_command(label='Open')
-        file.add_command(label='Show Users', command=lambda:self.user_gui.display_users())
-        file.add_command(label='Exit', command=lambda:exit())
-        menu.add_cascade(label='File', menu=file)
+    def create_menu(self):
+        self.menu = Menu(self.master)
+        self.master.config(menu=self.menu)
 
-        edit = Menu(menu, tearoff=0)
-        edit.add_command(label='Show Text')
-        menu.add_cascade(label='Edit', menu=edit)
+    def create_file_cascade(self):
+        self.file = Menu(self.menu, tearoff=0)
+        self.file.add_command(label='Open')
+        self.file.add_command(label='Show Users', command=self.uctrl.display_users)
+        self.file.add_command(label='Exit', command=lambda:exit())
+        self.menu.add_cascade(label='File', menu=self.file)
 
-        help = Menu(menu, tearoff=0)
-        help.add_command(label='Help Index')
-        help.add_command(label='About Us')
-        menu.add_cascade(label='Help', menu=help)
+    def create_edit_cascade(self):
+        self.edit = Menu(self.menu, tearoff=0)
+        self.edit.add_command(label='Show Text')
+        self.menu.add_cascade(label='Edit', menu=self.edit)
 
+    def create_help_cascade(self):
+        self.help = Menu(self.menu, tearoff=0)
+        self.help.add_command(label='Help Index')
+        self.help.add_command(label='About Us')
+        self.menu.add_cascade(label='Help', menu=self.help)
