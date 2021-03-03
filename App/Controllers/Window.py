@@ -1,12 +1,21 @@
 from tkinter import *
 from App.Controllers.UserController import UserController
+from App.Controllers.UIElements.LoginModal import LoginModal
 
 class Window (Frame):
-    def __init__(self, master = None):
+    def __init__(self, master=None):
         Frame.__init__(self,master)
         self.uctrl = UserController(self)
 
         self.master = master
+
+        # self.login_modal = LoginModal(self, self.uctrl)
+        # self.login_modal.create_modal()
+
+        # self.logged_user = self.uctrl.get_logged_user()
+        # print(self.logged_user)
+        # if(self.logged_user):
+
         self.init_window()
 
     def init_window(self):
@@ -42,6 +51,6 @@ class Window (Frame):
 
     def create_help_cascade(self):
         self.help = Menu(self.menu, tearoff=0)
-        self.help.add_command(label='Help Index')
+        self.help.add_command(label='Help')
         self.help.add_command(label='About Us')
         self.menu.add_cascade(label='Help', menu=self.help)

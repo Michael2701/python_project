@@ -32,6 +32,20 @@ class UserModel(DB):
             self.disconnect()
             return user
 
+    def get_user_by_email(self, email):
+        user = None
+
+        try:
+            cursor = self.get_cursor()
+            cursor.execute("SELECT rowid, * FROM users WHERE email=:email", {'email': email})
+            self.connection.commit()
+            user = cursor.fetchone()
+        except Exception as e:
+            print(str(e))
+        finally:
+            self.disconnect()
+            return user
+
     def update_user_by_id(self, data):
         rows_count = 0
 

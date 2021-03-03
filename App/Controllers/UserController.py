@@ -4,17 +4,16 @@ from tkinter.ttk import Notebook
 
 from App.Models.UserModel import UserModel
 from App.Services.Message import Message
-from App.Controllers.UIElements.UpdateUserPopup import UpdateUserPopup
+from App.Controllers.UIElements.UpdateOrCreateUserModal import UpdateOrCreateUserModal
 
 class UserController:
 
     def __init__(self, master=None):
-        self.top_level_dialog = UpdateUserPopup(master,self)
+        self.top_level_dialog = UpdateOrCreateUserModal(master,self)
         self.model = UserModel()
         self.msg = Message()
         self.master = master
-
-        # self.display_create_user_button()
+        self.logged_user = None
 
     def display_users(self):
         users = self.model.get_all_users()
@@ -44,6 +43,14 @@ class UserController:
 
         tablelayout.pack(fill='both')
 
+    def set_logged_user(self, logged_user):
+        self.logged_user = logged_user
+
+    def get_logged_user(self):
+        if(self.logged_user is not None):
+            return self.logged_user
+        return False
+
     def show_delete_modal(self, user):
         if( self.msg.question("Do you really want to delete this user?","Delete User") ):
             if( self.delete_user(user[0]) == 1):
@@ -59,14 +66,6 @@ class UserController:
             self.display_users()
         else:
             self.msg.warning("Warning. User not updated")
-
-    def display_create_user_button(self):
-        self.create_user_button = Button(
-            self.master, 
-            text="Create User", 
-            command=self.show_update_user_modal
-        )
-        self.create_user_button.pack()
 
     def create_user(self, data):
         if(self.model.create_user(data) == 1):
