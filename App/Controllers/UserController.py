@@ -39,6 +39,7 @@ class UserController:
             column += 1
             button = Button(tablelayout, text="Delete User", command=lambda user=user:self.show_delete_modal(user))
             button.grid(row=row, column=column, padx=3, pady=3)
+            
             row += 1
 
         tablelayout.pack(fill='both')
