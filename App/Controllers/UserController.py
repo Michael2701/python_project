@@ -43,14 +43,6 @@ class UserController:
 
         tablelayout.pack(fill='both')
 
-    def set_logged_user(self, logged_user):
-        self.logged_user = logged_user
-
-    def get_logged_user(self):
-        if(self.logged_user is not None):
-            return self.logged_user
-        return False
-
     def show_delete_modal(self, user):
         if( self.msg.question("Do you really want to delete this user?","Delete User") ):
             if( self.delete_user(user[0]) == 1):
