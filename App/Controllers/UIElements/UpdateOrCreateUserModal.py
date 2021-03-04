@@ -4,8 +4,7 @@ from tkinter.ttk import Combobox
 
 # from App.Controllers.UserController import UserController as UController
 
-
-class UpdateUserPopup():
+class UpdateOrCreateUserModal():
 
     def __init__(self, master, controller):
         self.uctrl = controller
@@ -78,8 +77,8 @@ class UpdateUserPopup():
         self.submit_button.grid(row=6, column=0)
 
     def set_cancel_button(self):
-        self.toplevel_dialog_no_button = Button(self.toplevel_dialog, text='Cancel', command=self.close_modal)
-        self.toplevel_dialog_no_button.grid(row=6, column=1)
+        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', command=self.close_modal)
+        self.cancel_button.grid(row=6, column=1)
 
     def set_first_name_field(self):
         self.first_name_label = Label(self.toplevel_dialog, text='First Name')
