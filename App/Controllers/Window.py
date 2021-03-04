@@ -33,8 +33,12 @@ class Window (Frame):
 
     def create_user_cascade(self):
         self.user = Menu(self.menu, tearoff=0)
-        self.user.add_command(label='Show Users', command=self.uctrl.display_users)
-        self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
+        if self.logged_user[5] == 'admin':
+            self.user.add_command(label='Show Users', command=self.uctrl.display_users)
+            self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
+
+        self.user.add_command(label='Profile', command=lambda:self.uctrl.show_update_user_modal(self.logged_user))
+        
         self.menu.add_cascade(label='User', menu=self.user)
 
     def create_edit_cascade(self):
