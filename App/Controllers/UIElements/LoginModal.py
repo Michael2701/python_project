@@ -1,16 +1,17 @@
 from tkinter import Entry, Toplevel, Button, Label
 from App.Models.UserModel import UserModel
+from App.Services.Message import Message
 
 class LoginModal():
 
-    def __init__(self, master, controller):
-        self.uctrl = controller
+    def __init__(self,window, master):
         self.umodel = UserModel()
+        self.msg = Message()
+        self.window = window
         self.master = master
 
         self.title = "Login"
         self.logged_user = None
-
 
     def show_toplevel_dialog(self, user=None):
         self.create_modal()
@@ -36,13 +37,14 @@ class LoginModal():
 
     def on_submit_login(self):
         self.get_form_data()
-        print(self.data['email'], self.data['password'])
         user = self.umodel.get_user_by_email(self.data['email'])
         if user is not None:
-            self.logged_user = user
             if user[4] == self.data['password']:
-                self.uctrl.set_logged_user(user)
-
+                self.logged_user = user
+                self.close_modal()
+                self.window(self.master, self.logged_user)
+        else:
+            self.msg.warning("Wrong email or password")
 
     def set_submit_button(self):
         self.submit_button = Button(self.toplevel_dialog, text='Submit', command=self.on_submit_login)
@@ -61,19 +63,17 @@ class LoginModal():
     def set_password_field(self):
         self.password_label = Label(self.toplevel_dialog, text="Password")
         self.password_label.grid(row=2, column=0)
-        self.password_entry = Entry(self.toplevel_dialog)
+        self.password_entry = Entry(self.toplevel_dialog, show='*')
         self.password_entry.grid(row=3, column=0)
 
-    def get_logged_user(self):
-        return self.logged_user
-
     def get_form_data(self):
-        data =  {
+        self.data =  {
             'email': self.email_entry.get(),
             'password': self.password_entry.get()
         }
 
-        self.data = data
+    def get_logged_user(self):
+        return self.logged_user
 
 
 

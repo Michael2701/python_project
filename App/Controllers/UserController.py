@@ -13,7 +13,6 @@ class UserController:
         self.model = UserModel()
         self.msg = Message()
         self.master = master
-        self.logged_user = None
 
     def display_users(self):
         users = self.model.get_all_users()
@@ -42,14 +41,6 @@ class UserController:
             row += 1
 
         tablelayout.pack(fill='both')
-
-    def set_logged_user(self, logged_user):
-        self.logged_user = logged_user
-
-    def get_logged_user(self):
-        if(self.logged_user is not None):
-            return self.logged_user
-        return False
 
     def show_delete_modal(self, user):
         if( self.msg.question("Do you really want to delete this user?","Delete User") ):
