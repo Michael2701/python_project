@@ -3,19 +3,12 @@ from App.Controllers.UserController import UserController
 from App.Controllers.UIElements.LoginModal import LoginModal
 
 class Window (Frame):
-    def __init__(self, master=None):
+    def __init__(self, master, logged_user):
         Frame.__init__(self,master)
         self.uctrl = UserController(self)
 
         self.master = master
-
-        # self.login_modal = LoginModal(self, self.uctrl)
-        # self.login_modal.create_modal()
-
-        # self.logged_user = self.uctrl.get_logged_user()
-        # print(self.logged_user)
-        # if(self.logged_user):
-
+        self.logged_user = logged_user
         self.init_window()
 
     def init_window(self):
