@@ -1,4 +1,4 @@
-# sudo apt-get install python3.6-tk
+# sudo apt-get install python3-tk
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
