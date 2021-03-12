@@ -6,7 +6,7 @@ setup(
     packages=["my_app"],
     entry_points={
         "console_scripts": [
-            "my_app = App.__main__:main"
+            "my_app=App.__main__:main"
         ]
-    },
+    }
 )

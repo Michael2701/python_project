@@ -42,7 +42,7 @@ class LoginModal():
             if user[4] == self.data['password']:
                 self.logged_user = user
                 self.close_modal()
-                self.window(self.master, self.logged_user)
+                self.window(self.master, self.logged_user)      
         else:
             self.msg.warning("Wrong email or password")
 
