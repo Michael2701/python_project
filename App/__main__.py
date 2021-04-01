@@ -1,12 +1,11 @@
 import sys
-from App.Controllers.Gui import Gui
+from App.Index import Index
 
 def main(args=None):
     if args is None:
         args = sys.argv[1:]
 
-    Gui()
-
+    Index()
 
 if __name__ == "__main__":
     sys.exit(main())

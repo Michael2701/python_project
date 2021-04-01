@@ -1,11 +1,11 @@
 from tkinter import Entry, Toplevel, Button, Label
-from App.Models.UserModel import UserModel
 from App.Services.Message import Message
+from App.Models.SimpleUser import SimpleUser
 
 class LoginModal():
 
     def __init__(self,window, master):
-        self.umodel = UserModel()
+        # self.umodel = UserModel()
         self.msg = Message()
         self.window = window
         self.master = master
@@ -37,10 +37,11 @@ class LoginModal():
 
     def on_submit_login(self):
         self.get_form_data()
-        user = self.umodel.get_user_by_email(self.data['email'])
+        user = SimpleUser.select(SimpleUser.q.email == self.data['email'])
+    
         if user is not None:
-            if user[4] == self.data['password']:
-                self.logged_user = user
+            if user[0].password == self.data['password']:
+                self.logged_user = user[0]
                 self.close_modal()
                 self.window(self.master, self.logged_user)      
         else:
