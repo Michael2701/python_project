@@ -2,7 +2,6 @@ from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label
 import tkinter as tk
 from tkinter.ttk import Combobox
 
-# from App.Controllers.UserController import UserController as UController
 
 class UpdateOrCreateUserModal():
 
@@ -58,7 +57,7 @@ class UpdateOrCreateUserModal():
     def update(self):
         self.get_form_data()
         self.close_modal()
-        self.uctrl.update_user(self.data)
+        self.uctrl.update_user(self.user, self.data)
 
     def create(self):
         self.get_form_data()
@@ -125,23 +124,23 @@ class UpdateOrCreateUserModal():
             self.set_user_role()
 
     def set_first_name(self):
-        if(self.user[1] is not None):
+        if(self.user.first_name is not None):
             self.first_name_entry.delete(0, tk.END)
-            self.first_name_entry.insert(0, self.user[1])
+            self.first_name_entry.insert(0, self.user.first_name)
 
     def set_last_name(self):
-        if(self.user[2] is not None):
+        if(self.user.last_name is not None):
             self.last_name_entry.delete(0, tk.END)
-            self.last_name_entry.insert(0, self.user[2])
+            self.last_name_entry.insert(0, self.user.last_name)
 
     def set_email(self):
-        if(self.user[3] is not None):
+        if(self.user.email is not None):
             self.email_entry.delete(0, tk.END)
-            self.email_entry.insert(0, self.user[3])
+            self.email_entry.insert(0, self.user.email)
 
     def set_user_role(self):
-        if(self.user[4] is not None):
-            self.user_role_entry.set(self.user[5])
+        if(self.user.user_role is not None):
+            self.user_role_entry.set(self.user.user_role)
 
     def get_form_data(self):
         data =  {
@@ -152,7 +151,8 @@ class UpdateOrCreateUserModal():
         }
 
         if(self.user is not None):
-            data['rowid'] = self.user[0]
+            data['id'] = self.user.id
+            data['password'] = self.user.password
         else:
             data['password'] = self.password_entry.get()
 

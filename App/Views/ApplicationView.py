@@ -1,8 +1,8 @@
 from tkinter import *
 from App.Controllers.UserController import UserController
-from App.Controllers.UIElements.LoginModal import LoginModal
+from App.Views.UIElements.LoginModal import LoginModal
 
-class Window (Frame):
+class ApplicationView (Frame):
     def __init__(self, master, logged_user):
         Frame.__init__(self,master)
         self.uctrl = UserController(self)
@@ -33,7 +33,7 @@ class Window (Frame):
 
     def create_user_cascade(self):
         self.user = Menu(self.menu, tearoff=0)
-        if self.logged_user[5] == 'admin':
+        if self.logged_user.user_role == 'admin':
             self.user.add_command(label='Show Users', command=self.uctrl.display_users)
             self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
 
