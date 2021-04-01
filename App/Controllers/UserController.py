@@ -15,17 +15,10 @@ class UserController:
 
     def __init__(self, master=None):
         self.top_level_dialog = UpdateOrCreateUserModal(master,self)
-        # self.model = UserModel()
         self.msg = Message()
         self.master = master
 
-        #new
-        # self.suser = SimpleUser()
-
     def display_users(self):
-        # users = self.model.get_all_users()
-        
-        #new
         users = SimpleUser.select('id > 0')
         print(users[0].email)
 
