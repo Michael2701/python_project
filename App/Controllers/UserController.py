@@ -2,15 +2,13 @@ import tkinter as tk
 from tkinter import *
 from tkinter.ttk import Notebook
 
-# from App.Models.UserModel import UserModel
+from App.Controllers.Controller import Controller
 from App.Models.SimpleUser import SimpleUser
 from App.Services.Message import Message
 from App.Views.UIElements.UpdateOrCreateUserModal import UpdateOrCreateUserModal
+from App.Views.UsersView import UsersView
 
-#new
-from App.Models.SimpleUser import SimpleUser
-
-class UserController:
+class UserController(Controller):
 
 
     def __init__(self, master=None):
@@ -19,36 +17,10 @@ class UserController:
         self.master = master
 
     def display_users(self):
+        self.clear_view(self.master)
         users = SimpleUser.select('id > 0')
-        print(users[0].email)
+        self.notebook = UsersView(self, self.master, users)
 
-
-        if(hasattr(self, 'frame')): self.frame.destroy()
-        self.frame = Frame(self.master, bg='lightgrey')
-        self.frame.pack()
-
-        tablelayout = Notebook(self.frame)
-
-        row = 0
-        for user in users:
-            label = Label(tablelayout, text=user.id, bg='lightgrey', fg='black')
-            label.grid(row=row, column=0, padx=3, pady=3)
-            label = Label(tablelayout, text=user.first_name, bg='lightgrey', fg='black')
-            label.grid(row=row, column=1, padx=3, pady=3)
-            label = Label(tablelayout, text=user.last_name, bg='lightgrey', fg='black')
-            label.grid(row=row, column=2, padx=3, pady=3)
-            label = Label(tablelayout, text=user.email, bg='lightgrey', fg='black')
-            label.grid(row=row, column=3, padx=3, pady=3)
-
-            button = Button(tablelayout, text="Update User", command=lambda user=user:self.show_update_user_modal(user))
-            button.grid(row=row, column=4, padx=3, pady=3)
-
-            button = Button(tablelayout, text="Delete User", command=lambda user=user:self.show_delete_modal(user))
-            button.grid(row=row, column=5, padx=3, pady=3)
-            
-            row += 1
-
-        tablelayout.pack(fill='both')
 
     def show_delete_modal(self, user):
         if( self.msg.question("Do you really want to delete this user?","Delete User") ):

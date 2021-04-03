@@ -1,11 +1,13 @@
 from tkinter import *
 from App.Controllers.UserController import UserController
+from App.Controllers.GeneticFileController import GeneticFileController
 from App.Views.UIElements.LoginModal import LoginModal
 
 class ApplicationView (Frame):
     def __init__(self, master, logged_user):
         Frame.__init__(self,master)
         self.uctrl = UserController(self)
+        self.gfctrl = GeneticFileController(self)
 
         self.master = master
         self.logged_user = logged_user
@@ -27,7 +29,8 @@ class ApplicationView (Frame):
 
     def create_file_cascade(self):
         self.file = Menu(self.menu, tearoff=0)
-        self.file.add_command(label='Open')
+        self.file.add_command(label='Show files', command=self.gfctrl.display_files)
+        self.file.add_command(label='Upload file', command=self.gfctrl.upload_file)
         self.file.add_command(label='Exit', command=lambda:exit())
         self.menu.add_cascade(label='File', menu=self.file)
 
