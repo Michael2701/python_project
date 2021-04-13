@@ -1,6 +1,6 @@
 {
     "background_color": "lightgrey",
-    "font_color": "red",
+    "font_color": "#111",
     "app_font": "Helvetica 11",
     "title_font": "Helvetica 11 bold"
 }
