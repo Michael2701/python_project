@@ -109,8 +109,8 @@ class UpdateFileMetaModal():
             data =  {
                 'id' : self.file.id,
                 'user_id' : self.file.user_id,
-                'file_name': self.file_name_entry.get().strip(),
-                'file_description': self.file_description_entry.get("1.0",'end').strip(),
+                'file_name': self.file_name_entry.get(),
+                'file_description': self.file_description_entry.get("1.0",tk.END).strip(),
                 'file_created_at': self.file.file_created_at
             }
 
@@ -136,7 +136,7 @@ class UpdateFileMetaModal():
 
     def check_file_description(self):
         try:
-            if(len(self.file_description_entry.get("1.0",'end').strip()) == 0):
+            if(len(self.file_description_entry.get("1.0",tk.END).strip()) == 0):
                 return False
             
             return True
