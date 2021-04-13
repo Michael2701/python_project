@@ -118,7 +118,7 @@ class FileUploadModal():
 
     def check_file_description(self):
         try:
-            if(len(self.file_description_entry.get("1.0",'end')) == 0):
+            if(len(self.file_description_entry.get("1.0",'end').strip()) == 0):
                 return False
             
             return True

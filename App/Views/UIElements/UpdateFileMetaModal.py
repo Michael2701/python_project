@@ -36,9 +36,11 @@ class UpdateFileMetaModal():
         self.toplevel_dialog.destroy()
 
     def update(self):
-        self.get_form_data()
-        self.close_modal()
-        self.ctrl.update_file(self.file, self.data)
+        if self.get_form_data():
+            self.close_modal()
+            self.ctrl.update_file(self.file, self.data)
+        else:
+            self.msg.warning("Warning. All fields are required")
 
 
     def create_toplevel_dialog(self):
@@ -107,28 +109,41 @@ class UpdateFileMetaModal():
             data =  {
                 'id' : self.file.id,
                 'user_id' : self.file.user_id,
-                'file_name': self.file_name_entry.get(),
-                'file_description': self.file_description_entry.get("1.0",'end'),
+                'file_name': self.file_name_entry.get().strip(),
+                'file_description': self.file_description_entry.get("1.0",'end').strip(),
                 'file_created_at': self.file.file_created_at
             }
 
             self.data = data
+            return True
         else:
-            self.msg.warning("Warning. All fields are required")
+            return False
 
     def check_fields(self):
-        return self.check_file_description and self.check_file_name()
+        return self.check_file_description() and self.check_file_name()
 
 
     def check_file_name(self):
-        if len(self.file_name_entry.get()) > 0:
+        try:
+            if(len(self.file_name_entry.get()) == 0):
+                return False
+            
             return True
-        return False
+
+        except Exception as e:
+            print(str(e))
+            return False
 
     def check_file_description(self):
-        if len(self.file_description_entry.get("1.0",'end')) > 0:
+        try:
+            if(len(self.file_description_entry.get("1.0",'end').strip()) == 0):
+                return False
+            
             return True
-        return False
+
+        except Exception as e:
+            print(str(e))
+            return False
 
     
 
