@@ -41,13 +41,13 @@ class LoginModal():
     def on_submit_login(self):
         self.get_form_data()
         user = SimpleUser.select(SimpleUser.q.email == self.data['email'])
-    
-        if user is not None:
+
+        try:
             if user[0].password == self.data['password']:
                 self.logged_user = user[0]
                 self.close_modal()
                 self.window(self.master, self.logged_user)      
-        else:
+        except Exception as e:
             self.msg.warning("Wrong email or password")
 
     def set_submit_button(self):
