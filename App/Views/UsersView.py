@@ -65,10 +65,10 @@ class UsersView(Notebook):
             label = Label(self, text=user.user_role, bg=self.bg, fg=self.fg, font=self.font)
             label.grid(row=row, column=4, padx=3, pady=3)
 
-            button = Button(self, text="Update User", font=self.font, command=lambda user=user:self.ctrl.show_update_user_modal(user))
+            button = Button(self, text="Update User", font=self.font, fg=self.fg, command=lambda user=user:self.ctrl.show_update_user_modal(user))
             button.grid(row=row, column=5, padx=3, pady=3)
 
-            button = Button(self, text="Delete User", font=self.font, command=lambda user=user:self.ctrl.show_delete_modal(user))
+            button = Button(self, text="Delete User", font=self.font, fg=self.fg, command=lambda user=user:self.ctrl.show_delete_modal(user))
             button.grid(row=row, column=6, padx=3, pady=3)
             
             row += 1

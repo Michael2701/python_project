@@ -2,6 +2,7 @@ from tkinter import *
 from App.Controllers.UserController import UserController
 from App.Controllers.GeneticFileController import GeneticFileController
 from App.Views.UIElements.LoginModal import LoginModal
+from App.Controllers.SettingsController import SettingsController
 
 class ApplicationView (Frame):
     def __init__(self, master, logged_user):
@@ -9,7 +10,7 @@ class ApplicationView (Frame):
         self.uctrl = UserController(self)
         self.gfctrl = GeneticFileController(self)
 
-        self.title_font = "Helvetica 10 bold"
+        SettingsController().set_view_settings(self)
 
         self.master = master
         self.logged_user = logged_user

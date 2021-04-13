@@ -1,11 +1,15 @@
 from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label
 import tkinter as tk
 from tkinter.ttk import Combobox
+from App.Controllers.SettingsController import SettingsController
 
 
 class UpdateFileMetaModal():
 
     def __init__(self, master, ctrl):
+       
+        SettingsController().set_view_settings(self)
+
         self.title = "Update file meta"
         self.ctrl = ctrl
         self.master = master
@@ -44,29 +48,29 @@ class UpdateFileMetaModal():
 
 
     def set_submit_button(self):
-        self.submit_button = Button(self.toplevel_dialog, text='Submit', command=self.update)
+        self.submit_button = Button(self.toplevel_dialog, text='Submit', fg=self.fg, font=self.font, command=self.update)
         self.submit_button.grid(row=6, column=0)
 
 
     def set_cancel_button(self):
-        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', command=self.close_modal)
+        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', fg=self.fg, font=self.font, command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
 
 
     def set_file_name_field(self):
-        self.file_name_label = Label(self.toplevel_dialog, text='File Name')
+        self.file_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text='File Name')
         self.file_name_label.grid(row=0, column=0)
         self.file_name_entry = Entry(self.toplevel_dialog)
         self.file_name_entry.grid(row=1, column=0)
 
     def set_file_description_field(self):
-        self.file_description_label = Label(self.toplevel_dialog, text="File Description")
+        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="File Description")
         self.file_description_label.grid(row=0, column=1)
         self.file_description_entry = Entry(self.toplevel_dialog)
         self.file_description_entry.grid(row=1, column=1)
 
     def set_file_created_at_field(self):
-        self.file_created_at_label = Label(self.toplevel_dialog, text="Created at")
+        self.file_created_at_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Created at")
         self.file_created_at_label.grid(row=2, column=0)
         self.file_created_at_entry = Entry(self.toplevel_dialog)
         self.file_created_at_entry.grid(row=3, column=0)
