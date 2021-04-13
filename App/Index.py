@@ -22,9 +22,9 @@ class Index:
         self.lmodal = LoginModal(ApplicationView, self.root)
         self.lmodal.create_modal()
 
-        self.root.mainloop()
-
         #====Migrations====
         #UsersMigration()
         #GeneticFileMigration()
         #GeneMigration()
+
+        self.root.mainloop()

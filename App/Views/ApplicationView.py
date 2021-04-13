@@ -48,7 +48,8 @@ class ApplicationView (Frame):
 
     def create_settings_cascade(self):
         self.edit = Menu(self.menu, tearoff=0)
-        self.edit.add_command(label='Settings')
+        self.edit.add_command(label='Application')
+        self.edit.add_command(label='Graphic')
         self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit)
 
     def create_help_cascade(self):
