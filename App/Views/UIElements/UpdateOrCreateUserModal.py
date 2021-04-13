@@ -2,6 +2,7 @@ from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label
 import tkinter as tk
 from tkinter.ttk import Combobox
 from App.Controllers.SettingsController import SettingsController
+from App.Services.Message import Message
 
 
 class UpdateOrCreateUserModal():
@@ -9,7 +10,8 @@ class UpdateOrCreateUserModal():
     def __init__(self, master, controller):
 
         SettingsController().set_view_settings(self)
-        
+        self.msg = Message()
+
         self.uctrl = controller
         self.master = master
         self.user = None
@@ -59,14 +61,14 @@ class UpdateOrCreateUserModal():
             self.update()
 
     def update(self):
-        self.get_form_data()
-        self.close_modal()
-        self.uctrl.update_user(self.user, self.data)
+        if self.get_form_data():
+            self.close_modal()
+            self.uctrl.update_user(self.user, self.data)
 
     def create(self):
-        self.get_form_data()
-        self.close_modal()
-        self.uctrl.create_user(self.data)
+        if self.get_form_data():
+            self.close_modal()
+            self.uctrl.create_user(self.data)
 
     def create_toplevel_dialog(self):
         self.toplevel_dialog = Toplevel(self.master, padx=5, pady=5)
@@ -147,21 +149,55 @@ class UpdateOrCreateUserModal():
             self.user_role_entry.set(self.user.user_role)
 
     def get_form_data(self):
-        data =  {
-            'first_name': self.first_name_entry.get(),
-            'last_name': self.last_name_entry.get(),
-            'email': self.email_entry.get(),
-            'user_role': self.user_role_entry.get()
-        }
+        if self.check_fields():
+            data =  {
+                'first_name': self.first_name_entry.get(),
+                'last_name': self.last_name_entry.get(),
+                'email': self.email_entry.get(),
+                'user_role': self.user_role_entry.get()
+            }
 
-        if(self.user is not None):
-            data['id'] = self.user.id
-            data['password'] = self.user.password
+            if(self.user is not None):
+                data['id'] = self.user.id
+                data['password'] = self.user.password
+            else:
+                data['password'] = self.password_entry.get()
+
+            self.data = data
+            return True
         else:
-            data['password'] = self.password_entry.get()
+            self.msg.warning('Warning. All fields are required!')
+            return False
 
-        self.data = data
+    def check_fields(self):
+        return self.check_first_name() and self.check_last_name() and self.check_email() and self.check_user_role() and self.check_password()
 
+    def check_first_name(self):
+        if len(self.first_name_entry.get()) > 0 :
+            return True
+        return False
+
+    def check_last_name(self):
+        if len(self.last_name_entry.get()) > 0 :
+            return True
+        return False
+
+    def check_email(self):
+        if len(self.email_entry.get()) > 0 :
+            return True
+        return False
+
+    def check_user_role(self):
+        if len(self.user_role_entry.get()) > 0 :
+            return True
+        return False
+
+    def check_password(self):
+        if self.user is not None and self.user.password is not None:
+            return True
+        elif len(self.password_entry.get()) > 0:
+            return True
+        return False
 
 
 
