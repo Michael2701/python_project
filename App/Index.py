@@ -17,7 +17,7 @@ class Index:
         self.root = Tk()
         self.root.geometry("850x500")
         self.root.title("Genetic App")
-        self.root.iconphoto(True, PhotoImage(file="App/Images/logo.png")) #why not showing up?
+        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png")) #why not showing up?
 
         self.lmodal = LoginModal(ApplicationView, self.root)
         self.lmodal.create_modal()
