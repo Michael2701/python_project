@@ -1,12 +1,15 @@
 from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label
 import tkinter as tk
 from tkinter.ttk import Combobox
+from App.Controllers.SettingsController import SettingsController
 
-# from App.Controllers.UserController import UserController as UController
 
 class UpdateOrCreateUserModal():
 
     def __init__(self, master, controller):
+
+        SettingsController().set_view_settings(self)
+        
         self.uctrl = controller
         self.master = master
         self.user = None
@@ -58,7 +61,7 @@ class UpdateOrCreateUserModal():
     def update(self):
         self.get_form_data()
         self.close_modal()
-        self.uctrl.update_user(self.data)
+        self.uctrl.update_user(self.user, self.data)
 
     def create(self):
         self.get_form_data()
@@ -73,33 +76,33 @@ class UpdateOrCreateUserModal():
         self.toplevel_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def set_submit_button(self):
-        self.submit_button = Button(self.toplevel_dialog, text='Submit', command=self.do_create_or_update)
+        self.submit_button = Button(self.toplevel_dialog, text='Submit', fg=self.fg, font=self.font, command=self.do_create_or_update)
         self.submit_button.grid(row=6, column=0)
 
     def set_cancel_button(self):
-        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', command=self.close_modal)
+        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', fg=self.fg, font=self.font, command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
 
     def set_first_name_field(self):
-        self.first_name_label = Label(self.toplevel_dialog, text='First Name')
+        self.first_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text='First Name')
         self.first_name_label.grid(row=0, column=0)
         self.first_name_entry = Entry(self.toplevel_dialog)
         self.first_name_entry.grid(row=1, column=0)
 
     def set_last_name_field(self):
-        self.last_name_label = Label(self.toplevel_dialog, text="Last Name")
+        self.last_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Last Name")
         self.last_name_label.grid(row=0, column=1)
         self.last_name_entry = Entry(self.toplevel_dialog)
         self.last_name_entry.grid(row=1, column=1)
 
     def set_email_field(self):
-        self.email_label = Label(self.toplevel_dialog, text="Email")
+        self.email_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Email")
         self.email_label.grid(row=2, column=0)
         self.email_entry = Entry(self.toplevel_dialog)
         self.email_entry.grid(row=3, column=0)
 
     def set_user_role_field(self):
-        self.user_role_label = Label(self.toplevel_dialog, text="User Role")
+        self.user_role_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="User Role")
         self.user_role_label.grid(row=2, column=1)
         
         self.user_role_entry = Combobox(
@@ -111,7 +114,7 @@ class UpdateOrCreateUserModal():
         self.user_role_entry.grid(row=3, column=1)
 
     def set_password_field(self):
-        self.password_label = Label(self.toplevel_dialog, text="Password")
+        self.password_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Password")
         self.password_label.grid(row=4, column=0)
         self.password_entry = Entry(self.toplevel_dialog)
         self.password_entry.grid(row=5, column=0)
@@ -125,23 +128,23 @@ class UpdateOrCreateUserModal():
             self.set_user_role()
 
     def set_first_name(self):
-        if(self.user[1] is not None):
+        if(self.user.first_name is not None):
             self.first_name_entry.delete(0, tk.END)
-            self.first_name_entry.insert(0, self.user[1])
+            self.first_name_entry.insert(0, self.user.first_name)
 
     def set_last_name(self):
-        if(self.user[2] is not None):
+        if(self.user.last_name is not None):
             self.last_name_entry.delete(0, tk.END)
-            self.last_name_entry.insert(0, self.user[2])
+            self.last_name_entry.insert(0, self.user.last_name)
 
     def set_email(self):
-        if(self.user[3] is not None):
+        if(self.user.email is not None):
             self.email_entry.delete(0, tk.END)
-            self.email_entry.insert(0, self.user[3])
+            self.email_entry.insert(0, self.user.email)
 
     def set_user_role(self):
-        if(self.user[4] is not None):
-            self.user_role_entry.set(self.user[5])
+        if(self.user.user_role is not None):
+            self.user_role_entry.set(self.user.user_role)
 
     def get_form_data(self):
         data =  {
@@ -152,7 +155,8 @@ class UpdateOrCreateUserModal():
         }
 
         if(self.user is not None):
-            data['rowid'] = self.user[0]
+            data['id'] = self.user.id
+            data['password'] = self.user.password
         else:
             data['password'] = self.password_entry.get()
 
