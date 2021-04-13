@@ -23,8 +23,8 @@ class Index:
         self.lmodal.create_modal()
 
         #====Migrations====
-        #UsersMigration()
-        #GeneticFileMigration()
-        #GeneMigration()
+        # UsersMigration()
+        # GeneticFileMigration()
+        # GeneMigration()
 
         self.root.mainloop()

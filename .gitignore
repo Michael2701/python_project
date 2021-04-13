@@ -14,5 +14,4 @@ logs
 
 __pycache__/
 gitkraken-amd64.deb
-App/DB/
 App/__pycache__/__main__.cpython-36.pyc
