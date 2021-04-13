@@ -2,6 +2,7 @@ from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label, Text
 import tkinter as tk
 from tkinter.ttk import Combobox
 from App.Controllers.SettingsController import SettingsController
+from App.Services.Message import Message
 
 
 class UpdateFileMetaModal():
@@ -9,6 +10,7 @@ class UpdateFileMetaModal():
     def __init__(self, master, ctrl):
        
         SettingsController().set_view_settings(self)
+        self.msg = Message()
 
         self.title = "Update file meta"
         self.ctrl = ctrl
@@ -101,15 +103,34 @@ class UpdateFileMetaModal():
             self.file_created_at_entry.configure(state='readonly')
 
     def get_form_data(self):
-        data =  {
-            'id' : self.file.id,
-            'user_id' : self.file.user_id,
-            'file_name': self.file_name_entry.get(),
-            'file_description': self.file_description_entry.get(),
-            'file_created_at': self.file_created_at_entry.get()
-        }
+        if self.check_fields():
+            data =  {
+                'id' : self.file.id,
+                'user_id' : self.file.user_id,
+                'file_name': self.file_name_entry.get(),
+                'file_description': self.file_description_entry.get("1.0",'end'),
+                'file_created_at': self.file.file_created_at
+            }
 
-        self.data = data
+            self.data = data
+        else:
+            self.msg.warning("Warning. All fields are required")
+
+    def check_fields(self):
+        return self.check_file_description and self.check_file_name()
+
+
+    def check_file_name(self):
+        if len(self.file_name_entry.get()) > 0:
+            return True
+        return False
+
+    def check_file_description(self):
+        if len(self.file_description_entry.get("1.0",'end')) > 0:
+            return True
+        return False
+
+    
 
 
 
