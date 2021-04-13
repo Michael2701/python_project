@@ -25,25 +25,25 @@ class UsersView(Notebook):
 
 
     def create_table_titles(self):
-        label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font, width=10)
         label.grid(row=0, column=0, padx=3, pady=3)
 
-        label = Label(self, text="First Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="First Name", bg=self.bg, fg=self.fg, font=self.title_font, width=17)
         label.grid(row=0, column=1, padx=3, pady=3)
 
-        label = Label(self, text="Last Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Last Name", bg=self.bg, fg=self.fg, font=self.title_font, width=15)
         label.grid(row=0, column=2, padx=3, pady=3)
 
-        label = Label(self, text="Email", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Email", bg=self.bg, fg=self.fg, font=self.title_font, width=15)
         label.grid(row=0, column=3, padx=3, pady=3)
 
-        label = Label(self, text="Role", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Role", bg=self.bg, fg=self.fg, font=self.title_font, width=15)
         label.grid(row=0, column=4, padx=3, pady=3)
 
-        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font, width=10)
         label.grid(row=0, column=5, padx=3, pady=3)
 
-        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font, width=10)
         label.grid(row=0, column=6, padx=3, pady=3)
 
 

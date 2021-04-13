@@ -1,3 +1,4 @@
+from textwrap import wrap
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import Notebook
@@ -43,19 +44,23 @@ class GeneticFilesView(Notebook):
         label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=5, padx=3, pady=3)
 
+    def break_string(self, s):
+        return '\n'.join(wrap(s, 40))
+
     def create_table(self):
         row = 1
+
         for file in self.files:
-            label = Label(self, text=file.id, bg=self.bg, fg=self.fg, font=self.font)
+            label = Label(self, text=file.id, bg=self.bg, fg=self.fg, font=self.font, width=10)
             label.grid(row=row, column=0, padx=3, pady=3)
 
-            label = Label(self, text=file.file_name, bg=self.bg, fg=self.fg, font=self.font)
+            label = Label(self, text=file.file_name, bg=self.bg, fg=self.fg, font=self.font, width=15)
             label.grid(row=row, column=1, padx=3, pady=3)
 
-            label = Label(self, text=file.file_description, bg=self.bg, fg=self.fg, font=self.font)
+            label = Label(self, text=self.break_string(file.file_description), bg=self.bg, fg=self.fg, font=self.font, width=40)
             label.grid(row=row, column=2, padx=3, pady=3)
 
-            label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font)
+            label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)
             label.grid(row=row, column=3, padx=3, pady=3)
 
             button = Button(self, text="Update file", font=self.font, fg=self.fg, command=lambda file=file:self.ctrl.show_update_file_modal(file))

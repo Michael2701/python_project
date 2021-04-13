@@ -1,4 +1,4 @@
-from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label
+from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label, Text
 import tkinter as tk
 from tkinter.ttk import Combobox
 from App.Controllers.SettingsController import SettingsController
@@ -63,17 +63,18 @@ class UpdateFileMetaModal():
         self.file_name_entry = Entry(self.toplevel_dialog)
         self.file_name_entry.grid(row=1, column=0)
 
-    def set_file_description_field(self):
-        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="File Description")
-        self.file_description_label.grid(row=0, column=1)
-        self.file_description_entry = Entry(self.toplevel_dialog)
-        self.file_description_entry.grid(row=1, column=1)
-
     def set_file_created_at_field(self):
         self.file_created_at_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Created at")
-        self.file_created_at_label.grid(row=2, column=0)
-        self.file_created_at_entry = Entry(self.toplevel_dialog)
-        self.file_created_at_entry.grid(row=3, column=0)
+        self.file_created_at_label.grid(row=0, column=1)
+        self.file_created_at_entry = Entry(self.toplevel_dialog, state='readonly')
+        self.file_created_at_entry.grid(row=1, column=1)
+
+    def set_file_description_field(self):
+        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="File Description")
+        self.file_description_label.grid(row=2, column=0)
+        self.file_description_entry = Text(self.toplevel_dialog, height=3, width=6)
+        self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
+
 
 
     def set_fields_values(self):
@@ -89,13 +90,15 @@ class UpdateFileMetaModal():
 
     def set_file_description(self):
         if(self.file.file_description is not None):
-            self.file_description_entry.delete(0, tk.END)
-            self.file_description_entry.insert(0, self.file.file_description)
+            self.file_description_entry.delete('1.0', tk.END)
+            self.file_description_entry.insert('1.0', self.file.file_description)
 
     def set_file_created_at (self):
         if(self.file.file_created_at  is not None):
+            self.file_created_at_entry.configure(state='normal')
             self.file_created_at_entry.delete(0, tk.END)
             self.file_created_at_entry.insert(0, self.file.file_created_at )
+            self.file_created_at_entry.configure(state='readonly')
 
     def get_form_data(self):
         data =  {
