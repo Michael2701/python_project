@@ -10,6 +10,7 @@ class GeneticFilesView(Notebook):
 
         self.bg = 'lightgrey'
         self.fg = 'black'
+        self.title_font = "Helvetica 10 bold"
         
         self.ctrl = ctrl
         self.master = master
@@ -18,7 +19,31 @@ class GeneticFilesView(Notebook):
 
 
     def init_window(self):
-        row = 0
+        self.create_table()
+        self.create_table_titles()
+        self.pack(fill='both')
+
+    def create_table_titles(self):
+        label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=0, padx=3, pady=3)
+
+        label = Label(self, text="Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=1, padx=3, pady=3)
+
+        label = Label(self, text="Description", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=2, padx=3, pady=3)
+
+        label = Label(self, text="Created at", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=3, padx=3, pady=3)
+
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=4, padx=3, pady=3)
+
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=5, padx=3, pady=3)
+
+    def create_table(self):
+        row = 1
         for file in self.files:
             label = Label(self, text=file.id, bg=self.bg, fg=self.fg)
             label.grid(row=row, column=0, padx=3, pady=3)
@@ -40,4 +65,4 @@ class GeneticFilesView(Notebook):
             
             row += 1
 
-        self.pack(fill='both')
+        

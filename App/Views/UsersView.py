@@ -10,6 +10,7 @@ class UsersView(Notebook):
 
         self.bg = 'lightgrey'
         self.fg = 'black'
+        self.title_font = "Helvetica 10 bold"
         
         self.ctrl = ctrl
         self.master = master
@@ -18,7 +19,36 @@ class UsersView(Notebook):
 
 
     def init_window(self):
-        row = 0
+        self.create_table_titles()
+        self.create_table()
+        self.pack(fill='both')
+
+
+    def create_table_titles(self):
+        label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=0, padx=3, pady=3)
+
+        label = Label(self, text="First Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=1, padx=3, pady=3)
+
+        label = Label(self, text="Last Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=2, padx=3, pady=3)
+
+        label = Label(self, text="Email", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=3, padx=3, pady=3)
+
+        label = Label(self, text="Role", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=4, padx=3, pady=3)
+
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=5, padx=3, pady=3)
+
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=6, padx=3, pady=3)
+
+
+    def create_table(self):
+        row = 1
         for user in self.users:
             label = Label(self, text=user.id, bg=self.bg, fg=self.fg)
             label.grid(row=row, column=0, padx=3, pady=3)
@@ -32,14 +62,16 @@ class UsersView(Notebook):
             label = Label(self, text=user.email, bg=self.bg, fg=self.fg)
             label.grid(row=row, column=3, padx=3, pady=3)
 
+            label = Label(self, text=user.user_role, bg=self.bg, fg=self.fg)
+            label.grid(row=row, column=4, padx=3, pady=3)
+
             button = Button(self, text="Update User", command=lambda user=user:self.ctrl.show_update_user_modal(user))
-            button.grid(row=row, column=4, padx=3, pady=3)
+            button.grid(row=row, column=5, padx=3, pady=3)
 
             button = Button(self, text="Delete User", command=lambda user=user:self.ctrl.show_delete_modal(user))
-            button.grid(row=row, column=5, padx=3, pady=3)
+            button.grid(row=row, column=6, padx=3, pady=3)
             
             row += 1
 
-        self.pack(fill='both')
 
 

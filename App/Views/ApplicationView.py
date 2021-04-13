@@ -9,6 +9,8 @@ class ApplicationView (Frame):
         self.uctrl = UserController(self)
         self.gfctrl = GeneticFileController(self)
 
+        self.title_font = "Helvetica 10 bold"
+
         self.master = master
         self.logged_user = logged_user
         self.init_window()
@@ -20,7 +22,7 @@ class ApplicationView (Frame):
         self.create_menu()
         self.create_file_cascade()
         self.create_user_cascade()
-        self.create_edit_cascade()
+        self.create_settings_cascade()
         self.create_help_cascade()
 
     def create_menu(self):
@@ -32,7 +34,7 @@ class ApplicationView (Frame):
         self.file.add_command(label='Show files', command=self.gfctrl.display_files)
         self.file.add_command(label='Upload file', command=self.gfctrl.upload_file)
         self.file.add_command(label='Exit', command=lambda:exit())
-        self.menu.add_cascade(label='File', menu=self.file)
+        self.menu.add_cascade(label='File', font=self.title_font, menu=self.file)
 
     def create_user_cascade(self):
         self.user = Menu(self.menu, tearoff=0)
@@ -42,15 +44,15 @@ class ApplicationView (Frame):
 
         self.user.add_command(label='Profile', command=lambda:self.uctrl.show_update_user_modal(self.logged_user))
         
-        self.menu.add_cascade(label='User', menu=self.user)
+        self.menu.add_cascade(label='User', font=self.title_font, menu=self.user)
 
-    def create_edit_cascade(self):
+    def create_settings_cascade(self):
         self.edit = Menu(self.menu, tearoff=0)
-        self.edit.add_command(label='Show Text')
-        self.menu.add_cascade(label='Edit', menu=self.edit)
+        self.edit.add_command(label='Settings')
+        self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit)
 
     def create_help_cascade(self):
         self.help = Menu(self.menu, tearoff=0)
         self.help.add_command(label='Help')
         self.help.add_command(label='About Us')
-        self.menu.add_cascade(label='Help', menu=self.help)
+        self.menu.add_cascade(label='Help', font=self.title_font, menu=self.help)
