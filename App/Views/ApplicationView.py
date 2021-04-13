@@ -14,6 +14,8 @@ class ApplicationView (Frame):
 
         self.master = master
         self.logged_user = logged_user
+        
+        self.gfctrl.display_files()
         self.init_window()
 
     def init_window(self):
