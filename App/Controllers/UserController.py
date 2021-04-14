@@ -8,6 +8,7 @@ from App.Services.Message import Message
 from App.Views.UIElements.UpdateOrCreateUserModal import UpdateOrCreateUserModal
 from App.Views.UsersView import UsersView
 
+
 class UserController(Controller):
 
 

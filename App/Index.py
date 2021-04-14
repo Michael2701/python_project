@@ -15,16 +15,16 @@ class Index:
 
     def __init__(self):
         self.root = Tk()
-        self.root.geometry("700x500")
+        self.root.geometry("850x500")
         self.root.title("Genetic App")
-        self.root.iconphoto(True, PhotoImage(file="App/Images/logo.png")) #why not showing up?
+        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png")) #why not showing up?
 
         self.lmodal = LoginModal(ApplicationView, self.root)
         self.lmodal.create_modal()
 
-        self.root.mainloop()
-
         #====Migrations====
-        #UsersMigration()
-        #GeneticFileMigration()
-        #GeneMigration()
+        # UsersMigration()
+        # GeneticFileMigration()
+        # GeneMigration()
+
+        self.root.mainloop()

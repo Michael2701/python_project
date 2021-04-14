@@ -1,0 +1,3 @@
+[console_scripts]
+my_app = App.__main__:main
+
