@@ -1,0 +1,3 @@
+
+class UserNotificator:
+    pass

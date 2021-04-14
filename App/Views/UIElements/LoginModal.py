@@ -6,7 +6,6 @@ from App.Controllers.SettingsController import SettingsController
 class LoginModal():
 
     def __init__(self,window, master):
-        # self.umodel = UserModel()
         self.msg = Message()
         self.window = window
         self.master = master

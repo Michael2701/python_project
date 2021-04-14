@@ -82,23 +82,23 @@ class UpdateFileMetaModal():
 
 
     def set_fields_values(self):
-        if(self.file is not None):
+        if self.file is not None:
             self.set_file_name()
             self.set_file_description()
             self.set_file_created_at()
 
     def set_file_name(self):
-        if(self.file.file_name is not None):
+        if self.file.file_name is not None:
             self.file_name_entry.delete(0, tk.END)
             self.file_name_entry.insert(0, self.file.file_name)
 
     def set_file_description(self):
-        if(self.file.file_description is not None):
+        if self.file.file_description is not None:
             self.file_description_entry.delete('1.0', tk.END)
             self.file_description_entry.insert('1.0', self.file.file_description)
 
     def set_file_created_at (self):
-        if(self.file.file_created_at  is not None):
+        if self.file.file_created_at  is not None:
             self.file_created_at_entry.configure(state='normal')
             self.file_created_at_entry.delete(0, tk.END)
             self.file_created_at_entry.insert(0, self.file.file_created_at )
@@ -125,7 +125,7 @@ class UpdateFileMetaModal():
 
     def check_file_name(self):
         try:
-            if(len(self.file_name_entry.get()) == 0):
+            if len(self.file_name_entry.get()) == 0:
                 return False
             
             return True
@@ -136,7 +136,7 @@ class UpdateFileMetaModal():
 
     def check_file_description(self):
         try:
-            if(len(self.file_description_entry.get("1.0",tk.END).strip()) == 0):
+            if len(self.file_description_entry.get("1.0",tk.END).strip()) == 0:
                 return False
             
             return True

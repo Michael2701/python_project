@@ -45,7 +45,7 @@ class FileUploadModal():
         self.toplevel_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def on_submit(self):
-        if( self.get_form_data() ):
+        if self.get_form_data():
             self.window.create_file(self.data)
             self.close_modal()
         else:
@@ -86,11 +86,7 @@ class FileUploadModal():
 
     def get_form_data(self):
 
-        if( self.check_file_name() and 
-            self.check_file_description() and 
-            self.check_file_path() and
-            self.check_user_id()
-        ):
+        if self.check_file_name() and self.check_file_description() and self.check_file_path() and self.check_user_id():
 
             self.data =  {
                 'user_id': str(self.master.logged_user.id),

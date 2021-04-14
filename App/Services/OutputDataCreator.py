@@ -1,0 +1,3 @@
+
+class OutputDataCreator:
+    pass

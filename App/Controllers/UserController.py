@@ -24,7 +24,7 @@ class UserController(Controller):
 
 
     def show_delete_modal(self, user):
-        if( self.msg.question("Do you really want to delete this user?","Delete User") ):
+        if self.msg.question("Do you really want to delete this user?","Delete User"):
             self.delete_user(user.id)
 
     def show_update_user_modal(self,user=None):
