@@ -86,25 +86,25 @@ class UpdateOrCreateUserModal():
         self.cancel_button.grid(row=6, column=1)
 
     def set_first_name_field(self):
-        self.first_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text='First Name')
+        self.first_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text='First Name')
         self.first_name_label.grid(row=0, column=0)
         self.first_name_entry = Entry(self.toplevel_dialog)
         self.first_name_entry.grid(row=1, column=0)
 
     def set_last_name_field(self):
-        self.last_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Last Name")
+        self.last_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Last Name")
         self.last_name_label.grid(row=0, column=1)
         self.last_name_entry = Entry(self.toplevel_dialog)
         self.last_name_entry.grid(row=1, column=1)
 
     def set_email_field(self):
-        self.email_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Email")
+        self.email_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
         self.email_label.grid(row=2, column=0)
         self.email_entry = Entry(self.toplevel_dialog)
         self.email_entry.grid(row=3, column=0)
 
     def set_user_role_field(self):
-        self.user_role_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="User Role")
+        self.user_role_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="User Role")
         self.user_role_label.grid(row=2, column=1)
         
         self.user_role_entry = Combobox(

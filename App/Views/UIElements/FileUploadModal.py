@@ -73,13 +73,13 @@ class FileUploadModal():
         self.cancel_button.grid(row=6, column=1)
     
     def set_file_name_field(self):
-        self.file_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="File name")
+        self.file_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File name")
         self.file_name_label.grid(row=0, column=0)
         self.file_name_entry = Entry(self.toplevel_dialog, state='readonly')
         self.file_name_entry.grid(row=1, column=0)
 
     def set_file_description_field(self):
-        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Description")
+        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Description")
         self.file_description_label.grid(row=2, column=0)
         self.file_description_entry = Text(self.toplevel_dialog, height=3, width=6)
         self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)

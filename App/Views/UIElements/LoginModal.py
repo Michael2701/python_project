@@ -58,13 +58,13 @@ class LoginModal():
         self.cancel_button.grid(row=6, column=1)
 
     def set_email_field(self):
-        self.email_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Email")
+        self.email_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
         self.email_label.grid(row=0, column=0)
         self.email_entry = Entry(self.toplevel_dialog)
         self.email_entry.grid(row=1, column=0)
 
     def set_password_field(self):
-        self.password_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Password")
+        self.password_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Password")
         self.password_label.grid(row=2, column=0)
         self.password_entry = Entry(self.toplevel_dialog, show='*')
         self.password_entry.grid(row=3, column=0)
