@@ -86,25 +86,25 @@ class UpdateOrCreateUserModal():
         self.cancel_button.grid(row=6, column=1)
 
     def set_first_name_field(self):
-        self.first_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text='First Name')
+        self.first_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text='First Name')
         self.first_name_label.grid(row=0, column=0)
         self.first_name_entry = Entry(self.toplevel_dialog)
         self.first_name_entry.grid(row=1, column=0)
 
     def set_last_name_field(self):
-        self.last_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Last Name")
+        self.last_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Last Name")
         self.last_name_label.grid(row=0, column=1)
         self.last_name_entry = Entry(self.toplevel_dialog)
         self.last_name_entry.grid(row=1, column=1)
 
     def set_email_field(self):
-        self.email_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Email")
+        self.email_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
         self.email_label.grid(row=2, column=0)
         self.email_entry = Entry(self.toplevel_dialog)
         self.email_entry.grid(row=3, column=0)
 
     def set_user_role_field(self):
-        self.user_role_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="User Role")
+        self.user_role_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="User Role")
         self.user_role_label.grid(row=2, column=1)
         
         self.user_role_entry = Combobox(
@@ -123,29 +123,29 @@ class UpdateOrCreateUserModal():
 
 
     def set_fields_values(self):
-        if(self.user is not None):
+        if self.user is not None:
             self.set_first_name()
             self.set_last_name()
             self.set_email()
             self.set_user_role()
 
     def set_first_name(self):
-        if(self.user.first_name is not None):
+        if self.user.first_name is not None:
             self.first_name_entry.delete(0, tk.END)
             self.first_name_entry.insert(0, self.user.first_name)
 
     def set_last_name(self):
-        if(self.user.last_name is not None):
+        if self.user.last_name is not None:
             self.last_name_entry.delete(0, tk.END)
             self.last_name_entry.insert(0, self.user.last_name)
 
     def set_email(self):
-        if(self.user.email is not None):
+        if self.user.email is not None :
             self.email_entry.delete(0, tk.END)
             self.email_entry.insert(0, self.user.email)
 
     def set_user_role(self):
-        if(self.user.user_role is not None):
+        if self.user.user_role is not None:
             self.user_role_entry.set(self.user.user_role)
 
     def get_form_data(self):
@@ -157,7 +157,7 @@ class UpdateOrCreateUserModal():
                 'user_role': self.user_role_entry.get()
             }
 
-            if(self.user is not None):
+            if self.user is not None:
                 data['id'] = self.user.id
                 data['password'] = self.user.password
             else:

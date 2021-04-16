@@ -12,6 +12,7 @@ class SettingsController(Controller):
             config = json.load(json_config)
             
             view.bg = config['background_color']
+            view.bg_modal = config['modal_bg']
             view.fg = config['font_color']
             view.title_font = config['title_font']
             view.font = config['app_font']

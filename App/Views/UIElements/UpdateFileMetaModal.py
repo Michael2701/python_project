@@ -62,19 +62,19 @@ class UpdateFileMetaModal():
 
 
     def set_file_name_field(self):
-        self.file_name_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text='File Name')
+        self.file_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text='File Name')
         self.file_name_label.grid(row=0, column=0)
         self.file_name_entry = Entry(self.toplevel_dialog)
         self.file_name_entry.grid(row=1, column=0)
 
     def set_file_created_at_field(self):
-        self.file_created_at_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Created at")
+        self.file_created_at_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Created at")
         self.file_created_at_label.grid(row=0, column=1)
         self.file_created_at_entry = Entry(self.toplevel_dialog, state='readonly')
         self.file_created_at_entry.grid(row=1, column=1)
 
     def set_file_description_field(self):
-        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg, fg=self.fg, font=self.font, text="File Description")
+        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File Description")
         self.file_description_label.grid(row=2, column=0)
         self.file_description_entry = Text(self.toplevel_dialog, height=3, width=6)
         self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
@@ -82,23 +82,23 @@ class UpdateFileMetaModal():
 
 
     def set_fields_values(self):
-        if(self.file is not None):
+        if self.file is not None:
             self.set_file_name()
             self.set_file_description()
             self.set_file_created_at()
 
     def set_file_name(self):
-        if(self.file.file_name is not None):
+        if self.file.file_name is not None:
             self.file_name_entry.delete(0, tk.END)
             self.file_name_entry.insert(0, self.file.file_name)
 
     def set_file_description(self):
-        if(self.file.file_description is not None):
+        if self.file.file_description is not None:
             self.file_description_entry.delete('1.0', tk.END)
             self.file_description_entry.insert('1.0', self.file.file_description)
 
     def set_file_created_at (self):
-        if(self.file.file_created_at  is not None):
+        if self.file.file_created_at  is not None:
             self.file_created_at_entry.configure(state='normal')
             self.file_created_at_entry.delete(0, tk.END)
             self.file_created_at_entry.insert(0, self.file.file_created_at )
@@ -125,7 +125,7 @@ class UpdateFileMetaModal():
 
     def check_file_name(self):
         try:
-            if(len(self.file_name_entry.get()) == 0):
+            if len(self.file_name_entry.get()) == 0:
                 return False
             
             return True
@@ -136,7 +136,7 @@ class UpdateFileMetaModal():
 
     def check_file_description(self):
         try:
-            if(len(self.file_description_entry.get("1.0",tk.END).strip()) == 0):
+            if len(self.file_description_entry.get("1.0",tk.END).strip()) == 0:
                 return False
             
             return True

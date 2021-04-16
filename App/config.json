@@ -1,5 +1,6 @@
 {
-    "background_color": "#ddd",
+    "background_color": "#fff",
+    "modal_bg": "#d9d9d9",
     "font_color": "#111",
     "app_font": "Helvetica 11",
     "title_font": "Helvetica 11 bold"
