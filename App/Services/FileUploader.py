@@ -1,5 +1,6 @@
 import os
 
+
 class FileUploader:
     file_path = None
 

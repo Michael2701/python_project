@@ -7,9 +7,10 @@ from tkinter import filedialog
 from App.Services.FileUploader import FileUploader
 from App.Controllers.SettingsController import SettingsController
 
-class FileUploadModal():
 
-    def __init__(self,ctrl, master):
+class FileUploadModal:
+
+    def __init__(self, ctrl, master):
         self.msg = Message()
         self.ctrl = ctrl
         self.master = master
@@ -88,7 +89,7 @@ class FileUploadModal():
 
         if self.check_file_name() and self.check_file_description() and self.check_file_path() and self.check_user_id():
 
-            self.data =  {
+            self.data = {
                 'user_id': str(self.master.logged_user.id),
                 'file_name': self.file_name_entry.get(),
                 'file_description': self.file_description_entry.get("1.0", tk.END).strip(),
@@ -99,10 +100,9 @@ class FileUploadModal():
 
         return False
 
-
     def check_file_name(self) -> bool:
         try:
-            if(len(self.file_name_entry.get()) == 0):
+            if len(self.file_name_entry.get()) == 0:
                 return False
             
             return True
@@ -110,11 +110,10 @@ class FileUploadModal():
         except Exception as e:
             print(str(e))
             return False
-
 
     def check_file_description(self) -> bool:
         try:
-            if(len(self.file_description_entry.get("1.0",tk.END).strip()) == 0):
+            if len(self.file_description_entry.get("1.0", tk.END).strip()) == 0:
                 return False
             
             return True
@@ -123,19 +122,19 @@ class FileUploadModal():
             print(str(e))
             return False
 
-
     def check_file_path(self) -> bool:
         try:
-            if(os.path.exists(self.file_path)):
+            if os.path.exists(self.file_path):
                 return True        
             return False
-        except Exception as e:
-            return False
 
+        except Exception as e:
+            print(str(e))
+            return False
 
     def check_user_id(self) -> bool:
         try:
-            if(self.master.logged_user.id != None):
+            if self.master.logged_user.id is not None:
                 return True
             return False
 

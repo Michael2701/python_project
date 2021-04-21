@@ -3,9 +3,10 @@ from App.Services.Message import Message
 from App.Models.SimpleUser import SimpleUser
 from App.Controllers.SettingsController import SettingsController
 
-class LoginModal():
 
-    def __init__(self,window, master):
+class LoginModal:
+
+    def __init__(self, window, master):
         self.msg = Message()
         self.window = window
         self.master = master
@@ -45,16 +46,19 @@ class LoginModal():
             if user[0].password == self.data['password']:
                 self.logged_user = user[0]
                 self.close_modal()
-                self.window(self.master, self.logged_user)      
+                self.window(self.master, self.logged_user)
         except Exception as e:
+            print(str(e))
             self.msg.warning("Wrong email or password")
 
     def set_submit_button(self) -> None:
-        self.submit_button = Button(self.toplevel_dialog, text='Submit', font=self.font, fg=self.fg, command=self.on_submit_login)
+        self.submit_button = Button(self.toplevel_dialog, text='Submit', font=self.font, fg=self.fg,
+                                    command=self.on_submit_login)
         self.submit_button.grid(row=6, column=0)
 
     def set_cancel_button(self) -> None:
-        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', font=self.font, fg=self.fg, command=self.close_modal)
+        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', font=self.font, fg=self.fg,
+                                    command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
 
     def set_email_field(self) -> None:
@@ -70,14 +74,10 @@ class LoginModal():
         self.password_entry.grid(row=3, column=0)
 
     def get_form_data(self) -> None:
-        self.data =  {
+        self.data = {
             'email': self.email_entry.get(),
             'password': self.password_entry.get()
         }
 
     def get_logged_user(self) -> SimpleUser:
         return self.logged_user
-
-
-
-

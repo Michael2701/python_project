@@ -1,11 +1,10 @@
-import tkinter as tk
 from tkinter import *
 from tkinter.ttk import Notebook
 
 from App.Controllers.SettingsController import SettingsController
 
-class UsersView(Notebook):
 
+class UsersView(Notebook):
 
     def __init__(self, ctrl, master, users):
         Notebook.__init__(self, master)
@@ -17,12 +16,10 @@ class UsersView(Notebook):
         self.users = users
         self.init_window()
 
-
     def init_window(self) -> None:
         self.create_table_titles()
         self.create_table()
         self.pack(fill='both')
-
 
     def create_table_titles(self) -> None:
         label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font, width=10)
@@ -45,7 +42,6 @@ class UsersView(Notebook):
 
         label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font, width=10)
         label.grid(row=0, column=6, padx=3, pady=3)
-
 
     def create_table(self) -> None:
         row = 1
@@ -72,6 +68,4 @@ class UsersView(Notebook):
             button.grid(row=row, column=6, padx=3, pady=3)
             
             row += 1
-
-
 

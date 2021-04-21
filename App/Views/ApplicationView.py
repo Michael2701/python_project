@@ -4,9 +4,10 @@ from App.Controllers.GeneticFileController import GeneticFileController
 from App.Views.UIElements.LoginModal import LoginModal
 from App.Controllers.SettingsController import SettingsController
 
+
 class ApplicationView (Frame):
     def __init__(self, master, logged_user):
-        Frame.__init__(self,master)
+        Frame.__init__(self, master)
         self.uctrl = UserController(self)
         self.gfctrl = GeneticFileController(self)
 
@@ -36,7 +37,7 @@ class ApplicationView (Frame):
         self.file = Menu(self.menu, tearoff=0)
         self.file.add_command(label='Show files', command=self.gfctrl.display_files)
         self.file.add_command(label='Upload file', command=self.gfctrl.upload_file)
-        self.file.add_command(label='Exit', command=lambda:exit())
+        self.file.add_command(label='Exit', command=exit)
         self.menu.add_cascade(label='File', font=self.title_font, menu=self.file)
 
     def create_user_cascade(self) -> None:

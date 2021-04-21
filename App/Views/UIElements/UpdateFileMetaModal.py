@@ -7,7 +7,7 @@ from App.Models.GeneticFileModel import GeneticFileModel
 from App.Services.Message import Message
 
 
-class UpdateFileMetaModal():
+class UpdateFileMetaModal:
 
     def __init__(self, master, ctrl) -> None:
        
@@ -44,7 +44,6 @@ class UpdateFileMetaModal():
         else:
             self.msg.warning("Warning. All fields are required")
 
-
     def create_toplevel_dialog(self) -> None:
         self.toplevel_dialog = Toplevel(self.master, padx=5, pady=5)
         self.toplevel_dialog.title(self.title)
@@ -52,16 +51,13 @@ class UpdateFileMetaModal():
         self.toplevel_dialog.transient(self.master)
         self.toplevel_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
-
     def set_submit_button(self) -> None:
         self.submit_button = Button(self.toplevel_dialog, text='Submit', fg=self.fg, font=self.font, command=self.update)
         self.submit_button.grid(row=6, column=0)
 
-
     def set_cancel_button(self) -> None:
         self.cancel_button = Button(self.toplevel_dialog, text='Cancel', fg=self.fg, font=self.font, command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
-
 
     def set_file_name_field(self) -> None:
         self.file_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text='File Name')
@@ -80,8 +76,6 @@ class UpdateFileMetaModal():
         self.file_description_label.grid(row=2, column=0)
         self.file_description_entry = Text(self.toplevel_dialog, height=3, width=6)
         self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
-
-
 
     def set_fields_values(self) -> None:
         if self.file is not None:
@@ -124,7 +118,6 @@ class UpdateFileMetaModal():
     def check_fields(self) -> bool:
         return self.check_file_description() and self.check_file_name()
 
-
     def check_file_name(self) -> bool:
         try:
             if len(self.file_name_entry.get()) == 0:
@@ -148,7 +141,3 @@ class UpdateFileMetaModal():
             return False
 
     
-
-
-
-
