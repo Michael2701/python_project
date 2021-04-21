@@ -9,6 +9,11 @@ from App.Models.SimpleUser import SimpleUser
 class UsersView(Notebook):
 
     def __init__(self, ctrl: Any, master: Any, users: SimpleUser):
+        """
+        :param ctrl: view controller
+        :param master: parent view
+        :param users: SimpleUser list
+        """
         Notebook.__init__(self, master)
 
         SettingsController().set_view_settings(self)
@@ -19,11 +24,19 @@ class UsersView(Notebook):
         self.init_window()
 
     def init_window(self) -> None:
+        """
+        init users view window
+        :return: None
+        """
         self.create_table_titles()
         self.create_table()
         self.pack(fill='both')
 
     def create_table_titles(self) -> None:
+        """
+        create users table titles
+        :return: None
+        """
         label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font, width=10)
         label.grid(row=0, column=0, padx=3, pady=3)
 
@@ -46,6 +59,10 @@ class UsersView(Notebook):
         label.grid(row=0, column=6, padx=3, pady=3)
 
     def create_table(self) -> None:
+        """
+        create users table from given users list
+        :return: None
+        """
         row = 1
         for user in self.users:
             label = Label(self, text=user.id, bg=self.bg, fg=self.fg, font=self.font)

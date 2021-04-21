@@ -9,6 +9,10 @@ from App.Models.SimpleUser import SimpleUser
 
 class ApplicationView (Frame):
     def __init__(self, master: Any, logged_user: SimpleUser):
+        """
+        :param master: parent view
+        :param logged_user: SimpleUser object logged user
+        """
         Frame.__init__(self, master)
         self.uctrl = UserController(self)
         self.gfctrl = GeneticFileController(self)
@@ -22,6 +26,10 @@ class ApplicationView (Frame):
         self.init_window()
 
     def init_window(self) -> None:
+        """
+        init application view window
+        :return: None
+        """
         self.master.title("Genetic App")
         self.pack(fill=BOTH, expand=1)
 
@@ -32,10 +40,18 @@ class ApplicationView (Frame):
         self.create_help_cascade()
 
     def create_menu(self) -> None:
+        """
+        create mane top menu
+        :return: None
+        """
         self.menu = Menu(self.master)
         self.master.config(menu=self.menu)
 
     def create_file_cascade(self) -> None:
+        """
+        create file cascade in mane menu
+        :return: None
+        """
         self.file = Menu(self.menu, tearoff=0)
         self.file.add_command(label='Show files', command=self.gfctrl.display_files)
         self.file.add_command(label='Upload file', command=self.gfctrl.upload_file)
@@ -43,6 +59,10 @@ class ApplicationView (Frame):
         self.menu.add_cascade(label='File', font=self.title_font, menu=self.file)
 
     def create_user_cascade(self) -> None:
+        """
+        create user cascade in mane menu
+        :return: None
+        """
         self.user = Menu(self.menu, tearoff=0)
         if self.logged_user.user_role == 'admin':
             self.user.add_command(label='Show Users', command=self.uctrl.display_users)
@@ -53,12 +73,20 @@ class ApplicationView (Frame):
         self.menu.add_cascade(label='User', font=self.title_font, menu=self.user)
 
     def create_settings_cascade(self) -> None:
+        """
+        create settings cascade in mane menu
+        :return: None
+        """
         self.edit = Menu(self.menu, tearoff=0)
         self.edit.add_command(label='Application')
         self.edit.add_command(label='Graphic')
         self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit)
 
     def create_help_cascade(self) -> None:
+        """
+        create help cascade in mane menu
+        :return: None
+        """
         self.help = Menu(self.menu, tearoff=0)
         self.help.add_command(label='Help')
         self.help.add_command(label='About Us')

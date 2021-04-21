@@ -8,6 +8,11 @@ class SettingsController(Controller):
     config_path = "App/config.json"
 
     def set_view_settings(self, view: Any) -> None:
+        """
+        set view style variables in given view
+        :param view: view to set style variables
+        :return: None
+        """
         with open(self.config_path) as json_config:
             
             config = json.load(json_config)

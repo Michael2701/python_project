@@ -11,6 +11,11 @@ from App.Models.GeneticFileModel import GeneticFileModel
 class GeneticFilesView(Notebook):
 
     def __init__(self, ctrl: Any, master: Any, files: GeneticFileModel):
+        """
+        :param ctrl: view controller
+        :param master: parent view
+        :param files: GeneticFileModel object list
+        """
         Notebook.__init__(self, master)
 
         SettingsController().set_view_settings(self)
@@ -21,11 +26,19 @@ class GeneticFilesView(Notebook):
         self.init_window()
 
     def init_window(self) -> None:
+        """
+        init files view window
+        :return: None
+        """
         self.create_table()
         self.create_table_titles()
         self.pack(fill='both')
 
     def create_table_titles(self) -> None:
+        """
+        create files table titles
+        :return: None
+        """
         label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=0, padx=3, pady=3)
 
@@ -46,9 +59,18 @@ class GeneticFilesView(Notebook):
 
     @staticmethod
     def break_string(s) -> str:
+        """
+        break given string with '\n'
+        :param s: string to break
+        :return: string
+        """
         return '\n'.join(wrap(s, 40))
 
     def create_table(self) -> None:
+        """
+        create table of files from given list
+        :return: None
+        """
         row = 1
 
         for file in self.files:

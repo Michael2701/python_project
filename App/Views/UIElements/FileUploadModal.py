@@ -13,6 +13,10 @@ from App.Controllers.SettingsController import SettingsController
 class FileUploadModal:
 
     def __init__(self, ctrl: Any, master: Any):
+        """
+        :param ctrl: modal controller
+        :param master: parent view
+        """
         self.msg = Message()
         self.ctrl = ctrl
         self.master = master
@@ -28,6 +32,10 @@ class FileUploadModal:
         self.create_modal()
 
     def create_modal(self) -> None:
+        """
+        init file upload modal
+        :return: None
+        """
         self.create_toplevel_dialog()
 
         self.set_file_name_field()
@@ -38,9 +46,17 @@ class FileUploadModal:
         self.set_cancel_button()
 
     def close_modal(self) -> None:
+        """
+        close modal
+        :return: None
+        """
         self.toplevel_dialog.destroy()
 
     def create_toplevel_dialog(self) -> None:
+        """
+        create top level dialog
+        :return: None
+        """
         self.toplevel_dialog = Toplevel(self.master, padx=5, pady=5)
         self.toplevel_dialog.title(self.title)
         self.toplevel_dialog.minsize(300, 100)
@@ -48,6 +64,10 @@ class FileUploadModal:
         self.toplevel_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def on_submit(self) -> None:
+        """
+        create file via file controller
+        :return: None
+        """
         if self.get_form_data():
             self.ctrl.create_file(self.data)
             self.close_modal()
@@ -55,6 +75,10 @@ class FileUploadModal:
             self.msg.warning("Warning. All fields are required!")
 
     def open_file_dialog(self) -> None:
+        """
+        open choose file dialog
+        :return: None
+        """
         self.file_path = filedialog.askopenfilename()
 
         self.file_name_entry.delete(0, tk.END)
@@ -63,32 +87,55 @@ class FileUploadModal:
         self.file_name_entry.configure(state='readonly')
 
     def set_file_dialog_button(self) -> None:
+        """
+        create file dialog button
+        :return: None
+        """
         self.file_dialog_button = Button(self.toplevel_dialog, text='Choose file', font=self.font, fg=self.fg, command=self.open_file_dialog)
         self.file_dialog_button.grid(row=1, column=1)
 
 
     def set_submit_button(self) -> None:
+        """
+        create submit button
+        :return: None
+        """
         self.submit_button = Button(self.toplevel_dialog, text='Submit', font=self.font, fg=self.fg, command=self.on_submit)
         self.submit_button.grid(row=6, column=0)
 
-    def set_cancel_button(self):
+    def set_cancel_button(self) -> None:
+        """
+        create cancel button
+        :return: None
+        """
         self.cancel_button = Button(self.toplevel_dialog, text='Cancel', font=self.font, fg=self.fg, command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
     
     def set_file_name_field(self) -> None:
+        """
+        create file name field and label
+        :return: None
+        """
         self.file_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File name")
         self.file_name_label.grid(row=0, column=0)
         self.file_name_entry = Entry(self.toplevel_dialog, state='readonly')
         self.file_name_entry.grid(row=1, column=0)
 
     def set_file_description_field(self) -> None:
+        """
+        create file description filed and label
+        :return: None
+        """
         self.file_description_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Description")
         self.file_description_label.grid(row=2, column=0)
         self.file_description_entry = Text(self.toplevel_dialog, height=3, width=6)
         self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
 
     def get_form_data(self) -> bool:
-
+        """
+        get form data end put it on the object
+        :return:True if form data is valid and false otherwise
+        """
         if self.check_file_name() and self.check_file_description() and self.check_file_path() and self.check_user_id():
 
             self.data = {
@@ -103,6 +150,10 @@ class FileUploadModal:
         return False
 
     def check_file_name(self) -> bool:
+        """
+        check if value of file name is valid
+        :return: True if valid and False otherwise
+        """
         try:
             if len(self.file_name_entry.get()) == 0:
                 return False
@@ -114,6 +165,10 @@ class FileUploadModal:
             return False
 
     def check_file_description(self) -> bool:
+        """
+        check if value of file description is vald
+        :return: True if valid and False otherwise
+        """
         try:
             if len(self.file_description_entry.get("1.0", tk.END).strip()) == 0:
                 return False
@@ -125,6 +180,10 @@ class FileUploadModal:
             return False
 
     def check_file_path(self) -> bool:
+        """
+        check if file path exists
+        :return: True if exists and False otherwise
+        """
         try:
             if os.path.exists(self.file_path):
                 return True        
@@ -135,6 +194,10 @@ class FileUploadModal:
             return False
 
     def check_user_id(self) -> bool:
+        """
+        check if logged user id exists
+        :return: True if exists and False otherwise
+        """
         try:
             if self.master.logged_user.id is not None:
                 return True
