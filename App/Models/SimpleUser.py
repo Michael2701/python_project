@@ -8,6 +8,7 @@ class SimpleUser(Model):
     user_role = StringCol()
     password = StringCol()
     email = StringCol(unique=True)
+    
 
     class sqlmeta:
         table = 'users'

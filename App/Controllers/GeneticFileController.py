@@ -26,9 +26,9 @@ class GeneticFileController(Controller):
         self.notebook = GeneticFilesView(self, self.master, files)
 
 
-    def show_delete_modal(self, user):
+    def show_delete_modal(self, file):
         if( self.msg.question("Do you really want to delete this file?","Delete File") ):
-            self.delete_file(user.id)
+            self.delete_file(file.id)
 
     def show_update_file_modal(self,file=None):
         self.top_level_dialog.show_toplevel_dialog(file)

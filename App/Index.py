@@ -29,7 +29,7 @@ class Index:
 
         #=======theme bg color======
         # print(self.root['bg'])
-        print(self.root.themes)
+        # print(self.root.themes)
 
         #====Migrations====
         # UsersMigration()
