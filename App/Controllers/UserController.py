@@ -1,4 +1,5 @@
 from tkinter import *
+from typing import Any
 
 from App.Controllers.Controller import Controller
 from App.Models.SimpleUser import SimpleUser
@@ -9,7 +10,7 @@ from App.Views.UsersView import UsersView
 
 class UserController(Controller):
 
-    def __init__(self, master=None):
+    def __init__(self, master: Any = None) -> None:
         self.top_level_dialog = UpdateOrCreateUserModal(master, self)
         self.msg = Message
         self.master = master

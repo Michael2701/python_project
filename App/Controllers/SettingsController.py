@@ -1,4 +1,5 @@
 import json
+from typing import Any
 from App.Controllers.Controller import Controller
 
 
@@ -6,7 +7,7 @@ class SettingsController(Controller):
 
     config_path = "App/config.json"
 
-    def set_view_settings(self, view) -> None:
+    def set_view_settings(self, view: Any) -> None:
         with open(self.config_path) as json_config:
             
             config = json.load(json_config)

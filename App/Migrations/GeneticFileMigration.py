@@ -3,7 +3,6 @@ from App.Models.GeneticFileModel import GeneticFileModel
 
 class GeneticFileMigration:
     def __init__(self):
-        super().__init__()
         self.create_files_table()
         self.insert_dummy_file()
 

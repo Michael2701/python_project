@@ -1,4 +1,5 @@
 from tkinter import *
+from typing import Any
 
 from App.Services.Message import Message
 from App.Controllers.Controller import Controller
@@ -12,7 +13,7 @@ from App.Views.UIElements.FileUploadModal import FileUploadModal
 
 class GeneticFileController(Controller):
 
-    def __init__(self, master=None):
+    def __init__(self, master: Any = None) -> None:
         self.top_level_dialog = UpdateFileMetaModal(master, self)
         self.msg = Message
         self.master = master

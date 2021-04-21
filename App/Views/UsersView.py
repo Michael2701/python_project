@@ -1,12 +1,14 @@
 from tkinter import *
+from typing import Any
 from tkinter.ttk import Notebook
 
 from App.Controllers.SettingsController import SettingsController
+from App.Models.SimpleUser import SimpleUser
 
 
 class UsersView(Notebook):
 
-    def __init__(self, ctrl, master, users):
+    def __init__(self, ctrl: Any, master: Any, users: SimpleUser):
         Notebook.__init__(self, master)
 
         SettingsController().set_view_settings(self)

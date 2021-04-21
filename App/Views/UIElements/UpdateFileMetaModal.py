@@ -1,5 +1,6 @@
 from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label, Text
 import tkinter as tk
+from typing import Any
 from tkinter.ttk import Combobox
 
 from App.Controllers.SettingsController import SettingsController
@@ -9,7 +10,7 @@ from App.Services.Message import Message
 
 class UpdateFileMetaModal:
 
-    def __init__(self, master, ctrl) -> None:
+    def __init__(self, master: Any, ctrl: Any) -> None:
        
         SettingsController().set_view_settings(self)
         self.msg = Message()

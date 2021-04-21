@@ -1,3 +1,4 @@
+from typing import Any
 from tkinter import Entry, Toplevel, Button, Label
 from App.Services.Message import Message
 from App.Models.SimpleUser import SimpleUser
@@ -6,7 +7,7 @@ from App.Controllers.SettingsController import SettingsController
 
 class LoginModal:
 
-    def __init__(self, window, master):
+    def __init__(self, window: Any, master: Any):
         self.msg = Message()
         self.window = window
         self.master = master

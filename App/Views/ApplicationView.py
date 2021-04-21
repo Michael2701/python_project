@@ -1,12 +1,14 @@
 from tkinter import *
+from typing import Any
 from App.Controllers.UserController import UserController
 from App.Controllers.GeneticFileController import GeneticFileController
 from App.Views.UIElements.LoginModal import LoginModal
 from App.Controllers.SettingsController import SettingsController
+from App.Models.SimpleUser import SimpleUser
 
 
 class ApplicationView (Frame):
-    def __init__(self, master, logged_user):
+    def __init__(self, master: Any, logged_user: SimpleUser):
         Frame.__init__(self, master)
         self.uctrl = UserController(self)
         self.gfctrl = GeneticFileController(self)

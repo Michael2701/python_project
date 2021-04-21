@@ -2,6 +2,8 @@ import os
 from datetime import datetime
 import tkinter as tk
 from tkinter import Entry, Toplevel, Button, Label, Text
+from typing import Any
+
 from App.Services.Message import Message
 from tkinter import filedialog
 from App.Services.FileUploader import FileUploader
@@ -10,7 +12,7 @@ from App.Controllers.SettingsController import SettingsController
 
 class FileUploadModal:
 
-    def __init__(self, ctrl, master):
+    def __init__(self, ctrl: Any, master: Any):
         self.msg = Message()
         self.ctrl = ctrl
         self.master = master

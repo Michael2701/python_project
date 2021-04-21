@@ -3,7 +3,6 @@ from App.Models.SimpleUser import SimpleUser
 
 class UsersMigration:
     def __init__(self):
-        super().__init__()
         self.create_users_table()
         self.insert_dummy_user()
 

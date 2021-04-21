@@ -3,7 +3,6 @@ from App.Models.GeneModel import GeneModel
 
 class GeneMigration:
     def __init__(self):
-        super().__init__()
         self.create_genes_table()
         self.insert_dummy_gene()
 

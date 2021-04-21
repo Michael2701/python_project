@@ -1,5 +1,6 @@
 from tkinter import Entry, OptionMenu, StringVar, Toplevel, Button, Label
 import tkinter as tk
+from typing import Any
 from tkinter.ttk import Combobox
 
 from App.Controllers.SettingsController import SettingsController
@@ -9,7 +10,7 @@ from App.Services.Message import Message
 
 class UpdateOrCreateUserModal:
 
-    def __init__(self, master, controller):
+    def __init__(self, master: Any, controller: Any):
 
         SettingsController().set_view_settings(self)
         self.msg = Message()

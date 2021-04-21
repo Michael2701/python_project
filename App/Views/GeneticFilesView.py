@@ -2,13 +2,15 @@ from textwrap import wrap
 import tkinter as tk
 from tkinter import *
 from tkinter.ttk import Notebook
+from typing import Any
 
 from App.Controllers.SettingsController import SettingsController
+from App.Models.GeneticFileModel import GeneticFileModel
 
 
 class GeneticFilesView(Notebook):
 
-    def __init__(self, ctrl, master, files):
+    def __init__(self, ctrl: Any, master: Any, files: GeneticFileModel):
         Notebook.__init__(self, master)
 
         SettingsController().set_view_settings(self)
