@@ -6,14 +6,14 @@ class UsersMigration():
         self.create_users_table()
         self.insert_dummy_user()
 
-    def create_users_table(self):
+    def create_users_table(self) -> None:
         try:
             SimpleUser.createTable()
         
         except Exception as e:
             print(str(e))
 
-    def insert_dummy_user(self):
+    def insert_dummy_user(self) -> None:
         try:
             SimpleUser._connection.debug = True
             person = SimpleUser(first_name="Foo",last_name="Kuku",email="t@t.com",user_role="admin", password="123")

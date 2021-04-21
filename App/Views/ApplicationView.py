@@ -18,7 +18,7 @@ class ApplicationView (Frame):
         self.gfctrl.display_files()
         self.init_window()
 
-    def init_window(self):
+    def init_window(self) -> None:
         self.master.title("Genetic App")
         self.pack(fill=BOTH, expand=1)
 
@@ -28,18 +28,18 @@ class ApplicationView (Frame):
         self.create_settings_cascade()
         self.create_help_cascade()
 
-    def create_menu(self):
+    def create_menu(self) -> None:
         self.menu = Menu(self.master)
         self.master.config(menu=self.menu)
 
-    def create_file_cascade(self):
+    def create_file_cascade(self) -> None:
         self.file = Menu(self.menu, tearoff=0)
         self.file.add_command(label='Show files', command=self.gfctrl.display_files)
         self.file.add_command(label='Upload file', command=self.gfctrl.upload_file)
         self.file.add_command(label='Exit', command=lambda:exit())
         self.menu.add_cascade(label='File', font=self.title_font, menu=self.file)
 
-    def create_user_cascade(self):
+    def create_user_cascade(self) -> None:
         self.user = Menu(self.menu, tearoff=0)
         if self.logged_user.user_role == 'admin':
             self.user.add_command(label='Show Users', command=self.uctrl.display_users)
@@ -49,13 +49,13 @@ class ApplicationView (Frame):
         
         self.menu.add_cascade(label='User', font=self.title_font, menu=self.user)
 
-    def create_settings_cascade(self):
+    def create_settings_cascade(self) -> None:
         self.edit = Menu(self.menu, tearoff=0)
         self.edit.add_command(label='Application')
         self.edit.add_command(label='Graphic')
         self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit)
 
-    def create_help_cascade(self):
+    def create_help_cascade(self) -> None:
         self.help = Menu(self.menu, tearoff=0)
         self.help.add_command(label='Help')
         self.help.add_command(label='About Us')

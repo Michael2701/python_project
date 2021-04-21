@@ -19,13 +19,13 @@ class GeneticFilesView(Notebook):
         self.init_window()
 
 
-    def init_window(self):
+    def init_window(self) -> None:
         self.create_table()
         self.create_table_titles()
         self.pack(fill='both')
 
 
-    def create_table_titles(self):
+    def create_table_titles(self) -> None:
         label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=0, padx=3, pady=3)
 
@@ -44,10 +44,10 @@ class GeneticFilesView(Notebook):
         label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=5, padx=3, pady=3)
 
-    def break_string(self, s):
+    def break_string(self, s) -> str:
         return '\n'.join(wrap(s, 40))
 
-    def create_table(self):
+    def create_table(self) -> None:
         row = 1
 
         for file in self.files:
@@ -63,10 +63,10 @@ class GeneticFilesView(Notebook):
             label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)
             label.grid(row=row, column=3, padx=3, pady=3)
 
-            button = Button(self, text="Update file", font=self.font, fg=self.fg, command=lambda file=file:self.ctrl.show_update_file_modal(file))
+            button = Button(self, text="Update", font=self.font, fg=self.fg, command=lambda file=file:self.ctrl.show_update_file_modal(file))
             button.grid(row=row, column=4, padx=3, pady=3)
 
-            button = Button(self, text="Delete file", font=self.font, fg=self.fg, command=lambda file=file:self.ctrl.show_delete_modal(file))
+            button = Button(self, text="Delete", font=self.font, fg=self.fg, command=lambda file=file:self.ctrl.show_delete_modal(file))
             button.grid(row=row, column=5, padx=3, pady=3)
             
             row += 1

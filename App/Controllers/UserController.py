@@ -17,20 +17,20 @@ class UserController(Controller):
         self.msg = Message()
         self.master = master
 
-    def display_users(self):
+    def display_users(self) -> None:
         self.clear_view(self.master)
         users = SimpleUser.select('id > 0')
         self.notebook = UsersView(self, self.master, users)
 
 
-    def show_delete_modal(self, user):
+    def show_delete_modal(self, user:SimpleUser) -> None:
         if self.msg.question("Do you really want to delete this user?","Delete User"):
             self.delete_user(user.id)
 
-    def show_update_user_modal(self,user=None):
+    def show_update_user_modal(self,user:SimpleUser=None) -> None:
         self.top_level_dialog.show_toplevel_dialog(user)
 
-    def update_user(self, user, data):
+    def update_user(self, user:SimpleUser, data:dict) -> None:
         try:
             user.set(
                 first_name=data['first_name'],
@@ -45,7 +45,7 @@ class UserController(Controller):
             print(str(e))
             self.msg.warning("Warning. User not updated")
 
-    def create_user(self, data):
+    def create_user(self, data:dict) -> None:
         try:
             SimpleUser(
                 first_name=data['first_name'],
@@ -60,7 +60,7 @@ class UserController(Controller):
             print(str(e))
             self.msg.warning("Warning. User not created")
 
-    def delete_user(self, id):
+    def delete_user(self, id:int) -> bool:
         try:
             SimpleUser.delete(id)
             self.display_users()

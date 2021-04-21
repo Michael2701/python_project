@@ -6,7 +6,7 @@ class SettingsController(Controller):
     config_path = "App/config.json"
 
 
-    def set_view_settings(self, view):
+    def set_view_settings(self, view) -> None:
         with open(self.config_path) as json_config:
             
             config = json.load(json_config)
