@@ -1,7 +1,4 @@
-# sudo apt-get install python3.6-tk
-# python3  -m pip install ttkthemes
 from tkinter import *
-from tkinter import ttk
 from ttkthemes import ThemedTk
 
 # Views
@@ -16,22 +13,21 @@ from App.Migrations.GeneMigration import GeneMigration
 
 class Index:
 
-    def __init__(self):
+    def __init__(self) -> None:
         # self.root = Tk()
         self.root = ThemedTk(theme='adapta')
         self.root.geometry("850x500")
         self.root.title("Genetic App")
-        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png")) #why not showing up?
-
+        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))  # why not showing up?
 
         self.lmodal = LoginModal(ApplicationView, self.root)
         self.lmodal.create_modal()
 
-        #=======theme bg color======
+        # =======theme bg color======
         # print(self.root['bg'])
-        print(self.root.themes)
+        # print(self.root.themes)
 
-        #====Migrations====
+        # ====Migrations====
         # UsersMigration()
         # GeneticFileMigration()
         # GeneMigration()

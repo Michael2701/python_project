@@ -1,42 +1,73 @@
 from tkinter import messagebox
 
-class Message:
-    def __init__(self):
-        pass
 
-    def info(self, message,  title=""):
+class Message:
+    """
+    wrapper for messagebox
+    """
+
+    @staticmethod
+    def info(message: str, title: str = "") -> None:
+        """
+        show info message
+        :param message: string message to show
+        :param title: string message title
+        :return: None
+        """
         messagebox.showinfo(title, message)
 
-    def warning(self, message,  title=""):
+    @staticmethod
+    def warning(message: str, title: str = "") -> None:
+        """
+        show warning message
+        :param message: string message to show
+        :param title: string message title
+        :return: None
+        """
         messagebox.showwarning(title, message)
 
-    def error(self, message,  title=""):
+    @staticmethod
+    def error(message: str, title: str = "") -> None:
+        """
+        show error message
+        :param message: string message to show
+        :param title: string message title
+        :return: None
+        """
         messagebox.showerror(title, message)
 
-    def question(self, question,  title=""):
-        if(messagebox.askquestion(title, question) == 'yes'):
+    @staticmethod
+    def question(question: str, title: str = "") -> bool:
+        """
+        show question
+        :param question: string question to ask
+        :param title: string question title title
+        :return: True if answer is positive and False otherwise
+        """
+        if messagebox.askquestion(title, question) == 'yes':
             return True
         return False
 
-    def okeycancel(self, question,  title=""):
-        if(messagebox.askokcancel(title, question) == 'yes'):
+    @staticmethod
+    def okeycancel(question: str, title: str = "") -> bool:
+        """
+        show okay and cancel modal
+        :param question: string question to ask
+        :param title: string question title
+        :return: True if answer is positive and False otherwise
+        """
+        if messagebox.askokcancel(title, question) == 'yes':
             return True
         return False
 
-    def yesno(self, question,  title=""):
-        if(messagebox.askyesno(title, question) == 'yes'):
+    @staticmethod
+    def yesno(question: str, title: str = "") -> bool:
+        """
+        show yes or no modal
+        :param question: string question to ask
+        :param title: string question title
+        :return: True if answer is positive and False otherwise
+        """
+        if messagebox.askyesno(title, question) == 'yes':
             return True
         return False
-
-
-
-
-
-
-
-
-
-
-
-
-

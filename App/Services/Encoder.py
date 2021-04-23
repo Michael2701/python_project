@@ -1,17 +1,33 @@
 from passlib.context import CryptContext
 
+
 class Encoder:
-    def __init__():
-        self.pwd_context = CryptContext(
-            schemes=["pbkdf2_sha256"],
-            default="pbkdf2_sha256",
-            pbkdf2_sha256__default_rounds=30000
-        ) 
 
-    def encrypt_password(self, password):
-        return self.pwd_context.encrypt(password)
+    """
+    password encoding definition
+    """
+    pwd_context = CryptContext(
+        schemes=["pbkdf2_sha256"],
+        default="pbkdf2_sha256",
+        pbkdf2_sha256__default_rounds=30000
+    ) 
 
+    @classmethod
+    def encrypt_password(cls, password: str) -> str:
+        """
+        encrypt given password
+        :param password: string to encrypt
+        :return: encrypted password
+        """
+        return cls.pwd_context.encrypt(password)
 
-    def check_encrypted_password(self, password, hashed):
-        return self.pwd_context.verify(password, hashed)
-    
+    @classmethod
+    def check_encrypted_password(cls, password: str, hashed: str) -> bool:
+        """
+        check given and encrypted passwords for match
+        :param password: string password to check
+        :param hashed: string hashed password from DB
+        :return: True if passwords match and False otherwise
+        """
+        return cls.pwd_context.verify(password, hashed)
+
