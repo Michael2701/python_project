@@ -6,7 +6,6 @@ from typing import Any
 
 from App.Services.Message import Message
 from tkinter import filedialog
-from App.Services.FileUploader import FileUploader
 from App.Controllers.SettingsController import SettingsController
 
 

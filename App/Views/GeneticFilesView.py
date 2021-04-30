@@ -1,5 +1,4 @@
 from textwrap import wrap
-import tkinter as tk
 from tkinter import *
 from tkinter.ttk import Notebook
 from typing import Any
