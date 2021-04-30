@@ -6,6 +6,14 @@ from App.Controllers.SettingsController import SettingsController
 
 
 class LoginModal:
+    top_level_dialog = None
+    submit_button = None
+    cancel_button = None
+    password_label = None
+    password_entry = None
+    email_label = None
+    email_entry = None
+    data = None
 
     def __init__(self, window: Any, master: Any):
         """
@@ -21,7 +29,7 @@ class LoginModal:
         self.title = "Login"
         self.logged_user = None
 
-    def show_toplevel_dialog(self):
+    def show_top_level_dialog(self):
         """
         show login modal
         :return: None
@@ -33,7 +41,7 @@ class LoginModal:
         init login modal
         :return: None
         """
-        self.create_toplevel_dialog()
+        self.create_top_level_dialog()
 
         self.set_email_field()
         self.set_password_field()
@@ -46,18 +54,18 @@ class LoginModal:
         close login modal
         :return: None
         """
-        self.toplevel_dialog.destroy()
+        self.top_level_dialog.destroy()
 
-    def create_toplevel_dialog(self) -> None:
+    def create_top_level_dialog(self) -> None:
         """
         create top level dialog
         :return: None
         """
-        self.toplevel_dialog = Toplevel(self.master, padx=5, pady=5)
-        self.toplevel_dialog.title(self.title)
-        self.toplevel_dialog.minsize(300, 100)
-        self.toplevel_dialog.transient(self.master)
-        self.toplevel_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog.title(self.title)
+        self.top_level_dialog.minsize(300, 100)
+        self.top_level_dialog.transient(self.master)
+        self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def on_submit_login(self) -> None:
         """
@@ -82,7 +90,7 @@ class LoginModal:
         create submit button
         :return: None
         """
-        self.submit_button = Button(self.toplevel_dialog, text='Submit', font=self.font, fg=self.fg,
+        self.submit_button = Button(self.top_level_dialog, text='Submit', font=self.font, fg=self.fg,
                                     command=self.on_submit_login)
         self.submit_button.grid(row=6, column=0)
 
@@ -91,7 +99,7 @@ class LoginModal:
         crete cancel button
         :return: None
         """
-        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', font=self.font, fg=self.fg,
+        self.cancel_button = Button(self.top_level_dialog, text='Cancel', font=self.font, fg=self.fg,
                                     command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
 
@@ -100,9 +108,9 @@ class LoginModal:
         create email field and label
         :return: None
         """
-        self.email_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
+        self.email_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
         self.email_label.grid(row=0, column=0)
-        self.email_entry = Entry(self.toplevel_dialog)
+        self.email_entry = Entry(self.top_level_dialog)
         self.email_entry.grid(row=1, column=0)
 
     def set_password_field(self) -> None:
@@ -110,9 +118,9 @@ class LoginModal:
         create password field and label
         :return: None
         """
-        self.password_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Password")
+        self.password_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Password")
         self.password_label.grid(row=2, column=0)
-        self.password_entry = Entry(self.toplevel_dialog, show='*')
+        self.password_entry = Entry(self.top_level_dialog, show='*')
         self.password_entry.grid(row=3, column=0)
 
     def get_form_data(self) -> None:

@@ -11,6 +11,14 @@ from App.Controllers.SettingsController import SettingsController
 
 
 class FileUploadModal:
+    submit_button = None
+    cancel_button = None
+    file_name_label = None
+    file_name_entry = None
+    top_level_dialog = None
+    file_dialog_button = None
+    file_description_label = None
+    file_description_entry = None
 
     def __init__(self, ctrl: Any, master: Any):
         """
@@ -50,18 +58,18 @@ class FileUploadModal:
         close modal
         :return: None
         """
-        self.toplevel_dialog.destroy()
+        self.top_level_dialog.destroy()
 
     def create_toplevel_dialog(self) -> None:
         """
         create top level dialog
         :return: None
         """
-        self.toplevel_dialog = Toplevel(self.master, padx=5, pady=5)
-        self.toplevel_dialog.title(self.title)
-        self.toplevel_dialog.minsize(300, 100)
-        self.toplevel_dialog.transient(self.master)
-        self.toplevel_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog.title(self.title)
+        self.top_level_dialog.minsize(300, 100)
+        self.top_level_dialog.transient(self.master)
+        self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def on_submit(self) -> None:
         """
@@ -91,16 +99,15 @@ class FileUploadModal:
         create file dialog button
         :return: None
         """
-        self.file_dialog_button = Button(self.toplevel_dialog, text='Choose file', font=self.font, fg=self.fg, command=self.open_file_dialog)
+        self.file_dialog_button = Button(self.top_level_dialog, text='Choose file', font=self.font, fg=self.fg, command=self.open_file_dialog)
         self.file_dialog_button.grid(row=1, column=1)
-
 
     def set_submit_button(self) -> None:
         """
         create submit button
         :return: None
         """
-        self.submit_button = Button(self.toplevel_dialog, text='Submit', font=self.font, fg=self.fg, command=self.on_submit)
+        self.submit_button = Button(self.top_level_dialog, text='Submit', font=self.font, fg=self.fg, command=self.on_submit)
         self.submit_button.grid(row=6, column=0)
 
     def set_cancel_button(self) -> None:
@@ -108,7 +115,7 @@ class FileUploadModal:
         create cancel button
         :return: None
         """
-        self.cancel_button = Button(self.toplevel_dialog, text='Cancel', font=self.font, fg=self.fg, command=self.close_modal)
+        self.cancel_button = Button(self.top_level_dialog, text='Cancel', font=self.font, fg=self.fg, command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
     
     def set_file_name_field(self) -> None:
@@ -116,9 +123,9 @@ class FileUploadModal:
         create file name field and label
         :return: None
         """
-        self.file_name_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File name")
+        self.file_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File name")
         self.file_name_label.grid(row=0, column=0)
-        self.file_name_entry = Entry(self.toplevel_dialog, state='readonly')
+        self.file_name_entry = Entry(self.top_level_dialog, state='readonly')
         self.file_name_entry.grid(row=1, column=0)
 
     def set_file_description_field(self) -> None:
@@ -126,9 +133,9 @@ class FileUploadModal:
         create file description filed and label
         :return: None
         """
-        self.file_description_label = Label(self.toplevel_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Description")
+        self.file_description_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Description")
         self.file_description_label.grid(row=2, column=0)
-        self.file_description_entry = Text(self.toplevel_dialog, height=3, width=6)
+        self.file_description_entry = Text(self.top_level_dialog, height=3, width=6)
         self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
 
     def get_form_data(self) -> bool:
@@ -185,11 +192,11 @@ class FileUploadModal:
         :return: True if exists and False otherwise
         """
         try:
-            if os.path.exists(self.file_path):
+            if os.path.exists(self.file_path) and os.path.isfile(self.file_path):
                 return True        
             return False
 
-        except Exception as e:
+        except FileExistsError as e:
             print(str(e))
             return False
 

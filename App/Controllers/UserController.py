@@ -43,7 +43,7 @@ class UserController(Controller):
         :param user: SimpleUser object to update
         :return:
         """
-        self.top_level_dialog.show_toplevel_dialog(user)
+        self.top_level_dialog.show_top_level_dialog(user)
 
     def update_user(self, user: SimpleUser, data: dict) -> None:
         """
