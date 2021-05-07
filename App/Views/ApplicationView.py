@@ -2,12 +2,17 @@ from tkinter import *
 from typing import Any
 from App.Controllers.UserController import UserController
 from App.Controllers.GeneticFileController import GeneticFileController
-from App.Views.UIElements.LoginModal import LoginModal
 from App.Controllers.SettingsController import SettingsController
 from App.Models.SimpleUser import SimpleUser
 
 
 class ApplicationView (Frame):
+    user = None
+    file = None
+    help = None
+    edit = None
+    menu = None
+
     def __init__(self, master: Any, logged_user: SimpleUser):
         """
         :param master: parent view

@@ -46,7 +46,7 @@ class GeneticFileController(Controller):
         :param file: None or GeneticFileModel object
         :return: None
         """
-        self.top_level_dialog.show_toplevel_dialog(file)
+        self.top_level_dialog.show_top_level_dialog(file)
 
     def update_file(self, file: GeneticFileModel, data: dict) -> None:
         """
