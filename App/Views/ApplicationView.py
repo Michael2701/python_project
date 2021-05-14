@@ -73,7 +73,7 @@ class ApplicationView (Frame):
             self.user.add_command(label='Show Users', command=self.uctrl.display_users)
             self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
 
-        self.user.add_command(label='Profile', command=lambda:self.uctrl.show_update_user_modal(self.logged_user))
+        self.user.add_command(label='Profile', command=lambda: self.uctrl.show_update_user_modal(self.logged_user))
         
         self.menu.add_cascade(label='User', font=self.title_font, menu=self.user)
 

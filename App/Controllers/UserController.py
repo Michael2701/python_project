@@ -6,6 +6,7 @@ from App.Models.SimpleUser import SimpleUser
 from App.Services.Message import Message
 from App.Views.UIElements.UpdateOrCreateUserModal import UpdateOrCreateUserModal
 from App.Views.UsersView import UsersView
+from App.Services.Encoder import Encoder
 
 
 class UserController(Controller):
@@ -77,7 +78,7 @@ class UserController(Controller):
                 first_name=data['first_name'],
                 last_name=data['last_name'],
                 email=data['email'],
-                password=data['password'],
+                password=Encoder.encrypt_password(data['password']),
                 user_role=data['user_role']
             )
             self.display_users()
