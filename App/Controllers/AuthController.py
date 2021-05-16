@@ -5,6 +5,8 @@ from App.Views.UIElements.LoginModal import LoginModal
 from App.Views.ApplicationView import ApplicationView
 from App.Services.Message import Message
 from App.Services.Encoder import Encoder
+from App.Services.FileEncryptor import FileEncryptor
+from App.Services.FileHelper import FileHelper
 
 
 class AuthController(Controller):
@@ -26,11 +28,24 @@ class AuthController(Controller):
         try:
             if Encoder.check_password(self.login_data['password'], self.user[0].password):
                 self.logged_user = self.user[0]
+                fields = ['rowid', 'first_name', 'last_name', 'user_role', 'email']
+
+                user_dict = {
+                    "rowid": self.user[0].rowid,
+                    "first_name": self.user[0].first_name,
+                    "last_name": self.user[0].last_name,
+                    "user_role": self.user[0].user_role,
+                    "email": self.user[0].email
+                }
+
+                FileHelper.write_csv(file_path="App/Storage/session.csv", data=[user_dict], field_names=fields)
+                FileEncryptor("session.csv").encrypt_file()
                 self.login_modal.close_modal()
                 ApplicationView(self.master, self.logged_user)
+            else:
+                Message.warning("Wrong email or password")
         except Exception as e:
             print(str(e))
-            Message.warning("Wrong email or password")
 
 
 

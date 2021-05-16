@@ -26,7 +26,7 @@ class ApplicationView (Frame):
 
         self.master = master
         self.logged_user = logged_user
-        
+
         self.gfctrl.display_files()
         self.init_window()
 
@@ -69,12 +69,14 @@ class ApplicationView (Frame):
         :return: None
         """
         self.user = Menu(self.menu, tearoff=0)
+
         if self.logged_user.user_role == 'admin':
             self.user.add_command(label='Show Users', command=self.uctrl.display_users)
             self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
+            self.user.add_command(label='Profile', command=lambda: self.uctrl.show_update_user_modal(self.logged_user))
+        else:
+            self.user.add_command(label='Profile', command=self.uctrl.display_users)
 
-        self.user.add_command(label='Profile', command=lambda: self.uctrl.show_update_user_modal(self.logged_user))
-        
         self.menu.add_cascade(label='User', font=self.title_font, menu=self.user)
 
     def create_settings_cascade(self) -> None:

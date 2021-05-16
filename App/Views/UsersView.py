@@ -2,13 +2,14 @@ from tkinter import *
 from typing import Any
 from tkinter.ttk import Notebook
 
+from App.Controllers import Controller
 from App.Controllers.SettingsController import SettingsController
 from App.Models.SimpleUser import SimpleUser
 
 
 class UsersView(Notebook):
 
-    def __init__(self, ctrl: Any, master: Any, users: SimpleUser):
+    def __init__(self, ctrl: Controller, master: Any, users: SimpleUser):
         """
         :param ctrl: view controller
         :param master: parent view
@@ -83,8 +84,9 @@ class UsersView(Notebook):
             button = Button(self, text="Update", font=self.font, fg=self.fg, command=lambda u=user: self.ctrl.show_update_user_modal(u))
             button.grid(row=row, column=5, padx=3, pady=3)
 
-            button = Button(self, text="Delete", font=self.font, fg=self.fg, command=lambda u=user: self.ctrl.show_delete_modal(u))
-            button.grid(row=row, column=6, padx=3, pady=3)
+            if self.ctrl.user['user_role'] == 'admin':
+                button = Button(self, text="Delete", font=self.font, fg=self.fg, command=lambda u=user: self.ctrl.show_delete_modal(u))
+                button.grid(row=row, column=6, padx=3, pady=3)
             
             row += 1
 

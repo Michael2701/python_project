@@ -30,6 +30,7 @@ class UpdateOrCreateUserModal:
         self.msg = Message()
 
         self.user_controller = controller
+        self.logged_user = controller.user
         self.master = master
         self.user = None
         self.data = []
@@ -71,20 +72,12 @@ class UpdateOrCreateUserModal:
         self.top_level_dialog.destroy()
 
     def do_create_or_update(self) -> None:
-        if self.user is None:
-            self.create()
-        else:
-            self.update()
-
-    def update(self) -> None:
         if self.get_form_data():
             self.close_modal()
-            self.user_controller.update_user(self.user, self.data)
-
-    def create(self) -> None:
-        if self.get_form_data():
-            self.close_modal()
-            self.user_controller.create_user(self.data)
+            if self.user is None:
+                self.user_controller.create_user(self.data)
+            else:
+                self.user_controller.update_user(self.user, self.data)
 
     def create_top_level_dialog(self) -> None:
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
@@ -128,11 +121,15 @@ class UpdateOrCreateUserModal:
                                      text="User Role")
         self.user_role_label.grid(row=2, column=1)
 
+        state = 'disabled'
+        if self.logged_user['user_role'] == 'admin':
+            state = 'readonly'
+
         self.user_role_entry = Combobox(
             self.top_level_dialog,
             values=self.roles,
             textvariable=self.default_role,
-            state='readonly'
+            state=state
         )
         self.user_role_entry.grid(row=3, column=1)
 
@@ -178,7 +175,7 @@ class UpdateOrCreateUserModal:
             }
 
             if self.user is not None:
-                data['id'] = self.user.id
+                data['rowid'] = int(self.user.id)
                 data['password'] = self.user.password
             else:
                 data['password'] = self.password_entry.get()
