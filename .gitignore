@@ -8,10 +8,15 @@ logs
 # The file containing environment variables 
 .env
 
-# Ignore IDE specific files
-.vscode/
-
-
-__pycache__/
+# Ignore IDE and othe programs specific files
 gitkraken-amd64.deb
+.vscode/
+.idea/
+
+# ignoge python cache files
+__pycache__/
 App/__pycache__/__main__.cpython-36.pyc
+
+# ignor virtual environment
+venv/
+

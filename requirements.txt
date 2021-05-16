@@ -1,0 +1,5 @@
+SQLObject~=3.9.1
+setuptools~=56.0.0
+ttkthemes~=3.2.2
+passlib~=1.7.4
+cryptography~=3.4.7
