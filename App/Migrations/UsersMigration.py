@@ -27,7 +27,10 @@ class UsersMigration:
         :return: None
         """
         try:
+<<<<<<< Updated upstream
             # SimpleUser._connection.debug = True
+            SimpleUser._connection.debug = True
+            person = SimpleUser(first_name="Foo",last_name="Kuku",email="tamir",user_role="admin", password="1234")
             password = Encoder.encrypt_password("123")
             SimpleUser(first_name="Super", last_name="Admin", email="email", user_role="admin", password=password)
         except Exception as e:
