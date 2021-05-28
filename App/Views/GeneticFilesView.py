@@ -1,15 +1,18 @@
 from textwrap import wrap
 from tkinter import *
 from tkinter.ttk import Notebook
-from typing import Any
+from typing import Any, List
 
 from App.Controllers.SettingsController import SettingsController
 from App.Models.GeneticFileModel import GeneticFileModel
 
 
 class GeneticFilesView(Notebook):
+    __ctrl: SettingsController
+    __master: Tk
+    __files: List[GeneticFileModel]
 
-    def __init__(self, ctrl: Any, master: Any, files: GeneticFileModel):
+    def __init__(self, ctrl: SettingsController, master: Tk, files: GeneticFileModel):
         """
         :param ctrl: view controller
         :param master: parent view
@@ -93,3 +96,26 @@ class GeneticFilesView(Notebook):
             
             row += 1
 
+    @property
+    def files(self):
+        return self.__files
+
+    @files.setter
+    def files(self, files):
+        self.__files = files
+
+    @property
+    def master(self):
+        return self.__master
+
+    @master.setter
+    def master(self, master):
+        self.__master = master
+
+    @property
+    def ctrl(self):
+        return self.__ctrl
+
+    @ctrl.setter
+    def ctrl(self, ctrl):
+        self.__ctrl = ctrl
