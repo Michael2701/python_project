@@ -97,25 +97,25 @@ class GeneticFilesView(Notebook):
             row += 1
 
     @property
-    def files(self):
+    def files(self) -> List[GeneticFileModel]:
         return self.__files
 
     @files.setter
-    def files(self, files):
+    def files(self, files) -> None:
         self.__files = files
 
     @property
-    def master(self):
+    def master(self) -> Tk:
         return self.__master
 
     @master.setter
-    def master(self, master):
+    def master(self, master) -> None:
         self.__master = master
 
     @property
-    def ctrl(self):
+    def ctrl(self) -> SettingsController:
         return self.__ctrl
 
     @ctrl.setter
-    def ctrl(self, ctrl):
+    def ctrl(self, ctrl) -> None:
         self.__ctrl = ctrl

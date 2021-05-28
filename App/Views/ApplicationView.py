@@ -14,43 +14,43 @@ class ApplicationView (Frame):
     __menu: Menu
 
     @property
-    def user_menu(self):
+    def user_menu(self) -> Menu:
         return self.__user_menu
 
     @user_menu.setter
-    def user_menu(self, menu):
+    def user_menu(self, menu) -> None:
         self.__user_menu = menu
 
     @property
-    def file_menu(self):
+    def file_menu(self) -> Menu:
         return self.__file_menu
 
     @file_menu.setter
-    def file_menu(self, menu):
+    def file_menu(self, menu) -> None:
         self.__file_menu = menu
 
     @property
-    def help_menu(self):
+    def help_menu(self) -> Menu:
         return self.__help_menu
 
     @help_menu.setter
-    def help_menu(self, menu):
+    def help_menu(self, menu) -> None:
         self.__help_menu = menu
 
     @property
-    def edit_menu(self):
+    def edit_menu(self) -> Menu:
         return self.__edit_menu
 
     @edit_menu.setter
-    def edit_menu(self, menu):
+    def edit_menu(self, menu) -> None:
         self.__edit_menu = menu
 
     @property
-    def menu(self):
+    def menu(self) -> Menu:
         return self.__menu
 
     @menu.setter
-    def menu(self, menu):
+    def menu(self, menu) -> None:
         self.__menu = menu
 
     def __init__(self, master: Any, logged_user: SimpleUser):
