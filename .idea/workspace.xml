@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="265b9bf3-3279-4a82-8c80-ed5340dc9da5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/App/Storage/session.csv" beforeDir="false" afterPath="$PROJECT_DIR$/App/Storage/session.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App/Views/ApplicationView.py" beforeDir="false" afterPath="$PROJECT_DIR$/App/Views/ApplicationView.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

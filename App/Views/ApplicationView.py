@@ -136,7 +136,7 @@ class ApplicationView (Frame):
         :return: None
         """
         self.help_menu = Menu(self.menu, tearoff=0)
-        self.help_menu.add_command(label='Help')
+        self.help_menu.add_command(label='Help', command=self.show_help_window)
         self.help_menu.add_command(label='About Us', command=self.show_about_us_window)
         self.menu.add_cascade(label='Help', font=self.title_font, menu=self.help_menu)
 
@@ -148,3 +148,12 @@ class ApplicationView (Frame):
         """
         messagebox.showinfo(title="About us", message="It will be cool genetic program")
 
+    @staticmethod
+    def show_help_window() -> None:
+        """
+        show help user information
+        :return:
+        """
+        help_message = "Welcome to Genetic Interference Program!\n" \
+                       "Here you can find useful guid program"
+        messagebox.showinfo(title="Help", message=help_message)
