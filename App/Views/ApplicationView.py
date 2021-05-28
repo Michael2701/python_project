@@ -7,16 +7,56 @@ from App.Models.SimpleUser import SimpleUser
 
 
 class ApplicationView (Frame):
-    user = None
-    file = None
-    help = None
-    edit = None
-    menu = None
+    __user_menu: Menu
+    __file_menu: Menu
+    __help_menu: Menu
+    __edit_menu: Menu
+    __menu: Menu
+
+    @property
+    def user_menu(self):
+        return self.__user_menu
+
+    @user_menu.setter
+    def user_menu(self, menu):
+        self.__user_menu = menu
+
+    @property
+    def file_menu(self):
+        return self.__file_menu
+
+    @file_menu.setter
+    def file_menu(self, menu):
+        self.__file_menu = menu
+
+    @property
+    def help_menu(self):
+        return self.__help_menu
+
+    @help_menu.setter
+    def help_menu(self, menu):
+        self.__help_menu = menu
+
+    @property
+    def edit_menu(self):
+        return self.__edit_menu
+
+    @edit_menu.setter
+    def edit_menu(self, menu):
+        self.__edit_menu = menu
+
+    @property
+    def menu(self):
+        return self.__menu
+
+    @menu.setter
+    def menu(self, menu):
+        self.__menu = menu
 
     def __init__(self, master: Any, logged_user: SimpleUser):
         """
         :param master: parent view
-        :param logged_user: SimpleUser object logged user
+        :param logged_user: SimpleUser object logged user_menu
         """
         Frame.__init__(self, master)
         self.uctrl = UserController(self)
@@ -54,47 +94,47 @@ class ApplicationView (Frame):
 
     def create_file_cascade(self) -> None:
         """
-        create file cascade in mane menu
+        create file_menu cascade in mane menu
         :return: None
         """
-        self.file = Menu(self.menu, tearoff=0)
-        self.file.add_command(label='Show files', command=self.gfctrl.display_files)
-        self.file.add_command(label='Upload file', command=self.gfctrl.upload_file)
-        self.file.add_command(label='Exit', command=exit)
-        self.menu.add_cascade(label='File', font=self.title_font, menu=self.file)
+        self.file_menu = Menu(self.menu, tearoff=0)
+        self.file_menu.add_command(label='Show files', command=self.gfctrl.display_files)
+        self.file_menu.add_command(label='Upload file_menu', command=self.gfctrl.upload_file)
+        self.file_menu.add_command(label='Exit', command=exit)
+        self.menu.add_cascade(label='File', font=self.title_font, menu=self.file_menu)
 
     def create_user_cascade(self) -> None:
         """
-        create user cascade in mane menu
+        create user_menu cascade in mane menu
         :return: None
         """
-        self.user = Menu(self.menu, tearoff=0)
+        self.user_menu = Menu(self.menu, tearoff=0)
 
         if self.logged_user.user_role == 'admin':
-            self.user.add_command(label='Show Users', command=self.uctrl.display_users)
-            self.user.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
-            self.user.add_command(label='Profile', command=lambda: self.uctrl.show_update_user_modal(self.logged_user))
+            self.user_menu.add_command(label='Show Users', command=self.uctrl.display_users)
+            self.user_menu.add_command(label='Add User', command=self.uctrl.show_update_user_modal)
+            self.user_menu.add_command(label='Profile', command=lambda: self.uctrl.show_update_user_modal(self.logged_user))
         else:
-            self.user.add_command(label='Profile', command=self.uctrl.display_users)
+            self.user_menu.add_command(label='Profile', command=self.uctrl.display_users)
 
-        self.menu.add_cascade(label='User', font=self.title_font, menu=self.user)
+        self.menu.add_cascade(label='User', font=self.title_font, menu=self.user_menu)
 
     def create_settings_cascade(self) -> None:
         """
         create settings cascade in mane menu
         :return: None
         """
-        self.edit = Menu(self.menu, tearoff=0)
-        self.edit.add_command(label='Application')
-        self.edit.add_command(label='Graphic')
-        self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit)
+        self.edit_menu = Menu(self.menu, tearoff=0)
+        self.edit_menu.add_command(label='Application')
+        self.edit_menu.add_command(label='Graphic')
+        self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit_menu)
 
     def create_help_cascade(self) -> None:
         """
-        create help cascade in mane menu
+        create help_menu cascade in mane menu
         :return: None
         """
-        self.help = Menu(self.menu, tearoff=0)
-        self.help.add_command(label='Help')
-        self.help.add_command(label='About Us')
-        self.menu.add_cascade(label='Help', font=self.title_font, menu=self.help)
+        self.help_menu = Menu(self.menu, tearoff=0)
+        self.help_menu.add_command(label='Help')
+        self.help_menu.add_command(label='About Us')
+        self.menu.add_cascade(label='Help', font=self.title_font, menu=self.help_menu)

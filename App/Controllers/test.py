@@ -29,6 +29,13 @@ def is_number(func):
         return is_valid_number
     return wrapper
 
+def a():
+    pass
+
+def b(a):
+    print("")
+    a()
+
 
 #decorator factory
 def length(min:int, max:int):
@@ -126,3 +133,6 @@ first_name: str = "huy"
 # print(set_first_name(name))
 if set_first_name(name):
     printer(msg=f"Hello {first_name}")
+
+foo1(*args1)
+foo2(**args2)

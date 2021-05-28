@@ -28,10 +28,10 @@ class AuthController(Controller):
         try:
             if Encoder.check_password(self.login_data['password'], self.user[0].password):
                 self.logged_user = self.user[0]
-                fields = ['rowid', 'first_name', 'last_name', 'user_role', 'email']
+                fields = ['id', 'first_name', 'last_name', 'user_role', 'email']
 
                 user_dict = {
-                    "rowid": self.user[0].rowid,
+                    "id": self.user[0].id,
                     "first_name": self.user[0].first_name,
                     "last_name": self.user[0].last_name,
                     "user_role": self.user[0].user_role,
