@@ -10,14 +10,78 @@ from App.Controllers.SettingsController import SettingsController
 
 
 class FileUploadModal:
-    submit_button = None
-    cancel_button = None
-    file_name_label = None
-    file_name_entry = None
-    top_level_dialog = None
-    file_dialog_button = None
-    file_description_label = None
-    file_description_entry = None
+    __submit_button: Button
+    __cancel_button: Button
+    __file_name_label: Label
+    __file_name_entry: Entry
+    __top_level_dialog: Toplevel
+    __file_dialog_button: Button
+    __file_description_label: Label
+    __file_description_entry: Entry
+
+    @property
+    def file_description_entry(self) -> Entry:
+        return self.__file_description_entry
+
+    @file_description_entry.setter
+    def file_description_entry(self, entry: Entry) -> None:
+        self.__file_description_entry = entry
+
+    @property
+    def file_description_label(self) -> Label:
+        return self.__file_description_label
+
+    @file_description_label.setter
+    def file_description_label(self, label: Label) -> None:
+        self.__file_description_label = label
+
+    @property
+    def file_dialog_button(self) -> Button:
+        return self.__file_dialog_button
+
+    @file_dialog_button.setter
+    def file_dialog_button(self, button: Button) -> None:
+        self.__file_dialog_button = button
+
+    @property
+    def top_level_dialog(self) -> Toplevel:
+        return self.__top_level_dialog
+
+    @top_level_dialog.setter
+    def top_level_dialog(self, top_level: Toplevel) -> None:
+        self.__top_level_dialog = top_level
+
+    @property
+    def file_name_entry(self) -> Entry:
+        return self.__file_name_entry
+
+    @file_name_entry.setter
+    def file_name_entry(self, entry: Entry) -> None:
+        self.__file_name_entry = entry
+
+    @property
+    def file_name_label(self) -> Label:
+        return self.__file_name_label
+
+    @file_name_label.setter
+    def file_name_label(self, label: Label) -> None:
+        self.__file_name_label = label
+
+    @property
+    def cancel_button(self) -> Button:
+        return self.__cancel_button
+
+    @cancel_button.setter
+    def cancel_button(self, button: Button) -> None:
+        self.__cancel_button = button
+
+    @property
+    def submit_button(self) -> Button:
+        return self.__submit_button
+
+    @submit_button.setter
+    def submit_button(self, button: Button) -> None:
+        self.__submit_button = button
 
     def __init__(self, ctrl: Any, master: Any):
         """
