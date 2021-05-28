@@ -5,9 +5,13 @@ from tkinter.ttk import Notebook
 from App.Controllers import Controller
 from App.Controllers.SettingsController import SettingsController
 from App.Models.SimpleUser import SimpleUser
+from typing import List
 
 
 class UsersView(Notebook):
+    __ctrl: Controller
+    __master: Tk
+    __users: List[SimpleUser]
 
     def __init__(self, ctrl: Controller, master: Any, users: SimpleUser):
         """
@@ -89,4 +93,28 @@ class UsersView(Notebook):
                 button.grid(row=row, column=6, padx=3, pady=3)
             
             row += 1
+
+    @property
+    def users(self):
+        return self.__users
+
+    @users.setter
+    def users(self, users):
+        self.__users = users
+
+    @property
+    def master(self):
+        return self.__master
+
+    @master.setter
+    def master(self, master):
+        self.__master = master
+
+    @property
+    def ctrl(self):
+        return self.__ctrl
+
+    @ctrl.setter
+    def ctrl(self, ctrl):
+        self.__ctrl = ctrl
 
