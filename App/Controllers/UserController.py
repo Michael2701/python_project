@@ -6,6 +6,7 @@ from App.Models.SimpleUser import SimpleUser
 from App.Services.Message import Message
 from App.Views.UIElements.UpdateOrCreateUserModal import UpdateOrCreateUserModal
 from App.Views.UsersView import UsersView
+from App.Services.Encoder import Encoder
 
 
 class UserController(Controller):
@@ -14,6 +15,7 @@ class UserController(Controller):
         """
         :param master: parent view
         """
+        self.get_logged_user()
         self.top_level_dialog = UpdateOrCreateUserModal(master, self)
         self.msg = Message
         self.master = master
@@ -25,7 +27,12 @@ class UserController(Controller):
         :return: None
         """
         self.clear_view(self.master)
-        users = SimpleUser.select('id > 0')
+
+        if self.user['user_role'] == 'admin':
+            users = SimpleUser.select('id > 0')
+        else:
+            users = SimpleUser.select(SimpleUser.q.rowid == int(self.user['rowid']))
+
         self.notebook = UsersView(self, self.master, users)
 
     def show_delete_modal(self, user: SimpleUser) -> None:
@@ -57,7 +64,6 @@ class UserController(Controller):
                 first_name=data['first_name'],
                 last_name=data['last_name'],
                 email=data['email'],
-                password=data['password'],
                 user_role=data['user_role']
             )
             self.display_users()
@@ -77,7 +83,7 @@ class UserController(Controller):
                 first_name=data['first_name'],
                 last_name=data['last_name'],
                 email=data['email'],
-                password=data['password'],
+                password=Encoder.encrypt_password(data['password']),
                 user_role=data['user_role']
             )
             self.display_users()

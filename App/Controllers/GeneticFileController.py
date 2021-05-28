@@ -18,6 +18,7 @@ class GeneticFileController(Controller):
         :param master: parent view
         """
         self.top_level_dialog = UpdateFileMetaModal(master, self)
+        self.get_logged_user()
         self.msg = Message
         self.master = master
         self.notebook = None
@@ -28,7 +29,10 @@ class GeneticFileController(Controller):
         :return:
         """
         self.clear_view(self.master)
-        files = GeneticFileModel.select('id > 0')
+        if self.user['user_role'] == 'admin':
+            files = GeneticFileModel.select('id > 0')
+        else:
+            files = GeneticFileModel.select(GeneticFileModel.q.user_idID == self.user['rowid'])
         self.notebook = GeneticFilesView(self, self.master, files)
 
     def show_delete_modal(self, file: GeneticFileModel) -> None:
@@ -42,7 +46,7 @@ class GeneticFileController(Controller):
 
     def show_update_file_modal(self, file=None):
         """
-
+        show file update modal
         :param file: None or GeneticFileModel object
         :return: None
         """

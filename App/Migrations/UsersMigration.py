@@ -1,4 +1,5 @@
 from App.Models.SimpleUser import SimpleUser
+from App.Services.Encoder import Encoder
 
 
 class UsersMigration:
@@ -27,6 +28,7 @@ class UsersMigration:
         """
         try:
             # SimpleUser._connection.debug = True
-            SimpleUser(first_name="Super", last_name="Admin", email="email", user_role="admin", password="123")
+            password = Encoder.encrypt_password("123")
+            SimpleUser(first_name="Super", last_name="Admin", email="email", user_role="admin", password=password)
         except Exception as e:
             print(str(e))

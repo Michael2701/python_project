@@ -2,6 +2,7 @@ from typing import Any
 from tkinter import Entry, Toplevel, Button, Label
 from App.Services.Message import Message
 from App.Models.SimpleUser import SimpleUser
+from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
 
 
@@ -15,13 +16,12 @@ class LoginModal:
     email_entry = None
     data = None
 
-    def __init__(self, window: Any, master: Any):
+    def __init__(self, master: Any, auth_ctrl: Controller) -> None:
         """
-        :param window: ApplicationView window
-        :param master: parent window(mane app window)
+        :param master: ApplicationView window
+        :param auth_ctrl: AuthController
         """
-        self.msg = Message()
-        self.window = window
+        self.auth_ctrl = auth_ctrl
         self.master = master
 
         SettingsController().set_view_settings(self)
@@ -29,7 +29,9 @@ class LoginModal:
         self.title = "Login"
         self.logged_user = None
 
-    def show_top_level_dialog(self):
+        self.create_modal()
+
+    def show_top_level_dialog(self) -> None:
         """
         show login modal
         :return: None
@@ -73,17 +75,7 @@ class LoginModal:
         if password is good show ApplicationView window
         :return: None
         """
-        self.get_form_data()
-        user = SimpleUser.select(SimpleUser.q.email == self.data['email'])
-
-        try:
-            if user[0].password == self.data['password']:
-                self.logged_user = user[0]
-                self.close_modal()
-                self.window(self.master, self.logged_user)
-        except Exception as e:
-            print(str(e))
-            self.msg.warning("Wrong email or password")
+        self.auth_ctrl.check_password(self.get_form_data())
 
     def set_submit_button(self) -> None:
         """
@@ -123,15 +115,16 @@ class LoginModal:
         self.password_entry = Entry(self.top_level_dialog, show='*')
         self.password_entry.grid(row=3, column=0)
 
-    def get_form_data(self) -> None:
+    def get_form_data(self) -> dict:
         """
         take form data and put it in self.data dictionary
-        :return:
+        :return: dict self.data
         """
         self.data = {
             'email': self.email_entry.get(),
             'password': self.password_entry.get()
         }
+        return self.data
 
     def get_logged_user(self) -> SimpleUser:
         """

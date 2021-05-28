@@ -22,7 +22,7 @@ class Encoder:
         return cls.pwd_context.encrypt(password)
 
     @classmethod
-    def check_encrypted_password(cls, password: str, hashed: str) -> bool:
+    def check_password(cls, password: str, hashed: str) -> bool:
         """
         check given and encrypted passwords for match
         :param password: string password to check
