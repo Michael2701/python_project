@@ -107,7 +107,6 @@ class GeneticFileController(Controller):
                         for y in range((x + 1), len(gene_ids)-1):
                             for z in range((y + 1), len(gene_ids)):
                                 gene_ids_groups.append([gene_ids[x], gene_ids[y], gene_ids[z]])
-
                 else:
                     gene_ids_groups.append(gene_ids)
 
