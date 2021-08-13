@@ -1,7 +1,11 @@
 from App.Controllers.Controller import Controller
+from App.Models.GeneModel import GeneModel
+from sqlobject.sqlbuilder import *
 
 
 class GenController(Controller):
-    pass
+    def __init__(self):
+        pass
+
 
 

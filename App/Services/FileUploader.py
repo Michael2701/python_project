@@ -1,10 +1,11 @@
 import os
-
+from App.Models.GeneModel import GeneModel 
 
 class FileUploader:
     file_path = None
 
-    def __init__(self, file_path: str) -> None:
+    def __init__(self, file_path: str, file_id: str) -> None:
+        self.file_id = file_id
         self.file_path = file_path
         self.line_number = 0
         self.line = ""
@@ -12,11 +13,16 @@ class FileUploader:
         self.file = open(self.file_path)
 
     def open_file(self) -> None:
-        pass
-        # if(os.path.exists(self.file_path)):
-        #     with(open(self.file_path)) as file:
-        #         for line in file:
-        #             print(line)
+        if os.path.exists(self.file_path):
+            with(open(self.file_path)) as file:
+                for line in file:
+                    splited_line = line.split(',,')
+                    GeneModel(
+                        file_id=self.file_id,
+                        name=splited_line[1],
+                        distance=splited_line[0],
+                        successors=splited_line[2]
+                    )
 
     def next(self) -> str:
         return self.file.readline()

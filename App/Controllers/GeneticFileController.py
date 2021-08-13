@@ -1,6 +1,7 @@
 from tkinter import *
 from typing import Any
 
+from App.Services.FileUploader import FileUploader
 from App.Services.Message import Message
 from App.Controllers.Controller import Controller
 
@@ -9,6 +10,7 @@ from App.Views.GeneticFilesView import GeneticFilesView
 
 from App.Views.UIElements.UpdateFileMetaModal import UpdateFileMetaModal
 from App.Views.UIElements.FileUploadModal import FileUploadModal
+from App.Models.GeneModel import GeneModel
 
 
 class GeneticFileController(Controller):
@@ -93,8 +95,23 @@ class GeneticFileController(Controller):
                 file_created_at=data['file_created_at']
             )
 
-            print(genetic_file.id)
-            file_id = genetic_file.id
+            fu = FileUploader(data['file_path'], str(genetic_file.id))
+            fu.open_file()
+            genes = [gene for gene in GeneModel.selectBy(file_id=str(genetic_file.id))]
+
+            gene_ids_groups = []
+            for i in range(0, len(genes), 10):
+                gene_ids = GeneModel.get_id_list(genes[i].id, str(genetic_file.id), 1, 3)
+                if len(gene_ids) > 3:
+                    for x in range(len(gene_ids)-2):
+                        for y in range((x + 1), len(gene_ids)-1):
+                            for z in range((y + 1), len(gene_ids)):
+                                gene_ids_groups.append([gene_ids[x], gene_ids[y], gene_ids[z]])
+
+                else:
+                    gene_ids_groups.append(gene_ids)
+
+            print(gene_ids_groups)
 
             self.display_files()
             self.msg.info("File created")
