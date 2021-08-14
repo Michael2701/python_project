@@ -104,6 +104,8 @@ class LoginModal:
         self.email_label.grid(row=0, column=0)
         self.email_entry = Entry(self.top_level_dialog)
         self.email_entry.grid(row=1, column=0)
+        # for dev
+        self.email_entry.insert(0, 'email')
 
     def set_password_field(self) -> None:
         """
@@ -114,6 +116,8 @@ class LoginModal:
         self.password_label.grid(row=2, column=0)
         self.password_entry = Entry(self.top_level_dialog, show='*')
         self.password_entry.grid(row=3, column=0)
+        # for dev
+        self.password_entry.insert(0, '123')
 
     def get_form_data(self) -> dict:
         """

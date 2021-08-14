@@ -2,7 +2,7 @@ from App.Models.Model import Model
 from sqlobject import *
 
 
-class InterferenceModel(Model):
+class MarkersModel(Model):
     """
     model for interference table
     """
@@ -16,5 +16,5 @@ class InterferenceModel(Model):
         """
         define table name
         """
-        table = 'interference'
+        table = 'markers'
 
