@@ -67,7 +67,6 @@ class UserController(Controller):
                 user_role=data['user_role']
             )
             self.display_users()
-            self.msg.info("User updated")
         except Exception as e:
             print(str(e))
             self.msg.warning("Warning. User not updated")
@@ -87,7 +86,6 @@ class UserController(Controller):
                 user_role=data['user_role']
             )
             self.display_users()
-            self.msg.info("User created")
         except Exception as e:
             print(str(e))
             self.msg.warning("Warning. User not created")
@@ -101,7 +99,6 @@ class UserController(Controller):
         try:
             SimpleUser.delete(id)
             self.display_users()
-            self.msg.info("User deleted")
             return True
         except Exception as e:
             print(str(e))

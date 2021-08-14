@@ -217,7 +217,6 @@ class GeneticFileController(Controller):
         try:
             GeneticFileModel.delete(id)
             self.display_files()
-            self.msg.info("File deleted")
             return True
         except Exception as e:
             print(str(e))
