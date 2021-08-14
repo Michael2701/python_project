@@ -121,6 +121,7 @@ class GeneticFileController(Controller):
         self.calculate_markers_genes(data["id"], self.get_groups_of_markers(str(data["id"]), data))
 
     def calculate_markers_genes(self, file_id: int, gene_ids_groups):
+        self.result_markers = []
         try:
             for gene_ids_group in gene_ids_groups:
                 ids_string = ','.join([str(gene_id) for gene_id in gene_ids_group])

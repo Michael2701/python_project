@@ -25,7 +25,7 @@ class Index:
         # MarkersMigration()
 
         self.root = ThemedTk(theme='adapta')
-        self.root.geometry("850x500")
+        self.root.geometry("900x500")
         self.root.title("Genetic App")
         self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))  # why not showing up?
 
