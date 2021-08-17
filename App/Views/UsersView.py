@@ -117,4 +117,3 @@ class UsersView(Notebook):
     @ctrl.setter
     def ctrl(self, ctrl) -> None:
         self.__ctrl = ctrl
-

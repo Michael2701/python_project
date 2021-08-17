@@ -1,4 +1,4 @@
-from tkinter import Entry, StringVar, Toplevel, Button, Label
+from tkinter import Entry, StringVar, Toplevel, Button, Label, X
 import tkinter as tk
 from typing import Any
 from tkinter.ttk import Combobox
@@ -82,44 +82,45 @@ class UpdateOrCreateUserModal:
     def create_top_level_dialog(self) -> None:
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.minsize(300, 100)
+        self.top_level_dialog.minsize(300, 300)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def set_submit_button(self) -> None:
         self.submit_button = Button(self.top_level_dialog, text='Submit', fg=self.fg, font=self.font,
                                     command=self.do_create_or_update)
-        self.submit_button.grid(row=6, column=0)
+        self.submit_button.pack(fill=X, expand=False, padx=5, pady=1)
 
     def set_cancel_button(self) -> None:
         self.cancel_button = Button(self.top_level_dialog, text='Cancel', fg=self.fg, font=self.font,
                                     command=self.close_modal)
-        self.cancel_button.grid(row=6, column=1)
+        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=1)
 
     def set_first_name_field(self) -> None:
         self.first_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
                                       text='First Name')
-        self.first_name_label.grid(row=0, column=0)
+        self.first_name_label.pack(fill=X, expand=False, padx=5)
         self.first_name_entry = Entry(self.top_level_dialog)
-        self.first_name_entry.grid(row=1, column=0)
+        self.first_name_entry.pack(fill=X, expand=False, padx=5)
 
     def set_last_name_field(self) -> None:
         self.last_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
                                      text="Last Name")
-        self.last_name_label.grid(row=0, column=1)
+        self.last_name_label.pack(fill=X, expand=False, padx=5)
+
         self.last_name_entry = Entry(self.top_level_dialog)
-        self.last_name_entry.grid(row=1, column=1)
+        self.last_name_entry.pack(fill=X, expand=False, padx=5)
 
     def set_email_field(self) -> None:
         self.email_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
-        self.email_label.grid(row=2, column=0)
+        self.email_label.pack(fill=X, expand=False, padx=5)
         self.email_entry = Entry(self.top_level_dialog)
-        self.email_entry.grid(row=3, column=0)
+        self.email_entry.pack(fill=X, expand=False, padx=5)
 
     def set_user_role_field(self) -> None:
         self.user_role_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
                                      text="User Role")
-        self.user_role_label.grid(row=2, column=1)
+        self.user_role_label.pack(fill=X, expand=False, padx=5)
 
         state = 'disabled'
         if self.logged_user['user_role'] == 'admin':
@@ -131,13 +132,15 @@ class UpdateOrCreateUserModal:
             textvariable=self.default_role,
             state=state
         )
-        self.user_role_entry.grid(row=3, column=1)
+        self.user_role_entry.pack(fill=X, expand=False, padx=5)
 
     def set_password_field(self) -> None:
         self.password_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Password")
-        self.password_label.grid(row=4, column=0)
+        # self.password_label.grid(row=4, column=0)
+        self.password_label.pack(fill=X, expand=False, padx=5)
         self.password_entry = Entry(self.top_level_dialog)
-        self.password_entry.grid(row=5, column=0)
+        # self.password_entry.grid(row=5, column=0)
+        self.password_entry.pack(fill=X, expand=False, padx=5)
 
     def set_fields_values(self) -> None:
         if self.user is not None:

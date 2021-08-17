@@ -117,7 +117,14 @@ class GeneticFileController(Controller):
     def process_file_genes(self, data: dict) -> None:
         self.calculate_markers_genes(data["id"], self.get_groups_of_markers(str(data["id"]), data))
 
-    def calculate_markers_genes(self, file_id: int, gene_ids_groups):
+    def calculate_markers_genes(self, file_id: int, gene_ids_groups) -> None:
+        """
+
+        :param file_id:
+        :param gene_ids_groups:
+        :return:
+        """
+
         self.result_markers = []
         try:
             for gene_ids_group in gene_ids_groups:
@@ -156,7 +163,11 @@ class GeneticFileController(Controller):
             self.msg.error("Error creating markers excel")
             print(e)
 
-    def create_markers_statistic_excel(self):
+    def create_markers_statistic_excel(self) -> None:
+        """
+        Create .xlsx file of triples markers and add statistics to it
+        :return: None
+        """
         now = datetime.now()
         date_time = now.strftime("%d-%m-%Y_%H:%M:%S")
         titles = ['marker1', 'marker2', 'marker3']
@@ -192,6 +203,12 @@ class GeneticFileController(Controller):
         workbook.close()
 
     def get_groups_of_markers(self, file_id: str, data: dict) -> list:
+        """
+        build group of three gene id's and return list of them
+        :param file_id: file ID
+        :param data:
+        :return: list of triple id's
+        """
         genes = [gene for gene in GeneModel.selectBy(file_id=file_id)]
         gene_ids_groups = []
         for i in range(0, len(genes), data["step"]):
@@ -205,14 +222,14 @@ class GeneticFileController(Controller):
                 gene_ids_groups.append(gene_ids)
         return gene_ids_groups
 
-    def delete_file(self, id: int) -> bool:
+    def delete_file(self, file_id: int) -> bool:
         """
         delete file with given file id
-        :param id: id of file to delete
+        :param file_id: id of file to delete
         :return: True if file deleted and False otherwise
         """
         try:
-            GeneticFileModel.delete(id)
+            GeneticFileModel.delete(file_id)
             self.display_files()
             return True
         except Exception as e:

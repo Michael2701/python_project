@@ -1,5 +1,5 @@
 from typing import Any
-from tkinter import Entry, Toplevel, Button, Label
+from tkinter import Entry, Toplevel, Button, Label, X, RIGHT, LEFT
 from App.Services.Message import Message
 from App.Models.SimpleUser import SimpleUser
 from App.Controllers.Controller import Controller
@@ -65,7 +65,7 @@ class LoginModal:
         """
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.minsize(300, 100)
+        self.top_level_dialog.minsize(300, 150)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
@@ -84,7 +84,7 @@ class LoginModal:
         """
         self.submit_button = Button(self.top_level_dialog, text='Submit', font=self.font, fg=self.fg,
                                     command=self.on_submit_login)
-        self.submit_button.grid(row=6, column=0)
+        self.submit_button.pack(fill=X, expand=False, padx=5, pady=1)
 
     def set_cancel_button(self) -> None:
         """
@@ -93,7 +93,7 @@ class LoginModal:
         """
         self.cancel_button = Button(self.top_level_dialog, text='Cancel', font=self.font, fg=self.fg,
                                     command=self.close_modal)
-        self.cancel_button.grid(row=6, column=1)
+        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=1)
 
     def set_email_field(self) -> None:
         """
@@ -101,9 +101,10 @@ class LoginModal:
         :return: None
         """
         self.email_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
-        self.email_label.grid(row=0, column=0)
+        self.email_label.pack(fill=X, expand=False, padx=5)
+        
         self.email_entry = Entry(self.top_level_dialog)
-        self.email_entry.grid(row=1, column=0)
+        self.email_entry.pack(fill=X, expand=False, padx=5)
         # for dev
         self.email_entry.insert(0, 'email')
 
@@ -113,9 +114,10 @@ class LoginModal:
         :return: None
         """
         self.password_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Password")
-        self.password_label.grid(row=2, column=0)
+        self.password_label.pack(fill=X, expand=False, padx=5)
+
         self.password_entry = Entry(self.top_level_dialog, show='*')
-        self.password_entry.grid(row=3, column=0)
+        self.password_entry.pack(fill=X, expand=False, padx=5)
         # for dev
         self.password_entry.insert(0, '123')
 
