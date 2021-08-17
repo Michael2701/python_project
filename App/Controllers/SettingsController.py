@@ -14,7 +14,6 @@ class SettingsController(Controller):
         :return: None
         """
         with open(self.config_path) as json_config:
-            
             config = json.load(json_config)
             
             view.bg = config['background_color']

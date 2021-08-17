@@ -49,18 +49,6 @@ class Message:
         return False
 
     @staticmethod
-    def okeycancel(question: str, title: str = "") -> bool:
-        """
-        show okay and cancel modal
-        :param question: string question to ask
-        :param title: string question title
-        :return: True if answer is positive and False otherwise
-        """
-        if messagebox.askokcancel(title, question) == 'yes':
-            return True
-        return False
-
-    @staticmethod
     def yesno(question: str, title: str = "") -> bool:
         """
         show yes or no modal
@@ -71,3 +59,15 @@ class Message:
         if messagebox.askyesno(title, question) == 'yes':
             return True
         return False
+
+
+def okay_cancel(question: str, title: str = "") -> bool:
+    """
+    show okay and cancel modal
+    :param question: string question to ask
+    :param title: string question title
+    :return: True if answer is positive and False otherwise
+    """
+    if messagebox.askokcancel(title, question) == 'yes':
+        return True
+    return False

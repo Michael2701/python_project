@@ -1,28 +1,41 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-# mtbxqfuvywuswthq
 
 
 class MailNotification:
 
     def __init__(self, msg: dict):
+        """
+        :param msg: text of message
+        """
         self.message = MIMEMultipart()
-
         self.__set_message(msg)
 
     def __set_message(self, msg: dict) -> None:
-        # Setup the MIME
+        """
+        Setup the MIME
+        :param msg: text of message
+        :return: None
+        """
         self.message['From'] = msg['From']
         self.message['To'] = msg['To']
         self.message['Subject'] = msg['Subject']
 
     def add_attachment(self, text: str) -> None:
-        # The body and the attachments for the mail
+        """
+        The body and the attachments for the mail
+        :param text: MIMEText attachment
+        :return:
+        """
         self.message.attach(MIMEText(text, 'plain'))
 
     def send_message(self, sender_pass: str) -> None:
-        # Create SMTP session for sending the mail
+        """
+        Create SMTP session for sending the mail
+        :param sender_pass:
+        :return:
+        """
         session = smtplib.SMTP('smtp.gmail.com', 587)  # use gmail with port
 
         try:
@@ -39,7 +52,6 @@ class MailNotification:
 
 
 # Test
-m = MailNotification({"From": "1hotlev@gmail.com", "To": "tamir.yur@gmail.com", "Subject": "hhh"})
-
-m.add_attachment("empty")
-m.send_message('mtbxqfuvywuswthq')
+# m = MailNotification({"From": "1hotlev@gmail.com", "To": "tamir.yur@gmail.com", "Subject": "Subject Mail"})
+# m.add_attachment("empty")
+# m.send_message('text message')

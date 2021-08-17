@@ -30,4 +30,3 @@ class Encoder:
         :return: True if passwords match and False otherwise
         """
         return cls.pwd_context.verify(password, hashed)
-

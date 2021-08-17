@@ -42,4 +42,4 @@ class FileHelper:
                 return True
             except Exception as e:
                 print(e)
-        return  False
+        return False

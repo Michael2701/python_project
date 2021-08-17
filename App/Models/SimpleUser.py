@@ -6,8 +6,6 @@ class SimpleUser(Model):
     """
     model for users table
     """
-    # rowid = IntCol()
-
     first_name = StringCol()
     last_name = StringCol()
     user_role = StringCol()

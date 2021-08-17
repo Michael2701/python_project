@@ -6,7 +6,6 @@ class GeneticFileModel(Model):
     """
     model for files table
     """
-    # user_id = ForeignKey('SimpleUser')
     user_id = StringCol()
     file_name = StringCol()
     file_description = StringCol()

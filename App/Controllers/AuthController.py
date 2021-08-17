@@ -46,6 +46,3 @@ class AuthController(Controller):
                 Message.warning("Wrong email or password")
         except Exception as e:
             print(str(e))
-
-
-

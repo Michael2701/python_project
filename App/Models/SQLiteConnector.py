@@ -6,9 +6,9 @@ class SQLiteConnector:
 
     @staticmethod
     def create_connection():
-        """ create a database connection to the SQLite database
-            specified by the db_file
-        :param db_file: database file
+        """
+        create a database connection to the SQLite database
+        specified by the db_file
         :return: Connection object or None
         """
         connection_string = 'App/DB/project.db'

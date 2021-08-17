@@ -90,14 +90,14 @@ class UserController(Controller):
             print(str(e))
             self.msg.warning("Warning. User not created")
 
-    def delete_user(self, id: int) -> bool:
+    def delete_user(self, user_id: int) -> bool:
         """
         delete user by given id
-        :param id: id of user to delete
+        :param user_id: id of user to delete
         :return: True if user deleted and False otherwise
         """
         try:
-            SimpleUser.delete(id)
+            SimpleUser.delete(user_id)
             self.display_users()
             return True
         except Exception as e:

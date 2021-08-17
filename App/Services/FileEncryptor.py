@@ -7,36 +7,36 @@ class FileEncryptor:
 
     def __init__(self, file_path: str = None):
         self.storage_path = "App/Storage/"
-        self.filekey_name = "filekey.key"
+        self.file_key_name = "filekey.key"
 
         if file_path is None:
             self.session_file = 'session.csv'
         else:
             self.session_file = file_path
 
-        self.filekey_path = f"{self.storage_path}{self.filekey_name}"
+        self.file_key_path = f"{self.storage_path}{self.file_key_name}"
         self.session_file_path = f"{self.storage_path}{self.session_file}"
 
-        self.create_filekey()
+        self.create_file_key()
 
-    def create_filekey(self) -> None:
+    def create_file_key(self) -> None:
         """
         create new encoding key if not exists
         in Storage/file.key
         :return: void
         """
-        if not path.exists(self.filekey_path) and not path.isfile(self.filekey_path):
+        if not path.exists(self.file_key_path) and not path.isfile(self.file_key_path):
             key = Fernet.generate_key()
-            with open(self.filekey_path, 'wb') as filekey:
-                filekey.write(key)
+            with open(self.file_key_path, 'wb') as file_key:
+                file_key.write(key)
 
     def encrypt_file(self) -> None:
         """
         encrypt given csv file
         :return: void
         """
-        with open(self.filekey_path, 'rb') as filekey:
-            key = filekey.read()
+        with open(self.file_key_path, 'rb') as file_key:
+            key = file_key.read()
 
         fernet = Fernet(key)
 
@@ -53,8 +53,8 @@ class FileEncryptor:
         decrypt given csv file
         :return: void
         """
-        with open(self.filekey_path, 'rb') as filekey:
-            key = filekey.read()
+        with open(self.file_key_path, 'rb') as file_key:
+            key = file_key.read()
 
         fernet = Fernet(key)
 
