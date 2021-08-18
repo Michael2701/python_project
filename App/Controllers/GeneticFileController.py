@@ -4,6 +4,7 @@ from typing import Any
 
 import xlsxwriter as xlsxwriter
 
+from App.Services.FileHelper import FileHelper
 from App.Services.FileUploader import FileUploader
 from App.Services.Message import Message
 from App.Controllers.Controller import Controller
@@ -170,13 +171,37 @@ class GeneticFileController(Controller):
         """
         now = datetime.now()
         date_time = now.strftime("%d-%m-%Y_%H:%M:%S")
+
+        workbook = xlsxwriter.Workbook(self.user['first_name'] + "_" +
+                                       self.user['last_name'] + "_" +
+                                       date_time + '.xlsx')
+        worksheet = workbook.add_worksheet()
+        row = 0
+
+        for lines in self.create_list_of_markers():
+            col = 0
+            for line in lines:
+                worksheet.write(row, col, line)
+                col += 1
+            row += 1
+
+        workbook.close()
+
+        FileHelper.write_list_to_csv('App/file.csv', self.create_list_of_markers())
+
+    def create_list_of_markers(self) -> list:
+        """
+
+        :return:
+        """
+        list_of_markers = []
         titles = ['marker1', 'marker2', 'marker3']
         keys_list = ['AAA', 'AAB', 'AAH', 'ABA', 'ABB', 'ABH', 'AHA', 'AHB', 'AHH',
                      'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
                      'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
 
         titles.extend(keys_list)
-        list_for_excel = [titles]
+        list_of_markers.append(titles)
 
         for markers in self.result_markers:
             line = [name for name in markers['name']]
@@ -185,22 +210,9 @@ class GeneticFileController(Controller):
                     line.append(markers["successors"][key])
                 else:
                     line.append(0)
-            list_for_excel.append(line)
+            list_of_markers.append(line)
 
-        workbook = xlsxwriter.Workbook(self.user['first_name'] + "_" +
-                                       self.user['last_name'] + "_" +
-                                       date_time + '.xlsx')
-        worksheet = workbook.add_worksheet()
-        row = 0
-
-        for lines in list_for_excel:
-            col = 0
-            for line in lines:
-                worksheet.write(row, col, line)
-                col += 1
-            row += 1
-
-        workbook.close()
+        return list_of_markers
 
     def get_groups_of_markers(self, file_id: str, data: dict) -> list:
         """
@@ -236,3 +248,6 @@ class GeneticFileController(Controller):
             print(str(e))
             self.msg.warning("Warning. File not deleted")
             return False
+
+    def aaa(self):
+        pass
