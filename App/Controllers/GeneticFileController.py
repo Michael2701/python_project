@@ -20,6 +20,10 @@ from App.Models.GeneModel import GeneModel
 
 class GeneticFileController(Controller):
 
+    keys_list = ['AAA', 'AAB', 'AAH', 'ABA', 'ABB', 'ABH', 'AHA', 'AHB', 'AHH',
+                     'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
+                     'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
+
     def __init__(self, master: Any = None) -> None:
         """
         :param master: parent view
@@ -196,16 +200,13 @@ class GeneticFileController(Controller):
         """
         list_of_markers = []
         titles = ['marker1', 'marker2', 'marker3']
-        keys_list = ['AAA', 'AAB', 'AAH', 'ABA', 'ABB', 'ABH', 'AHA', 'AHB', 'AHH',
-                     'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
-                     'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
 
-        titles.extend(keys_list)
+        titles.extend(self.keys_list)
         list_of_markers.append(titles)
 
         for markers in self.result_markers:
             line = [name for name in markers['name']]
-            for key in keys_list:
+            for key in self.keys_list:
                 if key in markers["successors"].keys():
                     line.append(markers["successors"][key])
                 else:

@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter.ttk import Notebook
 from typing import Any, List
 
+from App.Controllers.InterferenceController import InterferenceController
 from App.Controllers.SettingsController import SettingsController
 from App.Models.GeneticFileModel import GeneticFileModel
 
@@ -88,7 +89,7 @@ class GeneticFilesView(Notebook):
             label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)
             label.grid(row=row, column=3, padx=3, pady=3)
 
-            button = Button(self, text="Interference", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f))
+            button = Button(self, text="Interference", font=self.font, fg=self.fg, command=lambda f=file: InterferenceController().creat())
             button.grid(row=row, column=4, padx=3, pady=3)
 
             button = Button(self, text="Excel", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f))
