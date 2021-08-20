@@ -17,5 +17,5 @@ class SQLiteConnector:
             conn = sqlite3.connect(connection_string)
         except Error as e:
             print(e)
-
-        return conn
+        finally:
+            return conn
