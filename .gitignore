@@ -20,3 +20,5 @@ App/__pycache__/__main__.cpython-36.pyc
 # ignor virtual environment
 venv/
 
+Storage/session.csv
+
