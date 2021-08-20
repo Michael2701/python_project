@@ -1,7 +1,10 @@
+import os
 from typing import Any
 from tkinter import Entry, Toplevel, Button, Label, Scale, HORIZONTAL
 
+from App.Controllers.InterferenceController import InterferenceController
 from App.Models.GeneticFileModel import GeneticFileModel
+from App.Services.FileHelper import FileHelper
 from App.Services.Message import Message
 from App.Models.SimpleUser import SimpleUser
 from App.Controllers.Controller import Controller
@@ -20,6 +23,7 @@ class FileProcessModal:
     step_entry = None
     file = None
     data = None
+    is_excel = None
 
     def __init__(self, master: Any, genetic_file_ctrl: Controller) -> None:
         """
@@ -33,14 +37,16 @@ class FileProcessModal:
 
         self.title = "Create Interference"
         self.logged_user = None
+        self.is_excel = True
 
         self.create_modal()
 
-    def show_top_level_dialog(self, file: GeneticFileModel) -> None:
+    def show_top_level_dialog(self, file: GeneticFileModel, is_excel: bool) -> None:
         """
         show login modal
         :return: None
         """
+        self.is_excel = is_excel
         self.file = file
         self.create_modal()
 
@@ -83,9 +89,17 @@ class FileProcessModal:
         :return: None
         """
         self.get_form_data()
+        print(self.is_excel)
         if self.check_form_data():
             self.genetic_file_ctrl.process_file_genes(self.data)
-        # self.genetic_file_ctrl
+            if self.is_excel:
+                self.genetic_file_ctrl.create_markers_statistic_excel()
+            else:
+                if os.path.exists('App/file.csv'):
+                    os.remove('App/file.csv')
+                FileHelper.write_list_to_csv('App/file.csv', self.genetic_file_ctrl.create_list_of_markers())
+                InterferenceController().create(self.file)
+            self.close_modal()
 
     def check_form_data(self):
         if self.data["min_distance"] >= self.data["max_distance"]:

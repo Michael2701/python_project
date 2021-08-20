@@ -116,8 +116,8 @@ class GeneticFileController(Controller):
             print(str(e))
             self.msg.warning("Warning. File not created")
 
-    def open_file_process_modal(self, file: GeneticFileModel):
-        self.file_process_dialog.show_top_level_dialog(file)
+    def open_file_process_modal(self, file: GeneticFileModel, is_excel: bool):
+        self.file_process_dialog.show_top_level_dialog(file, is_excel)
 
     def process_file_genes(self, data: dict) -> None:
         self.calculate_markers_genes(data["id"], self.get_groups_of_markers(str(data["id"]), data))
@@ -138,11 +138,13 @@ class GeneticFileController(Controller):
                 genes_data = GeneModel.select(in_group)
                 genes_summary = {
                     "name": [],
+                    "distance": [],
                     "successors": []
                 }
                 for gdata in genes_data:
                     successors_list = gdata.successors.split(',')
                     genes_summary["name"].append(gdata.name)
+                    genes_summary["distance"].append(gdata.distance)
                     if not len(genes_summary["successors"]):
                         genes_summary["successors"] = successors_list
                     else:
@@ -158,15 +160,14 @@ class GeneticFileController(Controller):
 
                 self.result_markers.append({
                     "name": genes_summary["name"],
+                    "distance": genes_summary["distance"],
                     "successors": result_dict
                 })
-
-            self.file_process_dialog.close_modal()
-            self.create_markers_statistic_excel()
             self.msg.info("Markers file created")
         except Exception as e:
             self.msg.error("Error creating markers excel")
             print(e)
+
 
     def create_markers_statistic_excel(self) -> None:
         """
@@ -191,28 +192,26 @@ class GeneticFileController(Controller):
 
         workbook.close()
 
-        FileHelper.write_list_to_csv('App/file.csv', self.create_list_of_markers())
-
     def create_list_of_markers(self) -> list:
         """
 
         :return:
         """
         list_of_markers = []
-        titles = ['marker1', 'marker2', 'marker3']
+        titles = ['marker1', 'marker2',  'marker3', 'distance1', 'distance2', 'distance3']
 
         titles.extend(self.keys_list)
         list_of_markers.append(titles)
 
         for markers in self.result_markers:
             line = [name for name in markers['name']]
+            line.extend(markers['distance'])
             for key in self.keys_list:
                 if key in markers["successors"].keys():
                     line.append(markers["successors"][key])
                 else:
                     line.append(0)
             list_of_markers.append(line)
-
         return list_of_markers
 
     def get_groups_of_markers(self, file_id: str, data: dict) -> list:
