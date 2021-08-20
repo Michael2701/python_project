@@ -1,12 +1,9 @@
-import json
-import time
 from datetime import datetime
 from tkinter import *
 from typing import Any
 
 import xlsxwriter as xlsxwriter
 
-from App.Models.MarkersModel import MarkersModel
 from App.Services.FileUploader import FileUploader
 from App.Services.Message import Message
 from App.Controllers.Controller import Controller
