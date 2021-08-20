@@ -4,6 +4,7 @@ from typing import Any
 
 import xlsxwriter as xlsxwriter
 
+from App.Services.FileHelper import FileHelper
 from App.Services.FileUploader import FileUploader
 from App.Services.Message import Message
 from App.Controllers.Controller import Controller
@@ -18,6 +19,10 @@ from App.Models.GeneModel import GeneModel
 
 
 class GeneticFileController(Controller):
+
+    keys_list = ['AAA', 'AAB', 'AAH', 'ABA', 'ABB', 'ABH', 'AHA', 'AHB', 'AHH',
+                     'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
+                     'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
 
     def __init__(self, master: Any = None) -> None:
         """
@@ -111,8 +116,8 @@ class GeneticFileController(Controller):
             print(str(e))
             self.msg.warning("Warning. File not created")
 
-    def open_file_process_modal(self, file: GeneticFileModel):
-        self.file_process_dialog.show_top_level_dialog(file)
+    def open_file_process_modal(self, file: GeneticFileModel, is_excel: bool):
+        self.file_process_dialog.show_top_level_dialog(file, is_excel)
 
     def process_file_genes(self, data: dict) -> None:
         self.calculate_markers_genes(data["id"], self.get_groups_of_markers(str(data["id"]), data))
@@ -133,11 +138,13 @@ class GeneticFileController(Controller):
                 genes_data = GeneModel.select(in_group)
                 genes_summary = {
                     "name": [],
+                    "distance": [],
                     "successors": []
                 }
                 for gdata in genes_data:
                     successors_list = gdata.successors.split(',')
                     genes_summary["name"].append(gdata.name)
+                    genes_summary["distance"].append(gdata.distance)
                     if not len(genes_summary["successors"]):
                         genes_summary["successors"] = successors_list
                     else:
@@ -153,15 +160,14 @@ class GeneticFileController(Controller):
 
                 self.result_markers.append({
                     "name": genes_summary["name"],
+                    "distance": genes_summary["distance"],
                     "successors": result_dict
                 })
-
-            self.file_process_dialog.close_modal()
-            self.create_markers_statistic_excel()
             self.msg.info("Markers file created")
         except Exception as e:
             self.msg.error("Error creating markers excel")
             print(e)
+
 
     def create_markers_statistic_excel(self) -> None:
         """
@@ -170,22 +176,6 @@ class GeneticFileController(Controller):
         """
         now = datetime.now()
         date_time = now.strftime("%d-%m-%Y_%H:%M:%S")
-        titles = ['marker1', 'marker2', 'marker3']
-        keys_list = ['AAA', 'AAB', 'AAH', 'ABA', 'ABB', 'ABH', 'AHA', 'AHB', 'AHH',
-                     'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
-                     'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
-
-        titles.extend(keys_list)
-        list_for_excel = [titles]
-
-        for markers in self.result_markers:
-            line = [name for name in markers['name']]
-            for key in keys_list:
-                if key in markers["successors"].keys():
-                    line.append(markers["successors"][key])
-                else:
-                    line.append(0)
-            list_for_excel.append(line)
 
         workbook = xlsxwriter.Workbook(self.user['first_name'] + "_" +
                                        self.user['last_name'] + "_" +
@@ -193,7 +183,7 @@ class GeneticFileController(Controller):
         worksheet = workbook.add_worksheet()
         row = 0
 
-        for lines in list_for_excel:
+        for lines in self.create_list_of_markers():
             col = 0
             for line in lines:
                 worksheet.write(row, col, line)
@@ -201,6 +191,28 @@ class GeneticFileController(Controller):
             row += 1
 
         workbook.close()
+
+    def create_list_of_markers(self) -> list:
+        """
+
+        :return:
+        """
+        list_of_markers = []
+        titles = ['marker1', 'marker2',  'marker3', 'distance1', 'distance2', 'distance3']
+
+        titles.extend(self.keys_list)
+        list_of_markers.append(titles)
+
+        for markers in self.result_markers:
+            line = [name for name in markers['name']]
+            line.extend(markers['distance'])
+            for key in self.keys_list:
+                if key in markers["successors"].keys():
+                    line.append(markers["successors"][key])
+                else:
+                    line.append(0)
+            list_of_markers.append(line)
+        return list_of_markers
 
     def get_groups_of_markers(self, file_id: str, data: dict) -> list:
         """
@@ -236,3 +248,6 @@ class GeneticFileController(Controller):
             print(str(e))
             self.msg.warning("Warning. File not deleted")
             return False
+
+    def aaa(self):
+        pass

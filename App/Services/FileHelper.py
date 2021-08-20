@@ -43,3 +43,22 @@ class FileHelper:
             except Exception as e:
                 print(e)
         return False
+
+    @staticmethod
+    def write_list_to_csv(file_path: str, list_of_triple_markers: list) -> None:
+        """
+
+        :param file_path:
+        :param list_of_triple_markers:
+        :return:
+        """
+
+        try:
+            with open(file_path, 'a+', newline='') as csv_file:
+                for row in list_of_triple_markers:
+                    csv_file.write(",".join([str(r) for r in row]) + '\n')
+
+                return True
+        except Exception as e:
+            print(e)
+        return False

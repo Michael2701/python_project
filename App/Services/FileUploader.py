@@ -1,5 +1,5 @@
 import os
-from App.Models.GeneModel import GeneModel 
+from App.Models.GeneModel import GeneModel
 
 
 class FileUploader:
@@ -16,7 +16,7 @@ class FileUploader:
         self.line_number = 0
         self.line = ""
 
-        self.file = open(self.file_path)
+        self.file = open(self.file_path)  # Why need this?
 
     def upload_file(self) -> None:
         """
