@@ -163,7 +163,6 @@ class GeneticFileController(Controller):
                     "distance": genes_summary["distance"],
                     "successors": result_dict
                 })
-            self.msg.info("Markers file created")
         except Exception as e:
             self.msg.error("Error creating markers excel")
             print(e)

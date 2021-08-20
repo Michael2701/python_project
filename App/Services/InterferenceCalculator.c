@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <math.h>
 
 char** str_split(char* a_str, const char a_delim);
 
@@ -143,12 +144,6 @@ void main(int argc, char* argv[]){
 
                     free(*(chunks + i));
                 }
-                // printf("\n");
-                // printf("%Lf, %Lf, %Lf, %Lf, counter: %li \n", N_00, N_01, N_10, N_11, markers_counter);
-
-                // for(int x = 0; x < markers_counter; x++){
-                //     printf("[%f, %f] ", marker_differences[x][0], marker_differences[x][1]);
-                // }
 
                 free(chunks);
             }
@@ -158,6 +153,14 @@ void main(int argc, char* argv[]){
         if (line)
             free(line);
 
+        printf("%Lf, %Lf, %Lf, %Lf, counter: %li \n", N_00, N_01, N_10, N_11, markers_counter);
+
+        for(int x = 0; x < markers_counter; x++){
+             printf("[%f, %f] ", marker_differences[x][0], marker_differences[x][1]);
+        }
+
+
+        system ("python App/myscript.py arg1 arg2");
         exit(EXIT_SUCCESS);
     }
 }

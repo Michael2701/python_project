@@ -89,17 +89,17 @@ class FileProcessModal:
         :return: None
         """
         self.get_form_data()
-        print(self.is_excel)
         if self.check_form_data():
+            self.close_modal()
             self.genetic_file_ctrl.process_file_genes(self.data)
             if self.is_excel:
                 self.genetic_file_ctrl.create_markers_statistic_excel()
             else:
+
                 if os.path.exists('App/file.csv'):
                     os.remove('App/file.csv')
                 FileHelper.write_list_to_csv('App/file.csv', self.genetic_file_ctrl.create_list_of_markers())
                 InterferenceController().create(self.file)
-            self.close_modal()
 
     def check_form_data(self):
         if self.data["min_distance"] >= self.data["max_distance"]:
@@ -140,7 +140,8 @@ class FileProcessModal:
         create password field and label
         :return: None
         """
-        self.min_distance_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Min distance")
+        self.min_distance_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+                                        text="Min distance")
         self.min_distance_label.grid(row=1, column=0)
         self.min_distance_entry = Scale(self.top_level_dialog, from_=1, to=25, length=300, orient=HORIZONTAL)
         self.min_distance_entry.grid(row=1, column=1)
@@ -150,7 +151,8 @@ class FileProcessModal:
         create password field and label
         :return: None
         """
-        self.max_distance_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Max distance")
+        self.max_distance_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+                                        text="Max distance")
         self.max_distance_label.grid(row=2, column=0)
         self.max_distance_entry = Scale(self.top_level_dialog, from_=1, to=25, length=300, orient=HORIZONTAL)
         self.max_distance_entry.grid(row=2, column=1)
