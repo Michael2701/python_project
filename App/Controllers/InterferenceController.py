@@ -12,4 +12,4 @@ class InterferenceController(Controller):
 
     def create(self, file: GeneticFileModel):
         # InterferenceCreator().count_N_xx()
-        subprocess.check_call([r"App/Services/InterferenceCalculator", "App/file.csv", "fucking shit"])
+        subprocess.check_call([r"App/Services/c/InterferenceCalculator", "App/file.csv", "fucking shit"])
