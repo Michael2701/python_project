@@ -40,8 +40,7 @@ void main(int argc, char* argv[]){
 
             if (chunks)
             {
-                int i;
-                for (i = 0; *(chunks + i); i++)
+                for (int i = 0; *(chunks + i); i++)
                 {
                     if(i > 2 && i < 6){
                         char* ptr;
