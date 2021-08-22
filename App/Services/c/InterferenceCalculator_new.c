@@ -8,6 +8,7 @@
 #define M 2
 
 char** str_split(char* a_str, const char a_delim);
+void calculateLikelihood(float marker_differences[][M], long* markers_counter);
 void calculate_differences_and_counters(char* argv[], float marker_differences[][M], long* markers_counter, 
                                         long double* N_00, long double* N_01, long double* N_10, long double* N_11);
 
@@ -23,9 +24,9 @@ void main(int argc, char* argv[])
 
     if(argc >= 2){
         calculate_differences_and_counters(argv, marker_differences, &markers_counter, &N_00, &N_01, &N_10, &N_11);
-
     }
 
+    calculateLikelihood(marker_differences, &markers_counter);
 
     // system ("python App/myscript.py arg1 arg2");
     exit(EXIT_SUCCESS);
@@ -171,11 +172,8 @@ void calculate_differences_and_counters(char* argv[], float marker_differences[]
     if (line)
         free(line);
 
-    printf("%Lf, %Lf, %Lf, %Lf, counter: %li \n", *N_00, *N_01, *N_10, *N_11, *markers_counter);
 
-    for(int x = 0; x < *markers_counter; x++){
-            printf("[%f, %f] ", marker_differences[x][0], marker_differences[x][1]);
-    }
+
 }
 
 char** str_split(char* a_str, const char a_delim)
@@ -226,6 +224,15 @@ char** str_split(char* a_str, const char a_delim)
     return result;
 }
 
+
+void calculateLikelihood(float marker_differences[][M], long* markers_counter)
+{
+    printf("%Lf, %Lf, %Lf, %Lf, counter: %li \n", *N_00, *N_01, *N_10, *N_11, *markers_counter);
+
+    for(int x = 0; x < *markers_counter; x++){
+            printf("[%f, %f] ", marker_differences[x][0], marker_differences[x][1]);
+    }
+}
 
 
 
