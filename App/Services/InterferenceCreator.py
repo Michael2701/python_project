@@ -10,7 +10,7 @@ class InterferenceCreator:
                  'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
 
     def __init__(self, master: Any = None) -> None:
-        self.file_path = "App/file.csv"
+        self.file_path = "App/triplet_of_genes.csv"
         pass
 
     def count_N_xx(self):

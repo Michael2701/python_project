@@ -8,7 +8,7 @@ class Index:
     def __init__(self) -> None:
 
         self.root = ThemedTk(theme='adapta')
-        self.root.geometry("900x500")
+        self.root.geometry("1000x500")
         self.root.title("Genetic App")
         self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))  # why not showing up?
 

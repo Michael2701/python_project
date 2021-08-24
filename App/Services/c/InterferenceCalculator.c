@@ -1,36 +1,48 @@
+// Compile file with: gcc -o InterferenceCalculator InterferenceCalculator.c utils.o -lm
+
 #define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include "utils.h"
 
-char** str_split(char* a_str, const char a_delim);
+#define N 10000
+#define M 2
 
-void main(int argc, char* argv[]){
+void calculateLikelyHood();
+void calculateLikelyHoodGradient();
+void calculateXi();
+void createOutputCSV(char *fileName);
+FILE *openFile(char *fileName);
+
+double marker_differences[N][M];
+long markers_counter = 0;
+
+double N_00 = 0, N_01 = 0, N_10 = 0, N_11 = 0;
+double likelyHood[N];
+double likelyHoodMaximum[N];
+double max_coefficients[N];
+double lrScore[N];
+
+void main(int argc, char* argv[])
+{
     FILE * fp;
     char * line = NULL;
     size_t len = 0;
     ssize_t read;
+    char** chunks;
+    char* ptr;
+
     char keys_list[27][4] = {"AAA", "AAB", "AAH", "ABA", "ABB", "ABH", "AHA", "AHB", "AHH",
                             "BAA", "BAB", "BAH", "BBA", "BBB", "BBH", "BHA", "BHB", "BHH",
                             "HAA", "HAB", "HAH", "HBA", "HBB", "HBH", "HHA", "HHB", "HHH"};
 
-    char buffer[200];    
-    float marker_differences[10000][2];
-    long markers_counter = 0;
-    long double N_00 = 0;
-    long double N_01 = 0;
-    long double N_10 = 0;
-    long double N_11 = 0;
-    char** chunks;
-
-
-
     if(argc >= 2){
         fp = fopen(argv[1], "r");
         if (fp == NULL){
-            printf("Suka pochemu ty ne rabotaesh???");
+            printf("Error: Can't open triplet_of_genes.csv\n");
             exit(EXIT_FAILURE);
         }
 
@@ -44,25 +56,25 @@ void main(int argc, char* argv[]){
                 for (i = 0; *(chunks + i); i++)
                 {
                     if(i > 2 && i < 6){
-                        char* ptr;
+
                         if(i == 3)
                             marker_differences[markers_counter][0] = -1 * strtof(chunks[i], &ptr);
 
                         if(i == 4){
-                            marker_differences[markers_counter][0] += strtof(chunks[i], &ptr);      
+                            marker_differences[markers_counter][0] += strtof(chunks[i], &ptr);
                             marker_differences[markers_counter][1] = -1 * strtof(chunks[i], &ptr);
                         }
 
                         if(i == 5){
                             marker_differences[markers_counter][1] += strtof(chunks[i], &ptr);
                             markers_counter++;
-                        } 
+                        }
                     }
-                    
+
 
                     if(i > 5){
                         // === COUNTERS ===
-                        
+
                         // N_00: AAA, BBB
                         if(i == 6 || i == 19)
                             // N_00: AAA, BBB
@@ -88,7 +100,7 @@ void main(int argc, char* argv[]){
                             N_00 += atof(chunks[i]) / 2.0;
                         }
 
-                        // HAA, HBB: 00, 10 
+                        // HAA, HBB: 00, 10
                         if(i == 24 || i == 28){
                             N_00 += atof(chunks[i]) / 2.0;
                             N_10 += atof(chunks[i]) / 2.0;
@@ -105,7 +117,7 @@ void main(int argc, char* argv[]){
                             N_11 += atof(chunks[i]) / 2.0;
                             N_00 += atof(chunks[i]) / 2.0;
                         }
-                        
+
                         // AHB, BHA: 01, 10
                         if(i == 13 || i == 21){
                             N_01 += atof(chunks[i]) / 2.0;
@@ -124,7 +136,7 @@ void main(int argc, char* argv[]){
                             N_01 += atof(chunks[i]) / 4.0;
                             N_11 += atof(chunks[i]) / 4.0;
                         }
-                        
+
                         // AHH, BHH, HHA, HHB: 00, 01, 10, 11
                         if(i == 11 || i == 20 || i == 21 || i == 28){
                             N_00 += atof(chunks[i]) / 4.0;
@@ -132,7 +144,7 @@ void main(int argc, char* argv[]){
                             N_10 += atof(chunks[i]) / 4.0;
                             N_11 += atof(chunks[i]) / 4.0;
                         }
-                        
+
                         // HHH: 00, 01, 10, 11
                         if(i == 29){
                             N_00 += atof(chunks[i]) / 8.0;
@@ -153,66 +165,110 @@ void main(int argc, char* argv[]){
         if (line)
             free(line);
 
-        printf("%Lf, %Lf, %Lf, %Lf, counter: %li \n", N_00, N_01, N_10, N_11, markers_counter);
+        calculateLikelyHood();
+        calculateLikelyHoodGradient();
+        calculateXi();
+        createOutputCSV(argv[2]);
 
-        for(int x = 0; x < markers_counter; x++){
-             printf("[%f, %f] ", marker_differences[x][0], marker_differences[x][1]);
-        }
-
-
-        system ("python App/myscript.py arg1 arg2");
+        // system ("python App/myscript.py arg1 arg2");
         exit(EXIT_SUCCESS);
     }
 }
 
-char** str_split(char* a_str, const char a_delim)
+void calculateLikelyHood()
 {
-    char** result    = 0;
-    size_t count     = 0;
-    char* tmp        = a_str;
-    char* last_comma = 0;
-    char delim[2];
-    delim[0] = a_delim;
-    delim[1] = 0;
+    double coefficient = 1;
+    double P_00, P_10, P_01, P_11;
 
-    /* Count how many elements will be extracted. */
-    while (*tmp)
+    int i;
+    for(i = 0; i < markers_counter; i++)
     {
-        if (a_delim == *tmp)
-        {
-            count++;
-            last_comma = tmp;
-        }
-        tmp++;
+        P_00 = fabs(1 - marker_differences[i][0] - marker_differences[i][1] + coefficient * marker_differences[i][0] * marker_differences[i][1]);
+        P_01 = fabs(marker_differences[i][1] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
+        P_10 = fabs(marker_differences[i][0] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
+        P_11 = fabs(coefficient * marker_differences[i][0] * marker_differences[i][1]);
+
+        *(likelyHood + i) = log(P_00) * N_00 + log(P_01) * N_01 + log(P_10) * N_10 + log(P_11) * N_11;
     }
 
-    /* Add space for trailing token. */
-    count += last_comma < (a_str + strlen(a_str) - 1);
-
-    /* Add space for terminating null string so caller
-       knows where the list of returned strings ends. */
-    count++;
-
-    result = malloc(sizeof(char*) * count);
-
-    if (result)
-    {
-        size_t idx  = 0;
-        char* token = strtok(a_str, delim);
-
-        while (token)
-        {
-            assert(idx < count);
-            *(result + idx++) = strdup(token);
-            token = strtok(0, delim);
-        }
-        assert(idx == count - 1);
-        *(result + idx) = 0;
-    }
-
-    return result;
 }
 
+void calculateLikelyHoodGradient()
+{
+    double max_log_value, temp_log_value;
+    double P_00, P_10, P_01, P_11;
+    double max_coefficient_value;
 
+    int i;
+    for(i = 0; i < markers_counter; i++)
+    {
+        max_log_value = 0;
+        max_coefficient_value = 0;
 
+        double coefficient;
+        for(coefficient = 0; coefficient < 2; coefficient += 0.01)
+        {
+            P_00 = fabs(1 - marker_differences[i][0] - marker_differences[i][1] + coefficient * marker_differences[i][0] * marker_differences[i][1]);
+            P_01 = fabs(marker_differences[i][1] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
+            P_10 = fabs(marker_differences[i][0] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
+            P_11 = fabs(coefficient * marker_differences[i][0] * marker_differences[i][1]);
+
+            temp_log_value = log(P_00) * N_00 + log(P_01) * N_01 + log(P_10) * N_10 + log(P_11) * N_11;
+
+            if (temp_log_value > max_log_value)
+            {
+                max_log_value = temp_log_value;
+                max_coefficient_value = coefficient;
+            }
+        }// End loop likelyHood gradient
+
+        *(likelyHoodMaximum + i) = max_log_value;
+        *(max_coefficients + i) = max_coefficient_value;
+    }// End loop of distance between r1 and r2 markers
+}// End function calculateLikelyHoodGradient
+
+// Search df
+void calculateXi()
+{
+    int i;
+    for(i = 0; i < markers_counter; i++)
+    {
+        *(lrScore + i) = 2 * (likelyHood[i] - likelyHoodMaximum[i]);
+    }
+}
+
+void createOutputCSV(char *fileName)
+{
+    FILE *file;
+    if(file = openFile(fileName))
+    {
+        fprintf(file, "r1,r2,C,Xi\n"); // Print Header
+
+        int i;
+        for(i = 0; i < markers_counter; i++)
+        {
+            fprintf(file, "%f,%f,%f,%f\n",
+            marker_differences[i][0], marker_differences[i][1], max_coefficients[i], lrScore[i]); // markers * 3, r1, r2, C, Xi
+        }
+    }
+}
+
+FILE *openFile(char *fileName)
+{
+    FILE *file = fopen(fileName, "w+");
+
+    if(!file){
+        printf("Error, can't open/create file");
+        return NULL;
+    }else{
+        return file;
+    }
+}
+
+FILE *openFileTripleGenes()
+{
+    FILE *file;
+
+    return file;
+}
 
