@@ -64,7 +64,7 @@ class LoginModal:
         """
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.config(bg='#9fdf9f')
+        self.top_level_dialog.config(bg=self.bg)
         self.top_level_dialog.minsize(300, 150)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
@@ -100,7 +100,7 @@ class LoginModal:
         create email field and label
         :return: None
         """
-        self.email_label = Label(self.top_level_dialog, bg='#9fdf9f', fg=self.fg, font=self.font, text="Email")
+        self.email_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Email")
         self.email_label.pack(fill=X, expand=False, padx=5)
         
         self.email_entry = Entry(self.top_level_dialog)
@@ -113,7 +113,7 @@ class LoginModal:
         create password field and label
         :return: None
         """
-        self.password_label = Label(self.top_level_dialog, bg='#9fdf9f', fg=self.fg, font=self.font, text="Password")
+        self.password_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Password")
         self.password_label.pack(fill=X, expand=False, padx=5)
 
         self.password_entry = Entry(self.top_level_dialog, show='*')

@@ -1,12 +1,11 @@
 import os
 from typing import Any
-from tkinter import Entry, Toplevel, Button, Label, Scale, HORIZONTAL
+from tkinter import Toplevel, Button, Label, Scale, HORIZONTAL
 
 from App.Controllers.InterferenceController import InterferenceController
 from App.Models.GeneticFileModel import GeneticFileModel
 from App.Services.FileHelper import FileHelper
 from App.Services.Message import Message
-from App.Models.SimpleUser import SimpleUser
 from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
 
@@ -88,6 +87,7 @@ class FileProcessModal:
         if password is good show ApplicationView window
         :return: None
         """
+        file_triplet_name = 'App/triplet_of_genes.csv'
         self.get_form_data()
         if self.check_form_data():
             self.close_modal()
@@ -96,10 +96,10 @@ class FileProcessModal:
                 self.genetic_file_ctrl.create_markers_statistic_excel()
             else:
 
-                if os.path.exists('App/file.csv'):
-                    os.remove('App/file.csv')
-                FileHelper.write_list_to_csv('App/file.csv', self.genetic_file_ctrl.create_list_of_markers())
-                InterferenceController().create(self.file)
+                if os.path.exists(file_triplet_name):
+                    os.remove(file_triplet_name)
+                FileHelper.write_list_to_csv(file_triplet_name, self.genetic_file_ctrl.create_list_of_markers())
+                InterferenceController().create_interference(self.file)
 
     def check_form_data(self):
         if self.data["min_distance"] >= self.data["max_distance"]:
@@ -130,7 +130,7 @@ class FileProcessModal:
         create email field and label
         :return: None
         """
-        self.step_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Step")
+        self.step_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Step")
         self.step_label.grid(row=0, column=0)
         self.step_entry = Scale(self.top_level_dialog, from_=1, to=42, length=300, orient=HORIZONTAL)
         self.step_entry.grid(row=0, column=1)
@@ -140,7 +140,7 @@ class FileProcessModal:
         create password field and label
         :return: None
         """
-        self.min_distance_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+        self.min_distance_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font,
                                         text="Min distance")
         self.min_distance_label.grid(row=1, column=0)
         self.min_distance_entry = Scale(self.top_level_dialog, from_=1, to=25, length=300, orient=HORIZONTAL)
@@ -151,7 +151,7 @@ class FileProcessModal:
         create password field and label
         :return: None
         """
-        self.max_distance_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+        self.max_distance_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font,
                                         text="Max distance")
         self.max_distance_label.grid(row=2, column=0)
         self.max_distance_entry = Scale(self.top_level_dialog, from_=1, to=25, length=300, orient=HORIZONTAL)

@@ -21,6 +21,6 @@ App/__pycache__/__main__.cpython-36.pyc
 venv/
 
 App/Storage/session.csv
-App/file.csv
+App/triplet_of_genes.csv
 
 

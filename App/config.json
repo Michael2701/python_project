@@ -1,6 +1,6 @@
 {
-    "background_color": "#9FDF9F",
-    "modal_bg": "#9FDF9F",
+    "background_color": "#fff",
+    "modal_bg": "#d9d9d9",
     "font_color": "#111",
     "app_font": "Helvetica 11",
     "title_font": "Helvetica 11 bold"
