@@ -10,7 +10,7 @@ class Index:
         self.root = ThemedTk(theme='adapta')
         self.root.geometry("1000x500")
         self.root.title("Genetic App")
-        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))  # why not showing up?
+        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))
 
         auth_ctrl = AuthController(self.root)
         auth_ctrl.show_login_modal()
