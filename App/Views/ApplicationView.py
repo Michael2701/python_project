@@ -5,6 +5,7 @@ from App.Controllers.UserController import UserController
 from App.Controllers.GeneticFileController import GeneticFileController
 from App.Controllers.SettingsController import SettingsController
 from App.Models.SimpleUser import SimpleUser
+from App.Views.UIElements.SettingAppModal import SettingAppModal
 
 
 class ApplicationView (Frame):
@@ -126,7 +127,7 @@ class ApplicationView (Frame):
         :return: None
         """
         self.edit_menu = Menu(self.menu, tearoff=0)
-        self.edit_menu.add_command(label='Application')
+        self.edit_menu.add_command(label='Application', command=self.create_application_settings_window)
         self.edit_menu.add_command(label='Graphic')
         self.menu.add_cascade(label='Settings', font=self.title_font, menu=self.edit_menu)
 
@@ -139,6 +140,9 @@ class ApplicationView (Frame):
         self.help_menu.add_command(label='Help', command=self.show_help_window)
         self.help_menu.add_command(label='About Us', command=self.show_about_us_window)
         self.menu.add_cascade(label='Help', font=self.title_font, menu=self.help_menu)
+
+    def create_application_settings_window(self):
+        SettingAppModal(self.master)
 
     @staticmethod
     def show_about_us_window() -> None:
