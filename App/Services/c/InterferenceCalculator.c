@@ -47,6 +47,7 @@ void main(int argc, char* argv[])
 
     if(argc >= 2){
         fp = openFileTripleGenes(argv[1]);
+        read = getline(&line, &len, fp); // skip results from first line
 
         while ((read = getline(&line, &len, fp)) != -1) {
 
@@ -261,6 +262,7 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
 
     tripletOfGensFile = openFileTripleGenes(tripletOfGensFileName);
     interferenceFile = openOutputFile(interferenceFileName);
+
     if(tripletOfGensFile && interferenceFile)
     {
         fprintf(interferenceFile, "marker 1,marker 2, marker 3,r1,r2,C,Xi\n"); // Print Header
@@ -271,8 +273,8 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
         {
             cells = str_split(line, ',');
             fprintf(interferenceFile, "%s,%s,%s,%f,%f,%f,%f\n",
-            cells[0], cells[1], cells[2],
-            marker_differences[i][0], marker_differences[i][1], max_coefficients[i], lrScore[i]); // markers * 3, r1, r2, C, Xi
+                cells[0], cells[1], cells[2],
+                marker_differences[i][0], marker_differences[i][1], max_coefficients[i], lrScore[i]); // markers * 3, r1, r2, C, Xi
         }
 
         fclose(interferenceFile);
