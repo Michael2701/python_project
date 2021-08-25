@@ -1,26 +1,40 @@
-from tkinter import Toplevel, Label, Radiobutton, IntVar, Checkbutton, W, X, Entry
+from tkinter import Toplevel, Label, Radiobutton, IntVar, Checkbutton, W, X, Entry, Button
 from typing import Any
 from App.Controllers.Controller import Controller
+from App.Controllers.SettingsController import SettingsController
 
 
 class SettingAppModal:
     top_level_dialog = None
-    sms_label = None
-    email_label = None
     sms_radio_button = None
+    email_radio_button = None
+    sms_radio_button_status = IntVar()
+    email_radio_button_status = IntVar()
 
-    def __init__(self,  master: Any):
-        print("In SettingAppModal")
+    def __init__(self, master: Any):
+        """
+        :param master: ApplicationView window
+        """
         self.master = master
         self.title = "Settings"
 
+        settings = SettingsController()
+        settings.set_view_settings(self)
+        self.sms_radio_button_status = settings.get_sms_config()
+        self.email_radio_button_status = settings.get_email_config()
+
         self.create_top_level_dialog()
+        self.set_sms_check_button()
+        self.set_email_check_button()
+
+        self.sms_radio_button_status = SettingsController()
 
     def close_modal(self) -> None:
         """
-        close login modal
+        close setting modal
         :return: None
         """
+        SettingsController().set_config()
         self.top_level_dialog.destroy()
 
     def create_top_level_dialog(self) -> None:
@@ -34,8 +48,30 @@ class SettingAppModal:
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
-        # var1 = IntVar()
-        # b1 = Checkbutton(self.master, text="male", variable=var1)
-        # b1.pack(fill=X)
-        # var2 = IntVar()
-        # b2 = Checkbutton(self.master, text="female", variable=var2)
+    def set_sms_check_button(self):
+        """
+        sms on/off notification
+        :return: None
+        """
+        self.sms_radio_button_status = IntVar()
+        self.sms_radio_button = Checkbutton(self.top_level_dialog, text="SMS Notification",
+                                            variable=self.sms_radio_button_status,
+                                            onvalue=1,
+                                            offvalue=0,
+                                            height=2,
+                                            width=15)
+        self.sms_radio_button.pack()
+
+    def set_email_check_button(self) -> None:
+        """
+        email on/off notifications
+        :return: None
+        """
+        self.email_radio_button_status = IntVar()
+        self.email_radio_button = Checkbutton(self.top_level_dialog, text="Email Notification",
+                                              variable=self.email_radio_button_status,
+                                              onvalue=1,
+                                              offvalue=0,
+                                              height=2,
+                                              width=15)
+        self.email_radio_button.pack()

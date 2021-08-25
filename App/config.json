@@ -4,6 +4,6 @@
     "font_color": "#111",
     "app_font": "Helvetica 11",
     "title_font": "Helvetica 11 bold",
-    "sms_notification": "false",
-    "email_notification": "false"
+    "sms_notification": "0",
+    "email_notification": "0"
 }
