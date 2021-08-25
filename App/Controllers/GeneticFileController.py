@@ -4,7 +4,6 @@ from typing import Any
 
 import xlsxwriter as xlsxwriter
 
-from App.Services.FileHelper import FileHelper
 from App.Services.FileUploader import FileUploader
 from App.Services.Message import Message
 from App.Controllers.Controller import Controller
@@ -19,10 +18,9 @@ from App.Models.GeneModel import GeneModel
 
 
 class GeneticFileController(Controller):
-
     keys_list = ['AAA', 'AAB', 'AAH', 'ABA', 'ABB', 'ABH', 'AHA', 'AHB', 'AHH',
-                     'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
-                     'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
+                 'BAA', 'BAB', 'BAH', 'BBA', 'BBB', 'BBH', 'BHA', 'BHB', 'BHH',
+                 'HAA', 'HAB', 'HAH', "HBA", "HBB", 'HBH', 'HHA', 'HHB', 'HHH']
 
     def __init__(self, master: Any = None) -> None:
         """
@@ -45,7 +43,7 @@ class GeneticFileController(Controller):
         if self.user['user_role'] == 'admin':
             files = GeneticFileModel.select('id > 0')
         else:
-            files = GeneticFileModel.select(GeneticFileModel.q.user_idID == self.user['rowid'])
+            files = GeneticFileModel.select(GeneticFileModel.q.user_id == self.user['id'])
         self.notebook = GeneticFilesView(self, self.master, files)
 
     def show_delete_modal(self, file: GeneticFileModel) -> None:
@@ -120,12 +118,10 @@ class GeneticFileController(Controller):
         self.file_process_dialog.show_top_level_dialog(file, is_excel)
 
     def process_file_genes(self, data: dict) -> None:
-        self.calculate_markers_genes(data["id"], self.get_groups_of_markers(str(data["id"]), data))
+        self.calculate_markers_genes(self.get_groups_of_markers(str(data["id"]), data))
 
-    def calculate_markers_genes(self, file_id: int, gene_ids_groups) -> None:
+    def calculate_markers_genes(self, gene_ids_groups) -> None:
         """
-
-        :param file_id:
         :param gene_ids_groups:
         :return:
         """
@@ -134,7 +130,7 @@ class GeneticFileController(Controller):
         try:
             for gene_ids_group in gene_ids_groups:
                 ids_string = ','.join([str(gene_id) for gene_id in gene_ids_group])
-                in_group = 'id in ('+ids_string+')'
+                in_group = 'id in (' + ids_string + ')'
                 genes_data = GeneModel.select(in_group)
                 genes_summary = {
                     "name": [],
@@ -167,7 +163,6 @@ class GeneticFileController(Controller):
             self.msg.error("Error creating markers excel")
             print(e)
 
-
     def create_markers_statistic_excel(self) -> None:
         """
         Create .xlsx file of triples markers and add statistics to it
@@ -197,7 +192,7 @@ class GeneticFileController(Controller):
         :return:
         """
         list_of_markers = []
-        titles = ['marker1', 'marker2',  'marker3', 'distance1', 'distance2', 'distance3']
+        titles = ['marker 1', 'marker 2', 'marker 3', 'position 1', 'position 2', 'position 3']
 
         titles.extend(self.keys_list)
         list_of_markers.append(titles)

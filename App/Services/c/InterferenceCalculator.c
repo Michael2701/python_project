@@ -6,17 +6,23 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <math.h>
+#include <limits.h>
+
 #include "utils.h"
 
 #define N 10000
 #define M 2
 
+/*** Function declarations ***/
 void calculateLikelyHood();
 void calculateLikelyHoodGradient();
 void calculateXi();
-void createOutputCSV(char *fileName);
-FILE *openFile(char *fileName);
+void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName);
+FILE *openOutputFile(char *fileName);
+FILE *openFileTripleGenes(char * fileName);
 
+
+/*** Variables ***/
 double marker_differences[N][M];
 long markers_counter = 0;
 
@@ -40,11 +46,8 @@ void main(int argc, char* argv[])
                             "HAA", "HAB", "HAH", "HBA", "HBB", "HBH", "HHA", "HHB", "HHH"};
 
     if(argc >= 2){
-        fp = fopen(argv[1], "r");
-        if (fp == NULL){
-            printf("Error: Can't open triplet_of_genes.csv\n");
-            exit(EXIT_FAILURE);
-        }
+        fp = openFileTripleGenes(argv[1]);
+        read = getline(&line, &len, fp); // skip results from first line
 
         while ((read = getline(&line, &len, fp)) != -1) {
 
@@ -55,18 +58,19 @@ void main(int argc, char* argv[])
                 int i;
                 for (i = 0; *(chunks + i); i++)
                 {
-                    if(i > 2 && i < 6){
+                    if(i > 2 && i < 6) //
+                    {
 
                         if(i == 3)
-                            marker_differences[markers_counter][0] = -1 * strtof(chunks[i], &ptr);
+                            marker_differences[markers_counter][0] = -1 * strtof(chunks[i], &ptr) / 100;
 
                         if(i == 4){
-                            marker_differences[markers_counter][0] += strtof(chunks[i], &ptr);
-                            marker_differences[markers_counter][1] = -1 * strtof(chunks[i], &ptr);
+                            marker_differences[markers_counter][0] += strtof(chunks[i], &ptr) / 100;
+                            marker_differences[markers_counter][1] = -1 * strtof(chunks[i], &ptr) / 100;
                         }
 
                         if(i == 5){
-                            marker_differences[markers_counter][1] += strtof(chunks[i], &ptr);
+                            marker_differences[markers_counter][1] += strtof(chunks[i], &ptr) / 100;
                             markers_counter++;
                         }
                     }
@@ -168,9 +172,16 @@ void main(int argc, char* argv[])
         calculateLikelyHood();
         calculateLikelyHoodGradient();
         calculateXi();
-        createOutputCSV(argv[2]);
+        createOutputCSV(argv[1], argv[2]);
 
+// test
+//        int i;
+//        for(i = 0; i < markers_counter; i++)
+//        {
+//            printf("%f %f, ", marker_differences[i][0] / 100, marker_differences[i][1] / 100);
+//        }
         // system ("python App/myscript.py arg1 arg2");
+        // TODO add trigger send SMS or/and EMAIL
         exit(EXIT_SUCCESS);
     }
 }
@@ -202,11 +213,11 @@ void calculateLikelyHoodGradient()
     int i;
     for(i = 0; i < markers_counter; i++)
     {
-        max_log_value = 0;
+        max_log_value = LONG_MIN;
         max_coefficient_value = 0;
 
         double coefficient;
-        for(coefficient = 0; coefficient < 2; coefficient += 0.01)
+        for(coefficient = 0.01; coefficient < 2; coefficient += 0.01)
         {
             P_00 = fabs(1 - marker_differences[i][0] - marker_differences[i][1] + coefficient * marker_differences[i][0] * marker_differences[i][1]);
             P_01 = fabs(marker_differences[i][1] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
@@ -237,38 +248,70 @@ void calculateXi()
     }
 }
 
-void createOutputCSV(char *fileName)
+/**
+ * This function create and write main variables to csv file.
+ */
+void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
 {
-    FILE *file;
-    if(file = openFile(fileName))
+    size_t len = 0;
+    ssize_t read;
+    char** cells;
+    char* line = NULL;
+    FILE* tripletOfGensFile;
+    FILE* interferenceFile;
+
+    tripletOfGensFile = openFileTripleGenes(tripletOfGensFileName);
+    interferenceFile = openOutputFile(interferenceFileName);
+
+    if(tripletOfGensFile && interferenceFile)
     {
-        fprintf(file, "r1,r2,C,Xi\n"); // Print Header
+        fprintf(interferenceFile, "marker 1,marker 2, marker 3,r1,r2,C,Xi\n"); // Print Header
+        read = getline(&line, &len, tripletOfGensFile); // skip results from first line
 
         int i;
-        for(i = 0; i < markers_counter; i++)
+        for(i = 0; i < markers_counter && (read = getline(&line, &len, tripletOfGensFile)) != -1; i++)
         {
-            fprintf(file, "%f,%f,%f,%f\n",
-            marker_differences[i][0], marker_differences[i][1], max_coefficients[i], lrScore[i]); // markers * 3, r1, r2, C, Xi
+            cells = str_split(line, ',');
+            fprintf(interferenceFile, "%s,%s,%s,%f,%f,%f,%f\n",
+                cells[0], cells[1], cells[2],
+                marker_differences[i][0], marker_differences[i][1], max_coefficients[i], lrScore[i]); // markers * 3, r1, r2, C, Xi
         }
+
+        fclose(interferenceFile);
+        fclose(tripletOfGensFile);
     }
 }
 
-FILE *openFile(char *fileName)
+/**
+* This function open output file for "w+".
+*/
+FILE *openOutputFile(char *fileName)
 {
     FILE *file = fopen(fileName, "w+");
 
-    if(!file){
-        printf("Error, can't open/create file");
-        return NULL;
-    }else{
+    if(!file)
+    {
+        printf("Error: can't open/create file\n");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
         return file;
     }
 }
 
-FILE *openFileTripleGenes()
+/**
+* This function add help file triple of genes for "r".
+*/
+FILE *openFileTripleGenes(char * fileName)
 {
-    FILE *file;
+    FILE *file = fopen(fileName, "r");
 
+    if(!file)
+    {
+        printf("Error: can't open %s\n", fileName);
+        exit(EXIT_FAILURE);
+    }
     return file;
 }
 
