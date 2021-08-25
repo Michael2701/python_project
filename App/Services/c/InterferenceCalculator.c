@@ -169,46 +169,26 @@ void main(int argc, char* argv[])
         if (line)
             free(line);
 
-        calculateLikelyHood();
         calculateLikelyHoodGradient();
         calculateXi();
         createOutputCSV(argv[1], argv[2]);
 
-// test
-//        int i;
-//        for(i = 0; i < markers_counter; i++)
-//        {
-//            printf("%f %f, ", marker_differences[i][0] / 100, marker_differences[i][1] / 100);
-//        }
         // system ("python App/myscript.py arg1 arg2");
         // TODO add trigger send SMS or/and EMAIL
         exit(EXIT_SUCCESS);
     }
 }
 
-void calculateLikelyHood()
-{
-    double coefficient = 1;
-    double P_00, P_10, P_01, P_11;
-
-    int i;
-    for(i = 0; i < markers_counter; i++)
-    {
-        P_00 = fabs(1 - marker_differences[i][0] - marker_differences[i][1] + coefficient * marker_differences[i][0] * marker_differences[i][1]);
-        P_01 = fabs(marker_differences[i][1] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
-        P_10 = fabs(marker_differences[i][0] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
-        P_11 = fabs(coefficient * marker_differences[i][0] * marker_differences[i][1]);
-
-        *(likelyHood + i) = log(P_00) * N_00 + log(P_01) * N_01 + log(P_10) * N_10 + log(P_11) * N_11;
-    }
-
-}
-
+/**
+* This function calculate likely hood when coefficient in range [0, 2].
+*
+*/
 void calculateLikelyHoodGradient()
 {
     double max_log_value, temp_log_value;
     double P_00, P_10, P_01, P_11;
     double max_coefficient_value;
+    double one = 1.1;
 
     int i;
     for(i = 0; i < markers_counter; i++)
@@ -217,15 +197,19 @@ void calculateLikelyHoodGradient()
         max_coefficient_value = 0;
 
         double coefficient;
-        for(coefficient = 0.01; coefficient < 2; coefficient += 0.01)
+        for(coefficient = 0.01; coefficient < 15; coefficient += 0.01)
         {
-            P_00 = fabs(1 - marker_differences[i][0] - marker_differences[i][1] + coefficient * marker_differences[i][0] * marker_differences[i][1]);
-            P_01 = fabs(marker_differences[i][1] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
-            P_10 = fabs(marker_differences[i][0] - coefficient * marker_differences[i][0] * marker_differences[i][1]);
-            P_11 = fabs(coefficient * marker_differences[i][0] * marker_differences[i][1]);
+            P_00 = 1 - marker_differences[i][0] - marker_differences[i][1] + coefficient * marker_differences[i][0] * marker_differences[i][1];
+            P_01 = marker_differences[i][1] - coefficient * marker_differences[i][0] * marker_differences[i][1];
+            P_10 = marker_differences[i][0] - coefficient * marker_differences[i][0] * marker_differences[i][1];
+            P_11 = coefficient * marker_differences[i][0] * marker_differences[i][1];
 
             temp_log_value = log(P_00) * N_00 + log(P_01) * N_01 + log(P_10) * N_10 + log(P_11) * N_11;
 
+            if(fabs(coefficient - 1) < 0.001) // Mean: coefficient == 1 (double numbers version)
+            {
+                *(likelyHood + i) = temp_log_value;
+            }
             if (temp_log_value > max_log_value)
             {
                 max_log_value = temp_log_value;
@@ -265,16 +249,17 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
 
     if(tripletOfGensFile && interferenceFile)
     {
-        fprintf(interferenceFile, "marker 1,marker 2, marker 3,r1,r2,C,Xi\n"); // Print Header
+        fprintf(interferenceFile, "marker 1,marker 2,marker 3,r1,r2,C max,log(C max),log(C=1),Xi\n"); // Print Header
         read = getline(&line, &len, tripletOfGensFile); // skip results from first line
 
         int i;
         for(i = 0; i < markers_counter && (read = getline(&line, &len, tripletOfGensFile)) != -1; i++)
         {
             cells = str_split(line, ',');
-            fprintf(interferenceFile, "%s,%s,%s,%f,%f,%f,%f\n",
+            fprintf(interferenceFile, "%s,%s,%s,%f,%f,%f,%f,%f,%f\n",
                 cells[0], cells[1], cells[2],
-                marker_differences[i][0], marker_differences[i][1], max_coefficients[i], lrScore[i]); // markers * 3, r1, r2, C, Xi
+                marker_differences[i][0], marker_differences[i][1], max_coefficients[i], likelyHoodMaximum[i],
+                likelyHood[i], lrScore[i]); // markers * 3, r1, r2, C max, log(C max), log(C=1), Xi
         }
 
         fclose(interferenceFile);
