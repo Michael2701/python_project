@@ -143,10 +143,11 @@ void main(int argc, char* argv[])
                             N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 2.0;
                         }
 
-                        // HAH, HBH:  00, 01, 11
+                        // HAH, HBH:  00, 01, 10, 11
                         if(i == 26 || i == 29){
                             N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 4.0;
                             N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 4.0;
+                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 4.0;
                             N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 4.0;
                         }
 
