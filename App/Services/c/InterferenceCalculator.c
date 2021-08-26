@@ -161,10 +161,10 @@ void main(int argc, char* argv[])
 
                         // HHH: 00, 01, 10, 11
                         if(i == 29){
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 8.0;
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 8.0;
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 8.0;
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 8.0;
+                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 4.0;
+                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 4.0;
+                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 4.0;
+                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 4.0;
                         }
                     }
 
