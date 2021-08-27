@@ -18,8 +18,7 @@ void calculateLikelyHood();
 void calculateLikelyHoodGradient();
 void calculateXi();
 void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName);
-FILE *openOutputFile(char *fileName);
-FILE *openFileTripleGenes(char * fileName);
+FILE *openFile(char* fileName, char* mode);
 
 
 /*** Variables ***/
@@ -55,7 +54,7 @@ void main(int argc, char* argv[])
                             "HAA", "HAB", "HAH", "HBA", "HBB", "HBH", "HHA", "HHB", "HHH"};
 
     if(argc >= 2){
-        fp = openFileTripleGenes(argv[1]);
+        fp = openFile(argv[1], "r");
         read = getline(&line, &len, fp); // skip results from first line
 
         while ((read = getline(&line, &len, fp)) != -1) {
@@ -254,8 +253,8 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
     FILE* tripletOfGensFile;
     FILE* interferenceFile;
 
-    tripletOfGensFile = openFileTripleGenes(tripletOfGensFileName);
-    interferenceFile = openOutputFile(interferenceFileName);
+    tripletOfGensFile = openFile(tripletOfGensFileName, "r");
+    interferenceFile = openFile(interferenceFileName, "w+");
 
     if(tripletOfGensFile && interferenceFile)
     {
@@ -280,11 +279,11 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
 }
 
 /**
-* This function open output file for "w+".
+* This function open output file
 */
-FILE *openOutputFile(char *fileName)
+FILE *openFile(char *fileName, char *mode)
 {
-    FILE *file = fopen(fileName, "w+");
+    FILE *file = fopen(fileName, mode);
 
     if(!file)
     {
@@ -295,20 +294,5 @@ FILE *openOutputFile(char *fileName)
     {
         return file;
     }
-}
-
-/**
-* This function add help file triple of genes for "r".
-*/
-FILE *openFileTripleGenes(char * fileName)
-{
-    FILE *file = fopen(fileName, "r");
-
-    if(!file)
-    {
-        printf("Error: can't open %s\n", fileName);
-        exit(EXIT_FAILURE);
-    }
-    return file;
 }
 
