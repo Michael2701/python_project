@@ -23,11 +23,10 @@ class TripletMarkersCalc(Model):
     xi = StringCol()
     step = StringCol()
     min_distance = StringCol()
-    max_distance =StringCol()
+    max_distance = StringCol()
 
     class sqlmeta:
         """
         define table name
         """
         table = 'markers_calc'
-
