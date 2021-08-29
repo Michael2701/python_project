@@ -22,5 +22,7 @@ venv/
 
 App/Storage/session.csv
 App/triplet_of_genes.csv
+App/DB/project.db
+Interference.csv
 
 

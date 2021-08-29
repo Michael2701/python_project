@@ -22,8 +22,13 @@ class SettingsController(Controller):
             view.title_font = config['title_font']
             view.font = config['app_font']
 
-    def set_config(self, config):
-        pass
+    def set_notification_config(self, config: dict):
+        """
+        save do json file configuration
+        :param config:
+        :return:
+        """
+        print("Warning: set_notification_config NOT IMPLEMENTED")
 
     def get_sms_config(self) -> int:
         """

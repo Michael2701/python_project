@@ -1,6 +1,5 @@
-from tkinter import Toplevel, Label, Radiobutton, IntVar, Checkbutton, W, X, Entry, Button
+from tkinter import Toplevel, IntVar, Checkbutton
 from typing import Any
-from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
 
 
@@ -8,11 +7,12 @@ class SettingAppModal:
     top_level_dialog = None
     sms_radio_button = None
     email_radio_button = None
-    sms_radio_button_status = IntVar()
-    email_radio_button_status = IntVar()
+    sms_radio_button_status = None
+    email_radio_button_status = None
 
     def __init__(self, master: Any):
         """
+        called by INIT
         :param master: ApplicationView window
         """
         self.master = master
@@ -34,7 +34,8 @@ class SettingAppModal:
         close setting modal
         :return: None
         """
-        SettingsController().set_config()
+        config = {"sms_status": self.sms_radio_button_status, "email_status": self.email_radio_button_status}
+        SettingsController().set_notification_config(config)
         self.top_level_dialog.destroy()
 
     def create_top_level_dialog(self) -> None:
