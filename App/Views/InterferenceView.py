@@ -6,14 +6,15 @@ from typing import Any, List
 from App.Controllers.InterferenceController import InterferenceController
 from App.Controllers.SettingsController import SettingsController
 from App.Models.GeneticFileModel import GeneticFileModel
+from App.Models.TripletMarkersCalc import TripletMarkersCalc
 
 
-class GeneticFilesView(Notebook):
-    __ctrl: SettingsController
+class InterferenceView(Notebook):
+    __ctrl: InterferenceController
     __master: Tk
     __files: List[GeneticFileModel]
 
-    def __init__(self, ctrl: SettingsController, master: Tk, files: GeneticFileModel):
+    def __init__(self, ctrl: InterferenceController, master: Tk, files: TripletMarkersCalc):
         """
         :param ctrl: view controller
         :param master: parent view
@@ -120,7 +121,7 @@ class GeneticFilesView(Notebook):
         self.__master = master
 
     @property
-    def ctrl(self) -> SettingsController:
+    def ctrl(self) -> InterferenceController:
         return self.__ctrl
 
     @ctrl.setter

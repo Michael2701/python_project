@@ -31,7 +31,7 @@ char** str_split(char* a_str, const char a_delim)
             buffer[j++] = a_str[i];
         }else{
             buffer[j] = '\0';
-            char* b = (char*)malloc(sizeof(char)*strlen(buffer)+10);
+            char* b = (char*)malloc(sizeof(char)*strlen(buffer)+1);
             for(int r = 0; r < strlen(buffer); r++){
                 b[r] = buffer[r];
             }

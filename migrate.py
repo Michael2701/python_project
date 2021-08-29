@@ -1,3 +1,4 @@
+from App.Migrations.TripletMarkersCalcMigration import TripletMarkersCalcMigration
 from App.Migrations.UsersMigration import UsersMigration
 from App.Migrations.GeneticFileMigration import GeneticFileMigration
 from App.Migrations.GeneMigration import GeneMigration
@@ -10,6 +11,7 @@ class MigrationsFactory:
 
     def __init__(self):
         self.migrations = [
+            [TripletMarkersCalcMigration, "markers_calc"],
             [InterferenceMigration, 'interference'],
             [UsersMigration, 'users'],
             [GeneticFileMigration, 'files'],

@@ -1,32 +1,21 @@
-from App.Models.GeneModel import GeneModel
+from App.Models.TripletMarkersCalc import TripletMarkersCalc
 
 
-class GeneMigration:
+class TripletMarkersCalcMigration:
     def __init__(self):
         """
-        create genes table and fill it with one dummy gene
+        create genes table
         """
-        self.create_genes_table()
-        self.insert_dummy_gene()
+        self.create_table()
 
-    def create_genes_table(self) -> None:
+    def create_table(self) -> None:
         """
         create genes table
         :return: None
         """
         try:
-            GeneModel.createTable()
+            TripletMarkersCalc.createTable()
 
         except Exception as e:
             print(str(e))
 
-    def insert_dummy_gene(self) -> None:
-        """
-        insert one dummy gene
-        :return: None
-        """
-        try:
-            # GeneModel._connection.debug = True
-            GeneModel(file_id="3", name="gene1", distance="123", successors="321")
-        except Exception as e:
-            print(str(e))

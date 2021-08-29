@@ -53,7 +53,7 @@ void main(int argc, char* argv[])
                             "BAA", "BAB", "BAH", "BBA", "BBB", "BBH", "BHA", "BHB", "BHH",
                             "HAA", "HAB", "HAH", "HBA", "HBB", "HBH", "HHA", "HHB", "HHH"};
 
-    if(argc >= 2){
+    if(argc >= 3){
         fp = openFile(argv[1], "r");
         read = getline(&line, &len, fp); // skip results from first line
 
@@ -178,12 +178,23 @@ void main(int argc, char* argv[])
         if (line)
             free(line);
 
-        calculateLikelyHoodGradient();
-        calculateXi();
-        createOutputCSV(argv[1], argv[2]);
+//        calculateLikelyHoodGradient();
+//        calculateXi();
+//        createOutputCSV(argv[1], argv[2]);
 
-        // system ("python App/myscript.py arg1 arg2");
         // TODO add trigger send SMS or/and EMAIL
+        int d = 0;
+        char python_command[100] = "python App/myscript.py ";
+        int command_length = strlen(python_command);
+
+        for(int f = 2, q = 0; f < argc; f++){
+            for(int x = strlen(argv[f]), d = 0; x ; x--, d++, q++){
+                python_command[command_length+q] = argv[f][d];
+            }
+            python_command[command_length + q++] = ' ';
+        }
+
+        system (python_command);
         exit(EXIT_SUCCESS);
     }
 }

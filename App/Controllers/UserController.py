@@ -31,7 +31,7 @@ class UserController(Controller):
         if self.user['user_role'] == 'admin':
             users = SimpleUser.select('id > 0')
         else:
-            users = SimpleUser.select(SimpleUser.q.rowid == int(self.user['rowid']))
+            users = SimpleUser.select(SimpleUser.q.id == int(self.user['id']))
 
         self.notebook = UsersView(self, self.master, users)
 
