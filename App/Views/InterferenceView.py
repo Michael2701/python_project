@@ -3,18 +3,19 @@ from tkinter import *
 from tkinter.ttk import Notebook
 from typing import Any, List
 
-from App.Controllers.InterferenceController import InterferenceController
+# from App.Controllers.InterferenceController import InterferenceController
+from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
 from App.Models.GeneticFileModel import GeneticFileModel
-from App.Models.TripletMarkersCalc import TripletMarkersCalc
+from App.Models.InterferenceRowModel import IntereferenceRowModel
 
 
 class InterferenceView(Notebook):
-    __ctrl: InterferenceController
+    __ctrl: Controller
     __master: Tk
     __files: List[GeneticFileModel]
 
-    def __init__(self, ctrl: InterferenceController, master: Tk, files: TripletMarkersCalc):
+    def __init__(self, ctrl: Controller, master: Tk, files: IntereferenceRowModel):
         """
         :param ctrl: view controller
         :param master: parent view
@@ -24,7 +25,7 @@ class InterferenceView(Notebook):
 
         SettingsController().set_view_settings(self)
         
-        self.ctrl = ctrl
+        self.ctrl = ctrl # InterferenceController
         self.master = master
         self.files = files
         self.init_window()
@@ -49,17 +50,23 @@ class InterferenceView(Notebook):
         label = Label(self, text="Name", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=1, padx=3, pady=3)
 
-        label = Label(self, text="Description", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Step", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=2, padx=3, pady=3)
 
-        label = Label(self, text="Created at", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Min distance", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=3, padx=3, pady=3)
 
-        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Max distance", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=4, padx=3, pady=3)
 
-        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="Created at", bg=self.bg, fg=self.fg, font=self.title_font)
         label.grid(row=0, column=5, padx=3, pady=3)
+
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=6, padx=3, pady=3)
+
+        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label.grid(row=0, column=7, padx=3, pady=3)
 
     @staticmethod
     def break_string(s) -> str:
@@ -78,25 +85,25 @@ class InterferenceView(Notebook):
         row = 1
 
         for file in self.files:
-            label = Label(self, text=file.id, bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label = Label(self, text=file[0], bg=self.bg, fg=self.fg, font=self.font, width=5)
             label.grid(row=row, column=0, padx=3, pady=3)
 
-            label = Label(self, text=file.file_name, bg=self.bg, fg=self.fg, font=self.font, width=15)
+            label = Label(self, text=file[6], bg=self.bg, fg=self.fg, font=self.font, width=20)
             label.grid(row=row, column=1, padx=3, pady=3)
 
-            label = Label(self, text=self.break_string(file.file_description), bg=self.bg, fg=self.fg, font=self.font, width=40)
+            label = Label(self, text=file[2], bg=self.bg, fg=self.fg, font=self.font, width=5)
             label.grid(row=row, column=2, padx=3, pady=3)
 
-            label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)
+            label = Label(self, text=file[3], bg=self.bg, fg=self.fg, font=self.font, width=5)
             label.grid(row=row, column=3, padx=3, pady=3)
 
-            button = Button(self, text="Interference", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f, False))
-            button.grid(row=row, column=4, padx=3, pady=3)
+            label = Label(self, text=file[4], bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label.grid(row=row, column=4, padx=3, pady=3)
+
+            label = Label(self, text=file[5], bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label.grid(row=row, column=5, padx=3, pady=3)
 
             button = Button(self, text="Excel", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
-            button.grid(row=row, column=5, padx=3, pady=3)
-
-            button = Button(self, text="Update", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.show_update_file_modal(f))
             button.grid(row=row, column=6, padx=3, pady=3)
 
             button = Button(self, text="Delete", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.show_delete_modal(f))
@@ -121,7 +128,7 @@ class InterferenceView(Notebook):
         self.__master = master
 
     @property
-    def ctrl(self) -> InterferenceController:
+    def ctrl(self) -> Controller:
         return self.__ctrl
 
     @ctrl.setter

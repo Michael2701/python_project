@@ -7,10 +7,10 @@ class InterferenceModel(Model):
     model for interference table
     """
     file_id = StringCol()
-    ids = StringCol()
-    name = StringCol()
-    successors = StringCol()
-    time_stamp = StringCol()
+    step = StringCol()
+    min_distance = StringCol()
+    max_distance = StringCol()
+    timestamp = StringCol()
 
     class sqlmeta:
         """

@@ -2,9 +2,9 @@ import subprocess
 from typing import Any
 
 from App.Controllers.Controller import Controller
-from App.Models.TripletMarkersCalc import TripletMarkersCalc
-# from App.Views.InterferenceView import InterferenceView
+from App.Models.InterferenceRowModel import IntereferenceRowModel
 from App.Models.SQLiteConnector import SQLiteConnector
+from App.Views.InterferenceView import InterferenceView
 
 
 class InterferenceController(Controller):
@@ -12,22 +12,20 @@ class InterferenceController(Controller):
         self.get_logged_user()
         self.master = master
 
-    def create_interference(self, file: TripletMarkersCalc, data: dict):
+    def create_interference(self, file: IntereferenceRowModel, data: dict):
         subprocess.check_call([r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id), str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
 
     def show_interference_view(self):
-        print('here')
-        print(self.user)
+        self.clear_view(self.master)
         connection = SQLiteConnector.create_connection('App/DB/project.db')
         cur = connection.cursor()
-        cur.execute("select * from markers_calc")
-        print(cur.fetchall())
+        cur.execute("select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id")
 
-        # if self.user['user_role'] == 'admin':
-        #     print(self.user)
-        #     files = TripletMarkersCalc.select(" file_id > 0")
-        #     for file in files:
-        #         print(file.id)
-        # else:
-        #     files = TripletMarkersCalc.select(TripletMarkersCalc.q.user_id == self.user['id'])
-        # InterferenceView(self, self.master, files)
+        if self.user['user_role'] == 'admin':
+            cur.execute("select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id")
+        else:
+            user_file_ids = ",".join(cur.execute(f"SELECT id FROM WHERE user_id={self.user.id}"))
+            cur.execute(f"select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id WHERE f.user_id IN ({user_file_ids})")
+
+        files = cur.fetchall()
+        InterferenceView(self, self.master, files)

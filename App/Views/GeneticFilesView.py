@@ -67,7 +67,7 @@ class GeneticFilesView(Notebook):
         :param s: string to break
         :return: string
         """
-        return '\n'.join(wrap(s, 40))
+        return '\n'.join(wrap(s, 35))
 
     def create_table(self) -> None:
         """
@@ -77,13 +77,13 @@ class GeneticFilesView(Notebook):
         row = 1
 
         for file in self.files:
-            label = Label(self, text=file.id, bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label = Label(self, text=file.id, bg=self.bg, fg=self.fg, font=self.font, width=5)
             label.grid(row=row, column=0, padx=3, pady=3)
 
-            label = Label(self, text=file.file_name, bg=self.bg, fg=self.fg, font=self.font, width=15)
+            label = Label(self, text=file.file_name, bg=self.bg, fg=self.fg, font=self.font, width=20)
             label.grid(row=row, column=1, padx=3, pady=3)
 
-            label = Label(self, text=self.break_string(file.file_description), bg=self.bg, fg=self.fg, font=self.font, width=40)
+            label = Label(self, text=self.break_string(file.file_description), bg=self.bg, fg=self.fg, font=self.font, width=30)
             label.grid(row=row, column=2, padx=3, pady=3)
 
             label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)

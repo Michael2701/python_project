@@ -2,12 +2,11 @@ from App.Models.Model import Model
 from sqlobject import *
 
 
-class TripletMarkersCalc(Model):
+class IntereferenceRowModel(Model):
     """
     model for interference table
     """
-    file_id = StringCol()
-    calc_id = StringCol()
+    interference_id = StringCol()
     marker1 = StringCol()
     marker2 = StringCol()
     marker3 = StringCol()
@@ -21,13 +20,10 @@ class TripletMarkersCalc(Model):
     log_cmax = StringCol()
     log_c1 = StringCol()
     xi = StringCol()
-    step = StringCol()
-    min_distance = StringCol()
-    max_distance =StringCol()
 
     class sqlmeta:
         """
         define table name
         """
-        table = 'markers_calc'
+        table = 'interference_row'
 

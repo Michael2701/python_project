@@ -1,7 +1,7 @@
-from App.Models.TripletMarkersCalc import TripletMarkersCalc
+from App.Models.InterferenceRowModel import IntereferenceRowModel
 
 
-class TripletMarkersCalcMigration:
+class InterferenceRowMigration:
     def __init__(self):
         """
         create genes table
@@ -14,7 +14,7 @@ class TripletMarkersCalcMigration:
         :return: None
         """
         try:
-            TripletMarkersCalc.createTable()
+            IntereferenceRowModel.createTable()
 
         except Exception as e:
             print(str(e))
