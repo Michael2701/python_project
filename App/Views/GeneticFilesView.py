@@ -1,5 +1,6 @@
 from textwrap import wrap
 from tkinter import *
+import tkinter.ttk as ttk
 from tkinter.ttk import Notebook
 from typing import Any, List
 
@@ -42,22 +43,22 @@ class GeneticFilesView(Notebook):
         create files table titles
         :return: None
         """
-        label = Label(self, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self, text="#")
         label.grid(row=0, column=0, padx=3, pady=3)
 
-        label = Label(self, text="Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self, text="Name")
         label.grid(row=0, column=1, padx=3, pady=3)
 
-        label = Label(self, text="Description", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self, text="Description")
         label.grid(row=0, column=2, padx=3, pady=3)
 
-        label = Label(self, text="Created at", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self, text="Created at")
         label.grid(row=0, column=3, padx=3, pady=3)
 
-        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self, text="")
         label.grid(row=0, column=4, padx=3, pady=3)
 
-        label = Label(self, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = Label(self, text="")
         label.grid(row=0, column=5, padx=3, pady=3)
 
     @staticmethod
@@ -77,28 +78,28 @@ class GeneticFilesView(Notebook):
         row = 1
 
         for file in self.files:
-            label = Label(self, text=file.id, bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label = ttk.Label(self, text=file.id, width=2)
             label.grid(row=row, column=0, padx=3, pady=3)
 
-            label = Label(self, text=file.file_name, bg=self.bg, fg=self.fg, font=self.font, width=15)
+            label = ttk.Label(self, text=file.file_name, width=30)
             label.grid(row=row, column=1, padx=3, pady=3)
 
-            label = Label(self, text=self.break_string(file.file_description), bg=self.bg, fg=self.fg, font=self.font, width=40)
+            label = ttk.Label(self, text=self.break_string(file.file_description), width=50)
             label.grid(row=row, column=2, padx=3, pady=3)
 
-            label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)
+            label = ttk.Label(self, text=file.file_created_at, width=11)
             label.grid(row=row, column=3, padx=3, pady=3)
 
-            button = Button(self, text="Interference", command=lambda f=file: self.ctrl.open_file_process_modal(f, False))
+            button = ttk.Button(self, text="Interference", command=lambda f=file: self.ctrl.open_file_process_modal(f, False))
             button.grid(row=row, column=4, padx=3, pady=3)
 
-            button = Button(self, text="Excel", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
+            button = ttk.Button(self, text="Excel", command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
             button.grid(row=row, column=5, padx=3, pady=3)
 
-            button = Button(self, text="Update", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.show_update_file_modal(f))
+            button = ttk.Button(self, text="Update", command=lambda f=file: self.ctrl.show_update_file_modal(f))
             button.grid(row=row, column=6, padx=3, pady=3)
 
-            button = Button(self, text="Delete", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.show_delete_modal(f))
+            button = ttk.Button(self, text="Delete", command=lambda f=file: self.ctrl.show_delete_modal(f))
             button.grid(row=row, column=7, padx=3, pady=3)
 
             row += 1
