@@ -21,7 +21,7 @@ class GeneticFilesView(Notebook):
         """
         Notebook.__init__(self, master)
 
-        SettingsController().set_view_settings(self)
+        # SettingsController().set_view_settings(self)
         
         self.ctrl = ctrl
         self.master = master
@@ -89,7 +89,7 @@ class GeneticFilesView(Notebook):
             label = Label(self, text=file.file_created_at, bg=self.bg, fg=self.fg, font=self.font, width=11)
             label.grid(row=row, column=3, padx=3, pady=3)
 
-            button = Button(self, text="Interference", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f, False))
+            button = Button(self, text="Interference", command=lambda f=file: self.ctrl.open_file_process_modal(f, False))
             button.grid(row=row, column=4, padx=3, pady=3)
 
             button = Button(self, text="Excel", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
