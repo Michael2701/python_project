@@ -1,5 +1,3 @@
-// Compile file with: gcc -o InterferenceCalculator InterferenceCalculator.c utils.o -lm
-
 #define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
@@ -34,13 +32,13 @@ typedef struct
 } TripleGenes;
 
 TripleGenes N_xx[N];
-//double N_00 = 0, N_01 = 0, N_10 = 0, N_11 = 0;
+
 double likelyHood[N];
 double likelyHoodMaximum[N];
 double max_coefficients[N];
 double lrScore[N];
 
-void main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     FILE * fp;
     char * line = NULL;
@@ -48,10 +46,6 @@ void main(int argc, char* argv[])
     ssize_t read;
     char** chunks;
     char* ptr;
-
-    char keys_list[27][4] = {"AAA", "AAB", "AAH", "ABA", "ABB", "ABH", "AHA", "AHB", "AHH",
-                            "BAA", "BAB", "BAH", "BBA", "BBB", "BBH", "BHA", "BHB", "BHH",
-                            "HAA", "HAB", "HAH", "HBA", "HBB", "HBH", "HHA", "HHB", "HHH"};
 
     if(argc >= 3){
         fp = openFile(argv[1], "r");
@@ -178,12 +172,12 @@ void main(int argc, char* argv[])
         if (line)
             free(line);
 
-//        calculateLikelyHoodGradient();
-//        calculateXi();
-//        createOutputCSV(argv[1], argv[2]);
+        calculateLikelyHoodGradient();
+        calculateXi();
+        createOutputCSV(argv[1], argv[2]);
 
         // TODO add trigger send SMS or/and EMAIL
-        int d = 0;
+
         char python_command[100] = "python App/myscript.py ";
         int command_length = strlen(python_command);
 
@@ -197,6 +191,8 @@ void main(int argc, char* argv[])
         system (python_command);
         exit(EXIT_SUCCESS);
     }
+
+    return 0;
 }
 
 /**
@@ -208,7 +204,6 @@ void calculateLikelyHoodGradient()
     double max_log_value, temp_log_value;
     double P_00, P_10, P_01, P_11;
     double max_coefficient_value;
-    double one = 1.1;
 
     int i;
     for(i = 0; i < markers_counter; i++)
@@ -306,4 +301,3 @@ FILE *openFile(char *fileName, char *mode)
         return file;
     }
 }
-
