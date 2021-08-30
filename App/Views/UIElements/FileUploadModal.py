@@ -1,12 +1,12 @@
 import os
 from datetime import datetime
 import tkinter as tk
-from tkinter import Entry, Toplevel, Button, Label, Text
+import tkinter.ttk as ttk
+from tkinter import Entry, Toplevel, Button, Label, Text, X, LEFT
 from typing import Any
 
 from App.Services.Message import Message
 from tkinter import filedialog
-from App.Controllers.SettingsController import SettingsController
 
 
 class FileUploadModal:
@@ -92,8 +92,6 @@ class FileUploadModal:
         self.ctrl = ctrl
         self.master = master
 
-        SettingsController().set_view_settings(self)
-
         self.title = "File upload"
         self.file_path = None
         self.file_name = None
@@ -107,12 +105,11 @@ class FileUploadModal:
         init file upload modal
         :return: None
         """
-        self.create_toplevel_dialog()
+        self.create_top_level_dialog()
 
-        self.set_file_name_field()
+        self.set_file_name_fields()
         self.set_file_description_field()
 
-        self.set_file_dialog_button()
         self.set_submit_button()
         self.set_cancel_button()
 
@@ -123,7 +120,7 @@ class FileUploadModal:
         """
         self.top_level_dialog.destroy()
 
-    def create_toplevel_dialog(self) -> None:
+    def create_top_level_dialog(self) -> None:
         """
         create top level dialog
         :return: None
@@ -133,6 +130,14 @@ class FileUploadModal:
         self.top_level_dialog.minsize(300, 100)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_submit_button(self) -> None:
+        """
+        create submit button
+        :return: None
+        """
+        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.on_submit)
+        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
 
     def on_submit(self) -> None:
         """
@@ -157,49 +162,42 @@ class FileUploadModal:
         self.file_name_entry.insert(0, self.file_path.split("/")[-1])
         self.file_name_entry.configure(state='readonly')
 
-    def set_file_dialog_button(self) -> None:
-        """
-        create file dialog button
-        :return: None
-        """
-        self.file_dialog_button = Button(self.top_level_dialog, text='Choose file', font=self.font, fg=self.fg, command=self.open_file_dialog)
-        self.file_dialog_button.grid(row=1, column=1)
-
-    def set_submit_button(self) -> None:
-        """
-        create submit button
-        :return: None
-        """
-        self.submit_button = Button(self.top_level_dialog, text='Submit', font=self.font, fg=self.fg, command=self.on_submit)
-        self.submit_button.grid(row=6, column=0)
-
     def set_cancel_button(self) -> None:
         """
         create cancel button
         :return: None
         """
-        self.cancel_button = Button(self.top_level_dialog, text='Cancel', font=self.font, fg=self.fg, command=self.close_modal)
-        self.cancel_button.grid(row=6, column=1)
-    
-    def set_file_name_field(self) -> None:
+        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
+        # self.cancel_button.grid(row=6, column=1)
+        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+
+    def set_file_name_fields(self) -> None:
         """
-        create file name field and label
+        create file name field, label and button
         :return: None
         """
-        self.file_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File name")
-        self.file_name_label.grid(row=0, column=0)
-        self.file_name_entry = Entry(self.top_level_dialog, state='readonly')
-        self.file_name_entry.grid(row=1, column=0)
+        self.file_name_label = ttk.Label(self.top_level_dialog, text="File name")
+        self.file_name_label.pack(fill=X, expand=False, padx=5)
+
+        frame = tk.Frame(self.top_level_dialog)
+        frame.pack(fill=tk.X)
+
+        self.file_name_entry = ttk.Entry(frame, width=30, state='readonly')
+        self.file_name_entry.pack(side=LEFT, expand=False, padx=5)
+
+        self.file_dialog_button = ttk.Button(frame, text='Choose file', command=self.open_file_dialog)
+        self.file_dialog_button.pack(fill=X, expand=False, padx=5)
 
     def set_file_description_field(self) -> None:
         """
         create file description filed and label
         :return: None
         """
-        self.file_description_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Description")
-        self.file_description_label.grid(row=2, column=0)
+        self.file_description_label = ttk.Label(self.top_level_dialog, text="Description")
+        self.file_description_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+
         self.file_description_entry = Text(self.top_level_dialog, height=3, width=6)
-        self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
+        self.file_description_entry.pack(fill=X, expand=False, padx=5)
 
     def get_form_data(self) -> bool:
         """
@@ -236,7 +234,7 @@ class FileUploadModal:
 
     def check_file_description(self) -> bool:
         """
-        check if value of file description is vald
+        check if value of file description is valid
         :return: True if valid and False otherwise
         """
         try:
@@ -276,9 +274,3 @@ class FileUploadModal:
         except Exception as e:
             print(str(e))
             return False
-
-         
-
-
-
-

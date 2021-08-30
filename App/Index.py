@@ -16,7 +16,7 @@ class Index:
         root.iconphoto(True, tk.PhotoImage(file="App/Storage/Images/logo.png"))
 
         # Place the window in the center of the screen
-        windowWidth = 1100
+        windowWidth = 1250
         windowHeight = 500
         screenWidth = root.winfo_screenwidth()
         screenHeight = root.winfo_screenheight()
