@@ -21,8 +21,6 @@ class GeneticFilesView(Notebook):
         :param files: GeneticFileModel object list
         """
         Notebook.__init__(self, master)
-
-        # SettingsController().set_view_settings(self)
         
         self.ctrl = ctrl
         self.master = master

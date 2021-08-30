@@ -1,4 +1,5 @@
-from tkinter import Toplevel, IntVar, Checkbutton
+from tkinter import Toplevel, IntVar, Checkbutton, X
+import tkinter.ttk as ttk
 from typing import Any
 from App.Controllers.SettingsController import SettingsController
 
@@ -9,6 +10,7 @@ class SettingAppModal:
     email_radio_button = None
     sms_radio_button_status = None
     email_radio_button_status = None
+    theme_status = None
 
     def __init__(self, master: Any):
         """
@@ -26,8 +28,7 @@ class SettingAppModal:
         self.create_top_level_dialog()
         self.set_sms_check_button()
         self.set_email_check_button()
-
-        self.sms_radio_button_status = SettingsController()
+        self.set_black_theme_button()
 
     def close_modal(self) -> None:
         """
@@ -45,7 +46,8 @@ class SettingAppModal:
         """
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.minsize(300, 150)
+        self.top_level_dialog.minsize(210, 150)
+        self.top_level_dialog.maxsize(210, 150)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
@@ -55,13 +57,12 @@ class SettingAppModal:
         :return: None
         """
         self.sms_radio_button_status = IntVar()
-        self.sms_radio_button = Checkbutton(self.top_level_dialog, text="SMS Notification",
-                                            variable=self.sms_radio_button_status,
-                                            onvalue=1,
-                                            offvalue=0,
-                                            height=2,
-                                            width=15)
-        self.sms_radio_button.pack()
+
+        # Switch
+        switch = ttk.Checkbutton(self.top_level_dialog, text='SMS Notification', style='Switch',
+                                 variable=self.sms_radio_button_status, offvalue=0, onvalue=1)
+        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch.invoke()
 
     def set_email_check_button(self) -> None:
         """
@@ -69,10 +70,22 @@ class SettingAppModal:
         :return: None
         """
         self.email_radio_button_status = IntVar()
-        self.email_radio_button = Checkbutton(self.top_level_dialog, text="Email Notification",
-                                              variable=self.email_radio_button_status,
-                                              onvalue=1,
-                                              offvalue=0,
-                                              height=2,
-                                              width=15)
-        self.email_radio_button.pack()
+
+        # Switch
+        switch = ttk.Checkbutton(self.top_level_dialog, text='EMAIL Notification', style='Switch',
+                                 variable=self.email_radio_button_status, offvalue=0, onvalue=1)
+        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch.invoke()
+
+    def set_black_theme_button(self) -> None:
+        """
+        :return:
+        """
+        print("Theme switching NOT IMPLEMENTED")
+        self.theme_status = IntVar()
+
+        # Switch
+        switch = ttk.Checkbutton(self.top_level_dialog, text='Night Theme', style='Switch',
+                                 variable=self.theme_status, offvalue=0, onvalue=1)
+        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch.invoke()

@@ -1,7 +1,7 @@
 
 from typing import Any
 import tkinter.ttk as ttk
-from tkinter import Toplevel, X
+from tkinter import Toplevel, X, IntVar
 from App.Models.SimpleUser import SimpleUser
 from App.Controllers.Controller import Controller
 

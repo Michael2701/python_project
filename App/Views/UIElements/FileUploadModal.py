@@ -168,7 +168,6 @@ class FileUploadModal:
         :return: None
         """
         self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
-        # self.cancel_button.grid(row=6, column=1)
         self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
 
     def set_file_name_fields(self) -> None:
