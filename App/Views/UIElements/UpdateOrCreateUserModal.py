@@ -1,7 +1,7 @@
-from tkinter import Entry, StringVar, Toplevel, Button, Label, X
+from tkinter import StringVar, Toplevel, X
 import tkinter as tk
+import tkinter.ttk as ttk
 from typing import Any
-from tkinter.ttk import Combobox
 
 from App.Controllers.SettingsController import SettingsController
 from App.Models.SimpleUser import SimpleUser
@@ -82,51 +82,47 @@ class UpdateOrCreateUserModal:
     def create_top_level_dialog(self) -> None:
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.minsize(300, 300)
+        self.top_level_dialog.minsize(300, 400)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 
     def set_submit_button(self) -> None:
-        self.submit_button = Button(self.top_level_dialog, text='Submit', fg=self.fg, font=self.font,
-                                    command=self.do_create_or_update)
-        self.submit_button.pack(fill=X, expand=False, padx=5, pady=1)
+        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.do_create_or_update)
+        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(10, 0))
 
     def set_cancel_button(self) -> None:
-        self.cancel_button = Button(self.top_level_dialog, text='Cancel', fg=self.fg, font=self.font,
-                                    command=self.close_modal)
-        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=1)
+        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
+        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
 
     def set_first_name_field(self) -> None:
-        self.first_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
-                                      text='First Name')
+        self.first_name_label = ttk.Label(self.top_level_dialog, text='First Name')
         self.first_name_label.pack(fill=X, expand=False, padx=5)
-        self.first_name_entry = Entry(self.top_level_dialog)
+        self.first_name_entry = ttk.Entry(self.top_level_dialog)
         self.first_name_entry.pack(fill=X, expand=False, padx=5)
 
     def set_last_name_field(self) -> None:
-        self.last_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
-                                     text="Last Name")
-        self.last_name_label.pack(fill=X, expand=False, padx=5)
+        self.last_name_label = ttk.Label(self.top_level_dialog, text="Last Name")
+        self.last_name_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
 
-        self.last_name_entry = Entry(self.top_level_dialog)
+        self.last_name_entry = ttk.Entry(self.top_level_dialog)
         self.last_name_entry.pack(fill=X, expand=False, padx=5)
 
     def set_email_field(self) -> None:
-        self.email_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Email")
-        self.email_label.pack(fill=X, expand=False, padx=5)
-        self.email_entry = Entry(self.top_level_dialog)
+        self.email_label = ttk.Label(self.top_level_dialog, text="Email")
+        self.email_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+
+        self.email_entry = ttk.Entry(self.top_level_dialog)
         self.email_entry.pack(fill=X, expand=False, padx=5)
 
     def set_user_role_field(self) -> None:
-        self.user_role_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
-                                     text="User Role")
-        self.user_role_label.pack(fill=X, expand=False, padx=5)
+        self.user_role_label = ttk.Label(self.top_level_dialog, text="User Role")
+        self.user_role_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
 
         state = 'disabled'
         if self.logged_user['user_role'] == 'admin':
             state = 'readonly'
 
-        self.user_role_entry = Combobox(
+        self.user_role_entry = ttk.Combobox(
             self.top_level_dialog,
             values=self.roles,
             textvariable=self.default_role,
@@ -135,11 +131,10 @@ class UpdateOrCreateUserModal:
         self.user_role_entry.pack(fill=X, expand=False, padx=5)
 
     def set_password_field(self) -> None:
-        self.password_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Password")
-        # self.password_label.grid(row=4, column=0)
-        self.password_label.pack(fill=X, expand=False, padx=5)
-        self.password_entry = Entry(self.top_level_dialog)
-        # self.password_entry.grid(row=5, column=0)
+        self.password_label = ttk.Label(self.top_level_dialog, text="Password")
+        self.password_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+
+        self.password_entry = ttk.Entry(self.top_level_dialog)
         self.password_entry.pack(fill=X, expand=False, padx=5)
 
     def set_fields_values(self) -> None:
