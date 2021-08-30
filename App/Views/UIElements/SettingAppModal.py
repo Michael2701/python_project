@@ -1,6 +1,8 @@
 from tkinter import Toplevel, IntVar, Checkbutton, X
 import tkinter.ttk as ttk
 from typing import Any
+
+import App.Index
 from App.Controllers.SettingsController import SettingsController
 
 
@@ -10,7 +12,7 @@ class SettingAppModal:
     email_radio_button = None
     sms_radio_button_status = None
     email_radio_button_status = None
-    theme_status = None
+    app_theme = None
 
     def __init__(self, master: Any):
         """
@@ -24,6 +26,7 @@ class SettingAppModal:
         settings.set_view_settings(self)
         self.sms_radio_button_status = settings.get_sms_config()
         self.email_radio_button_status = settings.get_email_config()
+        self.app_theme = settings.get_theme()
 
         self.create_top_level_dialog()
         self.set_sms_check_button()
@@ -35,7 +38,8 @@ class SettingAppModal:
         close setting modal
         :return: None
         """
-        config = {"sms_status": self.sms_radio_button_status, "email_status": self.email_radio_button_status}
+        config = {"sms_status": self.sms_radio_button_status,
+                  "email_status": self.email_radio_button_status}
         SettingsController().set_notification_config(config)
         self.top_level_dialog.destroy()
 
@@ -82,10 +86,15 @@ class SettingAppModal:
         :return:
         """
         print("Theme switching NOT IMPLEMENTED")
-        self.theme_status = IntVar()
+        night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
+        day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
 
         # Switch
         switch = ttk.Checkbutton(self.top_level_dialog, text='Night Theme', style='Switch',
-                                 variable=self.theme_status, offvalue=0, onvalue=1)
+                                 variable=self.app_theme, offvalue=day_theme, onvalue=night_theme)
         switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+
+        SettingsController().set_theme(self.app_theme)
+
+        App.Index.Index.enable_app_theme(self.master)
         switch.invoke()

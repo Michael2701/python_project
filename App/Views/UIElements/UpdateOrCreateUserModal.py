@@ -82,7 +82,7 @@ class UpdateOrCreateUserModal:
     def create_top_level_dialog(self) -> None:
         self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.minsize(300, 400)
+        self.top_level_dialog.minsize(300, 300)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
 

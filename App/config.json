@@ -5,5 +5,7 @@
     "app_font": "Helvetica 11",
     "title_font": "Helvetica 11 bold",
     "sms_notification": "0",
-    "email_notification": "0"
+    "email_notification": "0",
+
+    "theme": "App/Azure-ttk-theme/azure/azure.tcl"
 }
