@@ -1,6 +1,5 @@
-from tkinter import BOTH
+from tkinter import BOTH, Tk, PhotoImage
 
-import tk
 import tkinter.ttk as ttk
 
 from App.Controllers.AuthController import AuthController
@@ -12,9 +11,9 @@ class Index:
     def __init__(self) -> None:
 
         # Create the window
-        self.root = tk.Tk()
+        self.root = Tk()
         self.root.title("Genetic App")
-        self.root.iconphoto(True, tk.PhotoImage(file="App/Storage/Images/logo.png"))
+        self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))
 
         # Place the window in the center of the screen
         windowWidth = 1250

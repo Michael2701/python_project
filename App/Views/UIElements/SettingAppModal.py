@@ -1,8 +1,8 @@
 from tkinter import Toplevel, IntVar, Checkbutton, X
 import tkinter.ttk as ttk
 from typing import Any
+# from App.Index import Index
 
-import App.Index
 from App.Controllers.SettingsController import SettingsController
 
 
@@ -96,5 +96,5 @@ class SettingAppModal:
 
         SettingsController().set_theme(self.app_theme)
 
-        App.Index.Index.enable_app_theme(self.master)
+        # Index.enable_app_theme(self.master)
         switch.invoke()
