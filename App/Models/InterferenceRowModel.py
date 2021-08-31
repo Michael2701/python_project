@@ -20,20 +20,10 @@ class IntereferenceRowModel(Model):
     log_cmax = StringCol()
     log_c1 = StringCol()
     xi = StringCol()
-<<<<<<< HEAD:App/Models/InterferenceRowModel.py
-=======
-    step = StringCol()
-    min_distance = StringCol()
-    max_distance = StringCol()
->>>>>>> develop:App/Models/TripletMarkersCalc.py
 
     class sqlmeta:
         """
         define table name
         """
-<<<<<<< HEAD:App/Models/InterferenceRowModel.py
         table = 'interference_row'
 
-=======
-        table = 'markers_calc'
->>>>>>> develop:App/Models/TripletMarkersCalc.py

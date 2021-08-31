@@ -1,3 +1,4 @@
+from tkinter.ttk import Notebook
 from typing import Any
 from App.Controllers.Controller import Controller
 from App.Models.SimpleUser import SimpleUser
@@ -11,8 +12,9 @@ from App.Services.FileHelper import FileHelper
 
 class AuthController(Controller):
 
-    def __init__(self, master: Any):
+    def __init__(self, master: Any, notebook: Notebook):
         self.master = master
+        self.notebook = notebook
         self.login_modal = None
         self.logged_user = None
         self.login_data = None
@@ -41,7 +43,7 @@ class AuthController(Controller):
                 FileHelper.write_csv(file_path="App/Storage/session.csv", data=[user_dict], field_names=fields)
                 FileEncryptor("session.csv").encrypt_file()
                 self.login_modal.close_modal()
-                ApplicationView(self.master, self.logged_user)
+                ApplicationView(self.master, self.notebook, self.logged_user)
             else:
                 Message.warning("Wrong email or password")
         except Exception as e:

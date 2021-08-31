@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+from tkinter.ttk import Notebook
 from typing import Any
 from App.Controllers.UserController import UserController
 from App.Controllers.GeneticFileController import GeneticFileController
@@ -65,15 +66,15 @@ class ApplicationView (Frame):
     def interference_menu(self, menu) -> None:
         self.__interference_menu = menu
 
-    def __init__(self, master: Any, logged_user: SimpleUser):
+    def __init__(self, master: Any, notebook: Notebook, logged_user: SimpleUser):
         """
         :param master: parent view
         :param logged_user: SimpleUser object logged user_menu
         """
         Frame.__init__(self, master)
-        self.uctrl = UserController(self)
-        self.gfctrl = GeneticFileController(self)
-        self.inctrl = InterferenceController(self)
+        self.uctrl = UserController(notebook)
+        self.gfctrl = GeneticFileController(notebook)
+        self.inctrl = InterferenceController(notebook)
 
         SettingsController().set_view_settings(self)
 
@@ -88,7 +89,7 @@ class ApplicationView (Frame):
         init application view window
         :return: None
         """
-        self.master.title("Genetic App")
+        # self.master.title("Genetic App")
         self.pack(fill=BOTH, expand=1)
 
         self.create_menu()
