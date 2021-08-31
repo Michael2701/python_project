@@ -99,7 +99,7 @@ class FileProcessModal:
                 if os.path.exists(file_triplet_name):
                     os.remove(file_triplet_name)
                 FileHelper.write_list_to_csv(file_triplet_name, self.genetic_file_ctrl.create_list_of_markers())
-                InterferenceController().create_interference(self.file)
+                InterferenceController().create_interference(self.file, self.data)
 
     def check_form_data(self):
         if self.data["min_distance"] >= self.data["max_distance"]:

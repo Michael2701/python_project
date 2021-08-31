@@ -5,16 +5,16 @@ from sqlite3 import Error
 class SQLiteConnector:
 
     @staticmethod
-    def create_connection():
+    def create_connection(db_path="App/DB/project.db"):
         """
         create a database connection to the SQLite database
         specified by the db_file
         :return: Connection object or None
         """
-        connection_string = 'App/DB/project.db'
+
         conn = None
         try:
-            conn = sqlite3.connect(connection_string)
+            conn = sqlite3.connect(db_path)
         except Error as e:
             print(e)
         finally:

@@ -4,6 +4,7 @@ from typing import Any
 from App.Controllers.UserController import UserController
 from App.Controllers.GeneticFileController import GeneticFileController
 from App.Controllers.SettingsController import SettingsController
+from App.Controllers.InterferenceController import InterferenceController
 from App.Models.SimpleUser import SimpleUser
 from App.Views.UIElements.SettingAppModal import SettingAppModal
 
@@ -13,6 +14,7 @@ class ApplicationView (Frame):
     __file_menu: Menu
     __help_menu: Menu
     __edit_menu: Menu
+    __interference_menu: Menu
     __menu: Menu
 
     @property
@@ -55,6 +57,14 @@ class ApplicationView (Frame):
     def menu(self, menu) -> None:
         self.__menu = menu
 
+    @property
+    def interference_menu(self) -> Menu:
+        return self.__interference_menu
+
+    @interference_menu.setter
+    def interference_menu(self, menu) -> None:
+        self.__interference_menu = menu
+
     def __init__(self, master: Any, logged_user: SimpleUser):
         """
         :param master: parent view
@@ -63,6 +73,7 @@ class ApplicationView (Frame):
         Frame.__init__(self, master)
         self.uctrl = UserController(self)
         self.gfctrl = GeneticFileController(self)
+        self.inctrl = InterferenceController(self)
 
         SettingsController().set_view_settings(self)
 
@@ -85,6 +96,7 @@ class ApplicationView (Frame):
         self.create_user_cascade()
         self.create_settings_cascade()
         self.create_help_cascade()
+        self.create_interference_cascade()
 
     def create_menu(self) -> None:
         """
@@ -104,6 +116,15 @@ class ApplicationView (Frame):
         self.file_menu.add_command(label='Upload file', command=self.gfctrl.upload_file)
         self.file_menu.add_command(label='Exit', command=exit)
         self.menu.add_cascade(label='File', font=self.title_font, menu=self.file_menu)
+
+    def create_interference_cascade(self) -> None:
+        """
+        create interference_menu cascade in mane menu
+        :return: None
+        """
+        self.interference_menu = Menu(self.menu, tearoff=0)
+        self.interference_menu.add_command(label='Show interference', command=self.inctrl.show_interference_view)
+        self.menu.add_cascade(label='Interference', font=self.title_font, menu=self.interference_menu)
 
     def create_user_cascade(self) -> None:
         """
