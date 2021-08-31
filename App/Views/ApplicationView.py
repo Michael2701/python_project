@@ -113,7 +113,7 @@ class ApplicationView (Frame):
         """
         self.file_menu = Menu(self.menu, tearoff=0)
         self.file_menu.add_command(label='Show files', command=self.gfctrl.display_files)
-        self.file_menu.add_command(label='Upload file_menu', command=self.gfctrl.upload_file)
+        self.file_menu.add_command(label='Upload file', command=self.gfctrl.upload_file)
         self.file_menu.add_command(label='Exit', command=exit)
         self.menu.add_cascade(label='File', font=self.title_font, menu=self.file_menu)
 

@@ -67,3 +67,22 @@ class SettingsController(Controller):
         with open(self.config_path) as json_config:
             config = json.load(json_config)
             config['email_notification'] = str(email_status)
+
+    def get_theme(self) -> str:
+        """
+        get theme path
+        :return: path to theme
+        """
+        with open(self.config_path) as json_config:
+            config = json.load(json_config)
+            return config['theme']
+
+    def set_theme(self, theme_path: str) -> None:
+        """
+        save theme to json config file
+        :param theme_path: path to theme in project
+        :return: None
+        """
+        with open(self.config_path) as json_config:
+            config = json.load(json_config)
+            config['theme'] = str(theme_path)
