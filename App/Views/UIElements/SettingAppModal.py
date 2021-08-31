@@ -12,7 +12,11 @@ class SettingAppModal:
     email_radio_button = None
     sms_radio_button_status = None
     email_radio_button_status = None
+    theme_switch_status = None
     app_theme = None
+
+    night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
+    day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
 
     def __init__(self, master: Any):
         """
@@ -31,7 +35,7 @@ class SettingAppModal:
         self.create_top_level_dialog()
         self.set_sms_check_button()
         self.set_email_check_button()
-        self.set_black_theme_button()
+        self.set_themes_switch()
 
     def close_modal(self) -> None:
         """
@@ -81,20 +85,32 @@ class SettingAppModal:
         switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
         switch.invoke()
 
-    def set_black_theme_button(self) -> None:
+    def set_themes_switch(self) -> None:
         """
-        :return:
+        Customize theme switch
+        :return: None
         """
-        print("Theme switching NOT IMPLEMENTED")
+        self.theme_switch_status = IntVar()
+
+        if self.app_theme == self.night_theme:
+            self.theme_switch_status.set(0)  # Set switch to ON position
+        else:
+            self.theme_switch_status.set(1)  # Set switch to OFF position
+
+        switch = ttk.Checkbutton(self.top_level_dialog, text='Night Theme', style='Switch',
+                                 variable=self.theme_switch_status, offvalue=0, onvalue=1, command=self.on_theme_switch_listener)
+        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch.invoke()
+
+    def on_theme_switch_listener(self) -> None:
+        """
+        called when theme switch changed
+        :return: None
+        """
         night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
         day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
 
-        # Switch
-        switch = ttk.Checkbutton(self.top_level_dialog, text='Night Theme', style='Switch',
-                                 variable=self.app_theme, offvalue=day_theme, onvalue=night_theme)
-        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
-
-        SettingsController().set_theme(self.app_theme)
-
-        # Index.enable_app_theme(self.master)
-        switch.invoke()
+        if self.theme_switch_status.get():
+            SettingsController().set_theme(night_theme)
+        else:
+            SettingsController().set_theme(day_theme)

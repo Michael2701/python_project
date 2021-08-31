@@ -85,7 +85,10 @@ class SettingsController(Controller):
         :param theme_path: path to theme in project
         :return: None
         """
+        config = {}
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            config['theme'] = str(theme_path)
-            # TODO save json
+
+        with open(self.config_path, 'w') as json_config:
+            config['theme'] = theme_path
+            json.dump(config, json_config)
