@@ -1,8 +1,8 @@
-# Importing Tkinter and Ttk
-import tkinter as tk
-from tkinter import ttk
+from tkinter import BOTH
 
-from ttkthemes import ThemedTk
+import tk
+import tkinter.ttk as ttk
+
 from App.Controllers.AuthController import AuthController
 from App.Controllers.SettingsController import SettingsController
 
@@ -27,7 +27,11 @@ class Index:
 
         self.enable_app_theme()
 
-        auth_ctrl = AuthController(self.root)
+        self.notebook = ttk.Notebook(self.root)
+        self.notebook.pack(fill=BOTH, expand=True)
+        self.notebook.pressed_index = None
+
+        auth_ctrl = AuthController(self.root, self.notebook)
         auth_ctrl.show_login_modal()
 
         self.root.mainloop()
