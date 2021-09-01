@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 from typing import Any
-from tkinter.ttk import Notebook
 
 from App.Controllers import Controller
 from App.Controllers.SettingsController import SettingsController

@@ -1,10 +1,8 @@
 from textwrap import wrap
 from tkinter import *
 from tkinter import ttk
-from tkinter.ttk import Notebook
 from typing import Any, List
 
-# from App.Controllers.InterferenceController import InterferenceController
 from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
 from App.Models.GeneticFileModel import GeneticFileModel
