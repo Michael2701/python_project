@@ -1,5 +1,6 @@
 from textwrap import wrap
 from tkinter import *
+from tkinter import ttk
 from tkinter.ttk import Notebook
 from typing import Any, List
 
@@ -22,14 +23,8 @@ class InterferenceView(Canvas):
         :param files: GeneticFileModel object list
         """
         Canvas.__init__(self, master)
-
-        scroll = Scrollbar(self, command=self.yview)
-        self.config(yscrollcommand=scroll.set, scrollregion=(0, 0, 500, 1000))
-        self.pack(side=LEFT, fill=BOTH, expand=True)
-        scroll.pack(side=RIGHT, fill=Y)
-
-        self.frame = Frame(self, width=500, height=1000)
-        self.create_window((300, 40), window=self.frame)
+        self.scroll = ttk.Scrollbar(master, command=self.yview)
+        self.frame = ttk.Frame(self, width=500, height=1000)
 
         SettingsController().set_view_settings(self)
         
@@ -45,35 +40,40 @@ class InterferenceView(Canvas):
         """
         self.create_table()
         self.create_table_titles()
-        self.pack(fill='both')
+
+        self.create_window(0, 0, anchor='nw', window=self.frame)
+        self.update_idletasks()
+        self.configure(yscrollcommand=self.scroll.set, scrollregion=self.bbox('all'))
+        self.pack(side=LEFT, fill=BOTH, expand=True)
+        self.scroll.pack(side=RIGHT, fill=Y)
 
     def create_table_titles(self) -> None:
         """
         create files table titles
         :return: None
         """
-        label = Label(self.frame, text="#", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="#")
         label.grid(row=0, column=0, padx=3, pady=3)
 
-        label = Label(self.frame, text="Name", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="Name")
         label.grid(row=0, column=1, padx=3, pady=3)
 
-        label = Label(self.frame, text="Step", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="Step")
         label.grid(row=0, column=2, padx=3, pady=3)
 
-        label = Label(self.frame, text="Min distance", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="Min distance")
         label.grid(row=0, column=3, padx=3, pady=3)
 
-        label = Label(self.frame, text="Max distance", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="Max distance")
         label.grid(row=0, column=4, padx=3, pady=3)
 
-        label = Label(self.frame, text="Created at", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="Created at")
         label.grid(row=0, column=5, padx=3, pady=3)
 
-        label = Label(self.frame, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="")
         label.grid(row=0, column=6, padx=3, pady=3)
 
-        label = Label(self.frame, text="", bg=self.bg, fg=self.fg, font=self.title_font)
+        label = ttk.Label(self.frame, text="")
         label.grid(row=0, column=7, padx=3, pady=3)
 
     @staticmethod
@@ -93,28 +93,28 @@ class InterferenceView(Canvas):
         row = 1
 
         for file in self.files:
-            label = Label(self.frame, text=file[0], bg=self.bg, fg=self.fg, font=self.font, width=5)
+            label = ttk.Label(self.frame, text=file[0])
             label.grid(row=row, column=0, padx=3, pady=3)
 
-            label = Label(self.frame, text=file[6], bg=self.bg, fg=self.fg, font=self.font, width=20)
+            label = ttk.Label(self.frame, text=file[6])
             label.grid(row=row, column=1, padx=3, pady=3)
 
-            label = Label(self.frame, text=file[2], bg=self.bg, fg=self.fg, font=self.font, width=5)
+            label = ttk.Label(self.frame, text=file[2])
             label.grid(row=row, column=2, padx=3, pady=3)
 
-            label = Label(self.frame, text=file[3], bg=self.bg, fg=self.fg, font=self.font, width=5)
+            label = ttk.Label(self.frame, text=file[3])
             label.grid(row=row, column=3, padx=3, pady=3)
 
-            label = Label(self.frame, text=file[4], bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label = ttk.Label(self.frame, text=file[4])
             label.grid(row=row, column=4, padx=3, pady=3)
 
-            label = Label(self.frame, text=file[5], bg=self.bg, fg=self.fg, font=self.font, width=10)
+            label = ttk.Label(self.frame, text=file[5])
             label.grid(row=row, column=5, padx=3, pady=3)
 
-            button = Button(self.frame, text="Excel", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
+            button = ttk.Button(self.frame, text="Excel", command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
             button.grid(row=row, column=6, padx=3, pady=3)
 
-            button = Button(self.frame, text="Delete", font=self.font, fg=self.fg, command=lambda f=file: self.ctrl.show_delete_modal(f))
+            button = ttk.Button(self.frame, text="Delete", command=lambda f=file: self.ctrl.show_delete_modal(f))
             button.grid(row=row, column=7, padx=3, pady=3)
 
             row += 1

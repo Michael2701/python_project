@@ -21,14 +21,8 @@ class GeneticFilesView(Canvas):
         :param files: GeneticFileModel object list
         """
         Canvas.__init__(self, master, width=500, height=1000)
-
-        scroll = Scrollbar(self, command=self.yview)
-        self.config(yscrollcommand=scroll.set, scrollregion=(0, 0, 500, 1000))
-        self.pack(side=LEFT, fill=BOTH, expand=True)
-        scroll.pack(side=RIGHT, fill=Y)
-
-        self.frame = Frame(self, width=500, height=1000)
-        self.create_window((400, 260), window=self.frame)
+        self.scroll = ttk.Scrollbar(master, command=self.yview)
+        self.frame = ttk.Frame(self, width=500, height=1000)
 
         SettingsController().set_view_settings(self)
         self.ctrl = ctrl
@@ -43,7 +37,12 @@ class GeneticFilesView(Canvas):
         """
         self.create_table()
         self.create_table_titles()
-        self.pack(fill='both')
+
+        self.create_window(0, 0, anchor='nw', window=self.frame)
+        self.update_idletasks()
+        self.configure(yscrollcommand=self.scroll.set, scrollregion=self.bbox('all'))
+        self.pack(side=LEFT, fill=BOTH, expand=True)
+        self.scroll.pack(side=RIGHT, fill=Y)
 
     def create_table_titles(self) -> None:
         """
@@ -93,7 +92,6 @@ class GeneticFilesView(Canvas):
             label.grid(row=row, column=1, padx=3, pady=3)
 
             label = ttk.Label(self.frame, text=self.break_string(file.file_description), width=50)
-
             label.grid(row=row, column=2, padx=3, pady=3)
 
             label = ttk.Label(self.frame, text=file.file_created_at, width=11)
