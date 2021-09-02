@@ -10,8 +10,8 @@ class SettingAppModal:
     top_level_dialog = None
     sms_radio_button = None
     email_radio_button = None
-    sms_radio_button_status = None
-    email_radio_button_status = None
+    sms_switch_status = None
+    email_switch_status = None
     theme_switch_status = None
     app_theme = None
 
@@ -28,9 +28,9 @@ class SettingAppModal:
 
         settings = SettingsController()
         settings.set_view_settings(self)
-        self.sms_radio_button_status = settings.get_sms_config()
-        self.email_radio_button_status = settings.get_email_config()
-        self.app_theme = settings.get_theme()
+        # self.sms_switch_status = settings.get_sms_config()
+        # self.email_switch_status = settings.get_email_config()
+        self.app_theme = settings.get_theme_path()
 
         self.create_top_level_dialog()
         self.set_sms_check_button()
@@ -42,9 +42,9 @@ class SettingAppModal:
         close setting modal
         :return: None
         """
-        config = {"sms_status": self.sms_radio_button_status,
-                  "email_status": self.email_radio_button_status}
-        SettingsController().set_notification_config(config)
+        # config = {"sms_status": self.sms_switch_status,
+        #           "email_status": self.email_switch_status}
+        # SettingsController().set_notifications_config(config)
         self.top_level_dialog.destroy()
 
     def create_top_level_dialog(self) -> None:
@@ -64,26 +64,54 @@ class SettingAppModal:
         sms on/off notification
         :return: None
         """
-        self.sms_radio_button_status = IntVar()
+        self.sms_switch_status = IntVar()
 
-        # Switch
+        if SettingsController().get_sms_notification_status():
+            self.sms_switch_status.set(1)  # Set switch to ON position
+        else:
+            self.sms_switch_status.set(0)  # Set switch to OFF position
+
         switch = ttk.Checkbutton(self.top_level_dialog, text='SMS Notification', style='Switch',
-                                 variable=self.sms_radio_button_status, offvalue=0, onvalue=1)
+                                 variable=self.sms_switch_status, offvalue=0, onvalue=1, command=self.on_sms_switch_listener)
         switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
         switch.invoke()
+
+    def on_sms_switch_listener(self) -> None:
+        """
+        send data to setting controller according switch status
+        :return:
+        """
+        if self.sms_switch_status.get():
+            SettingsController().set_sms_config(True)
+        else:
+            SettingsController().set_sms_config(False)
 
     def set_email_check_button(self) -> None:
         """
         email on/off notifications
         :return: None
         """
-        self.email_radio_button_status = IntVar()
+        self.email_switch_status = IntVar()
 
-        # Switch
+        if SettingsController().get_email_notification_status():
+            self.email_switch_status.set(1)  # Set switch to ON position
+        else:
+            self.email_switch_status.set(0)  # Set switch to OFF position
+
         switch = ttk.Checkbutton(self.top_level_dialog, text='EMAIL Notification', style='Switch',
-                                 variable=self.email_radio_button_status, offvalue=0, onvalue=1)
+                                 variable=self.email_switch_status, offvalue=0, onvalue=1,  command=self.on_email_switch_listener)
         switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
         switch.invoke()
+
+    def on_email_switch_listener(self) -> None:
+        """
+        send data to setting controller according switch status
+        :return: None
+        """
+        if self.sms_switch_status.get():
+            SettingsController().set_email_config(True)
+        else:
+            SettingsController().set_email_config(False)
 
     def set_themes_switch(self) -> None:
         """
@@ -107,10 +135,10 @@ class SettingAppModal:
         called when theme switch changed
         :return: None
         """
-        night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
-        day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
+        # night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
+        # day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
 
         if self.theme_switch_status.get():
-            SettingsController().set_theme(night_theme)
+            SettingsController().set_theme(self.night_theme)
         else:
-            SettingsController().set_theme(day_theme)
+            SettingsController().set_theme(self.day_theme)
