@@ -42,7 +42,7 @@ class Index:
         style.map('Button', background=[('active', 'red')])
 
         # Import the tcl file
-        self.root.tk.call('source', SettingsController().get_theme())
+        self.root.tk.call('source', SettingsController().get_theme_path())
 
         # Set the theme with the theme_use method
         style.theme_use('azure')

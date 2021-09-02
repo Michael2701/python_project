@@ -22,55 +22,60 @@ class SettingsController(Controller):
             view.title_font = config['title_font']
             view.font = config['app_font']
 
-    def set_notification_config(self, config: dict):
+    def set_notifications_config(self, config: dict) -> None:
         """
         save do json file configuration
-        :param config:
-        :return:
+        :param config: sms_status & email_status
+        :return: None
         """
-        print("Warning: set_notification_config NOT IMPLEMENTED")
+        self.set_sms_config(config['sms_status'])
+        self.set_email_config(config['email_status'])
 
-    def get_sms_config(self) -> int:
+    def get_sms_notification_status(self) -> bool:
         """
         get status on/off of sms notification in config file
-        :return: 1 if on otherwise 0
+        :return: true if active otherwise false
         """
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            return int(config['sms_notification'])
+            return bool(config['sms_notification'])
 
-    def get_email_config(self) -> int:
+    def get_email_notification_status(self) -> bool:
         """
         get status on/off of email notification in config file
-        :return: 1 if on otherwise 0
+        :return: true if active otherwise false
         """
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            return int(config['email_notification'])
+            return bool(config['email_notification'])
 
-    def set_sms_config(self, sms_status: int) -> None:
+    def set_sms_config(self, is_sms_notification_active: bool) -> None:
         """
         set status on/off of sms notification in config file
-        :param sms_status: 1 if notification is on otherwise 0
+        :param is_sms_notification_active: tue if notification is active otherwise false
         :return: None
         """
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            config['sms_notification'] = str(sms_status)
-            # TODO save json
 
-    def set_email_config(self, email_status: int) -> None:
+        with open(self.config_path, 'w') as json_config:
+            config['sms_notification'] = str(is_sms_notification_active)
+            json.dump(config, json_config)
+
+    def set_email_config(self, is_email_notification_active: bool) -> None:
         """
         set status on/off of email notification in config file
-        :param email_status: 1 if notification is on otherwise 0
+        :param is_email_notification_active: 1 true notification is active otherwise false
         :return: None
         """
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            config['email_notification'] = str(email_status)
-            # TODO save json
 
-    def get_theme(self) -> str:
+        with open(self.config_path, 'w') as json_config:
+            config['email_notification'] = str(is_email_notification_active)
+            json.dump(config, json_config)
+
+    def get_theme_path(self) -> str:
         """
         get theme path
         :return: path to theme
@@ -81,11 +86,10 @@ class SettingsController(Controller):
 
     def set_theme(self, theme_path: str) -> None:
         """
-        save theme to json config file
+        save theme path to json config file. Help switch themes
         :param theme_path: path to theme in project
         :return: None
         """
-        config = {}
         with open(self.config_path) as json_config:
             config = json.load(json_config)
 
