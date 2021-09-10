@@ -80,6 +80,7 @@ scale.place(x=80, y=430)
 # Progressbar
 progress = ttk.Progressbar(root, value=0, variable=g, mode='determinate')
 progress.place(x=80, y=480)
+progress.start(1)
 
 # Entry
 entry = ttk.Entry(root)
