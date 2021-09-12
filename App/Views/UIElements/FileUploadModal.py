@@ -2,7 +2,7 @@ import os
 from datetime import datetime
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import Entry, Toplevel, Button, Label, Text, X, LEFT
+from tkinter import Entry, Toplevel, Button, Label, Text, IntVar, X, LEFT
 from typing import Any
 
 from App.Services.Message import Message
@@ -18,6 +18,7 @@ class FileUploadModal:
     __file_dialog_button: Button
     __file_description_label: Label
     __file_description_entry: Entry
+    __progress_value: IntVar
 
     @property
     def file_description_entry(self) -> Entry:
@@ -96,6 +97,8 @@ class FileUploadModal:
         self.file_path = None
         self.file_name = None
         self.file_description = None
+        self.progress_bar = None
+        self.__progress_value = IntVar()
         self.data = []
 
         self.create_modal()
@@ -112,6 +115,8 @@ class FileUploadModal:
 
         self.set_submit_button()
         self.set_cancel_button()
+
+        self.set_progress_bar()
 
     def close_modal(self) -> None:
         """
@@ -145,6 +150,7 @@ class FileUploadModal:
         :return: None
         """
         if self.get_form_data():
+            self.animate_progress_bar()
             self.ctrl.create_file(self.data)
             self.close_modal()
         else:
@@ -169,6 +175,26 @@ class FileUploadModal:
         """
         self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
         self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+
+    def set_progress_bar(self) -> None:
+        self.progress_bar = ttk.Progressbar(self.top_level_dialog, value=0, variable=self.__progress_value, mode='determinate')
+        self.progress_bar.pack(fill=X, expand=False, padx=5)
+
+    def increment_progress_bar(self, step: int) -> None:
+        """
+        increment progress value by step
+        :param step: incrementing value
+        :return: None
+        """
+        self.progress_bar.step(step)
+
+    def animate_progress_bar(self, step: int = None):
+        """
+        start progress bar animation
+        :param step: interval defaults to 50 milliseconds (20 steps/second) if omitted.
+        :return: None
+        """
+        self.progress_bar.start(step)
 
     def set_file_name_fields(self) -> None:
         """
