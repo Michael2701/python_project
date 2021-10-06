@@ -230,9 +230,8 @@ class FileUploadModal:
         :return:True if form data is valid and false otherwise
         """
         if self.check_file_name() and self.check_file_description() and self.check_file_path() and self.check_user_id():
-
             self.data = {
-                'user_id': str(self.master.logged_user.id),
+                'user_id': str(self.ctrl.user["id"]),
                 'file_name': self.file_name_entry.get(),
                 'file_description': self.file_description_entry.get("1.0", tk.END).strip(),
                 'file_created_at': datetime.now().strftime("%d/%m/%Y"),
@@ -292,7 +291,7 @@ class FileUploadModal:
         :return: True if exists and False otherwise
         """
         try:
-            if self.master.logged_user.id is not None:
+            if self.ctrl.user["id"] is not None:
                 return True
             return False
 

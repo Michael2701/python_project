@@ -142,4 +142,3 @@ class GeneticFilesView(Canvas):
     @frame.setter
     def frame(self, frame: Frame) -> None:
         self.__frame = frame
-
