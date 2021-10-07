@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#/home/ty/PycharmProjects/python_project/App/Views/ApplicationView.py</OriginalElement>
+  <nodes>
+    <node x="-5.0" y="-14.0">App.Views.ApplicationView.ApplicationView</node>
+    <node x="-0.5" y="-414.0">App.Views.GeneticFilesView.GeneticFilesView</node>
+    <node x="-520.5" y="-398.0">App.Views.UsersView.UsersView</node>
+    <node x="-575.5" y="-70.0">App.Views.InterferenceView.InterferenceView</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Compact" zoom="0.6805555555555556" showDependencies="false" x="-25.5" y="80.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+</Diagram>
+

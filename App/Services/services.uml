@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#/home/ty/PycharmProjects/python_project/App/Services/Encoder.py</OriginalElement>
+  <nodes>
+    <node x="3475.0" y="518.0">App.Services.SMSNotification.SMSNotification</node>
+    <node x="375.0" y="579.5">App.Services.OutputDataCreator.OutputDataCreator</node>
+    <node x="3928.0" y="518.0">App.Services.Message.Message</node>
+    <node x="1401.0" y="530.0">App.Services.FileEncryptor.FileEncryptor</node>
+    <node x="3094.0" y="566.0">App.Services.Notification.Notification</node>
+    <node x="0.0" y="554.0">App.Services.Encoder.Encoder</node>
+    <node x="888.0" y="579.5">App.Services.InterferenceCreator.InterferenceCreator</node>
+    <node x="1802.0" y="542.0">App.Services.FileUploader.FileUploader</node>
+    <node x="2644.0" y="542.0">App.Services.FileHelper.FileHelper</node>
+    <node x="2191.0" y="530.0">App.Services.MailNotification.MailNotification</node>
+    <node x="4247.0" y="579.5">App.Services.UserNotificator.UserNotificator</node>
+    <node x="2262.5" y="0.0">object</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="App.Services.FileUploader.FileUploader" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-54.0" />
+      <point x="1986.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.FileHelper.FileHelper" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-54.0" />
+      <point x="2859.0" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.Encoder.Encoder" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-42.0" />
+      <point x="177.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.FileEncryptor.FileEncryptor" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-66.0" />
+      <point x="1591.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.MailNotification.MailNotification" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-66.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.OutputDataCreator.OutputDataCreator" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="621.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.SMSNotification.SMSNotification" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-78.0" />
+      <point x="3691.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.InterferenceCreator.InterferenceCreator" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="1134.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.Notification.Notification" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-30.0" />
+      <point x="3274.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.Message.Message" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-78.0" />
+      <point x="4077.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+    <edge source="App.Services.UserNotificator.UserNotificator" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="4456.5" y="493.0" />
+      <point x="2407.5" y="493.0" />
+      <point x="0.0" y="234.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.4445155783183952" showDependencies="false" x="2333.0" y="337.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+</Diagram>
+

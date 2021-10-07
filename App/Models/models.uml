@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#/home/ty/PycharmProjects/python_project/App/Models/Model.py</OriginalElement>
+  <nodes>
+    <node x="-6.0" y="-16.5">App.Models.Model.Model</node>
+    <node x="34.0" y="275.5">App.Models.GeneModel.GeneModel</node>
+    <node x="34.0" y="129.5">App.Models.GeneticFileModel.GeneticFileModel</node>
+    <node x="34.0" y="56.5">App.Models.InterferenceModel.InterferenceModel</node>
+    <node x="34.0" y="202.5">App.Models.MarkersModel.MarkersModel</node>
+    <node x="34.0" y="348.5">App.Models.SimpleUser.SimpleUser</node>
+    <node x="19.0" y="443.5">App.Models.SQLiteConnector.SQLiteConnector</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="App.Models.GeneticFileModel.GeneticFileModel" target="App.Models.Model.Model" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="256.0" y="91.5" />
+      <point x="26.0" y="91.5" />
+      <point x="-94.0" y="16.5" />
+    </edge>
+    <edge source="App.Models.InterferenceModel.InterferenceModel" target="App.Models.Model.Model" relationship="REALIZATION">
+      <point x="-145.0" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="App.Models.SimpleUser.SimpleUser" target="App.Models.Model.Model" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="202.0" y="310.5" />
+      <point x="2.0" y="310.5" />
+      <point x="-118.0" y="16.5" />
+    </edge>
+    <edge source="App.Models.MarkersModel.MarkersModel" target="App.Models.Model.Model" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="228.0" y="164.5" />
+      <point x="18.0" y="164.5" />
+      <point x="-102.0" y="16.5" />
+    </edge>
+    <edge source="App.Models.GeneModel.GeneModel" target="App.Models.Model.Model" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="204.0" y="237.5" />
+      <point x="10.0" y="237.5" />
+      <point x="-110.0" y="16.5" />
+    </edge>
+  </edges>
+  <settings layout="Compact" zoom="1.0" showDependencies="false" x="245.0" y="223.5" />
+  <SelectedNodes />
+  <Categories />
+</Diagram>
+

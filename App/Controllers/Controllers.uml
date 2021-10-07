@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#/home/ty/PycharmProjects/python_project/App/Controllers/Controller.py</OriginalElement>
+  <nodes>
+    <node x="23.0" y="134.0">App.Controllers.GeneticFileController.GeneticFileController</node>
+    <node x="-17.0" y="-14.0">App.Controllers.Controller.Controller</node>
+    <node x="23.0" y="570.0">App.Controllers.SettingsController.SettingsController</node>
+    <node x="589.0" y="134.0">App.Controllers.UserController.UserController</node>
+    <node x="629.0" y="378.0">App.Controllers.AdminController.AdminController</node>
+    <node x="539.0" y="570.0">App.Controllers.InterferenceController.InterferenceController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="App.Controllers.UserController.UserController" target="App.Controllers.Controller.Controller" relationship="REALIZATION">
+      <point x="0.0" y="-102.0" />
+      <point x="804.0" y="96.0" />
+      <point x="190.0" y="96.0" />
+      <point x="30.0" y="54.0" />
+    </edge>
+    <edge source="App.Controllers.InterferenceController.InterferenceController" target="App.Controllers.Controller.Controller" relationship="REALIZATION">
+      <point x="-234.0" y="-54.0" />
+      <point x="587.0" y="132.0" />
+      <point x="180.0" y="132.0" />
+      <point x="20.0" y="54.0" />
+    </edge>
+    <edge source="App.Controllers.AdminController.AdminController" target="App.Controllers.UserController.UserController" relationship="REALIZATION">
+      <point x="-57.0" y="-16.5" />
+      <point x="0.0" y="102.0" />
+    </edge>
+    <edge source="App.Controllers.GeneticFileController.GeneticFileController" target="App.Controllers.Controller.Controller" relationship="REALIZATION">
+      <point x="-126.0" y="-198.0" />
+      <point x="10.0" y="54.0" />
+    </edge>
+    <edge source="App.Controllers.SettingsController.SettingsController" target="App.Controllers.Controller.Controller" relationship="REALIZATION">
+      <point x="0.0" y="-114.0" />
+      <point x="271.0" y="532.0" />
+      <point x="21.0" y="532.0" />
+      <point x="-139.0" y="54.0" />
+    </edge>
+  </edges>
+  <settings layout="Compact" zoom="0.8245192307692307" showDependencies="false" x="543.0" y="392.0" />
+  <SelectedNodes>
+    <node>App.Controllers.AdminController.AdminController</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+</Diagram>
+

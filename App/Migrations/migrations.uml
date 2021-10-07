@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>Python</ID>
+  <OriginalElement>#/home/ty/PycharmProjects/python_project/App/Migrations/GeneMigration.py</OriginalElement>
+  <nodes>
+    <node x="35.0" y="348.5">App.Migrations.GeneMigration.GeneMigration</node>
+    <node x="35.0" y="275.5">App.Migrations.UsersMigration.UsersMigration</node>
+    <node x="35.0" y="129.5">App.Migrations.GeneticFileMigration.GeneticFileMigration</node>
+    <node x="35.0" y="56.5">App.Migrations.InterferenceRowMigration.InterferenceRowMigration</node>
+    <node x="35.0" y="202.5">App.Migrations.MarkersMigration.MarkersMigration</node>
+    <node x="-5.0" y="-16.5">object</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="App.Migrations.MarkersMigration.MarkersMigration" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="275.5" y="164.5" />
+      <point x="19.0" y="164.5" />
+      <point x="-21.0" y="16.5" />
+    </edge>
+    <edge source="App.Migrations.InterferenceRowMigration.InterferenceRowMigration" target="object" relationship="REALIZATION">
+      <point x="-310.5" y="-16.5" />
+      <point x="0.0" y="16.5" />
+    </edge>
+    <edge source="App.Migrations.UsersMigration.UsersMigration" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="253.5" y="237.5" />
+      <point x="11.0" y="237.5" />
+      <point x="-29.0" y="16.5" />
+    </edge>
+    <edge source="App.Migrations.GeneticFileMigration.GeneticFileMigration" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="303.5" y="91.5" />
+      <point x="27.0" y="91.5" />
+      <point x="-13.0" y="16.5" />
+    </edge>
+    <edge source="App.Migrations.GeneMigration.GeneMigration" target="object" relationship="REALIZATION">
+      <point x="0.0" y="-16.5" />
+      <point x="251.5" y="310.5" />
+      <point x="3.0" y="310.5" />
+      <point x="-37.0" y="16.5" />
+    </edge>
+  </edges>
+  <settings layout="Compact" zoom="1.0" showDependencies="false" x="330.5" y="182.5" />
+  <SelectedNodes />
+  <Categories />
+</Diagram>
+
