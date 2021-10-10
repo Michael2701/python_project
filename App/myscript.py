@@ -7,6 +7,7 @@ import Models.SQLiteConnector
 
 print("hi")
 def save_interference():
+    print("Log: In save_interference()")
     connection = Models.SQLiteConnector.SQLiteConnector.create_connection('App/DB/project.db')
     field_names = []
     args = sys.argv[1:]
@@ -31,6 +32,8 @@ def save_interference():
                     connection.commit()
 
         connection.close()
+
+    print("Log: Exit save_interference()")
 
 
 save_interference()

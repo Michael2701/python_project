@@ -118,7 +118,9 @@ class GeneticFileController(Controller):
         self.file_process_dialog.show_top_level_dialog(file, is_excel)
 
     def process_file_genes(self, data: dict) -> None:
+        print("Log: In process_file_genes()")
         self.calculate_markers_genes(self.get_groups_of_markers(str(data["id"]), data))
+        print("Log: Exit process_file_genes()")
 
     def calculate_markers_genes(self, gene_ids_groups) -> None:
         """
@@ -168,6 +170,7 @@ class GeneticFileController(Controller):
         Create .xlsx file of triples markers and add statistics to it
         :return: None
         """
+        print("Log: In create_markers_statistic_excel()")
         now = datetime.now()
         date_time = now.strftime("%d-%m-%Y_%H:%M:%S")
 
@@ -185,12 +188,14 @@ class GeneticFileController(Controller):
             row += 1
 
         workbook.close()
+        print("Log: Exit create_markers_statistic_excel()")
 
     def create_list_of_markers(self) -> list:
         """
 
         :return:
         """
+        print("Log: In create_list_of_markers()")
         list_of_markers = []
         titles = ['marker 1', 'marker 2', 'marker 3', 'position 1', 'position 2', 'position 3']
 
@@ -206,6 +211,7 @@ class GeneticFileController(Controller):
                 else:
                     line.append(0)
             list_of_markers.append(line)
+        print("Log: Exit create_list_of_markers()")
         return list_of_markers
 
     def get_groups_of_markers(self, file_id: str, data: dict) -> list:

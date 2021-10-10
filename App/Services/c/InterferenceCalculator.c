@@ -40,6 +40,7 @@ double lrScore[N];
 
 int main(int argc, char* argv[])
 {
+    printf("Log: In main C\n");
     FILE * fp;
     char * line = NULL;
     size_t len = 0;
@@ -186,10 +187,13 @@ int main(int argc, char* argv[])
             python_command[command_length + q++] = ' ';
         }
 
+        printf("******\n");
         system (python_command);
+        printf("--------\n");
         exit(EXIT_SUCCESS);
     }
 
+        printf("Log: Exit main C\n");
     return 0;
 }
 
