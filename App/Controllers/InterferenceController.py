@@ -2,15 +2,19 @@ import subprocess
 from typing import Any
 
 from App.Controllers.Controller import Controller
+from App.Models.InterferenceModel import InterferenceModel
 from App.Models.InterferenceRowModel import IntereferenceRowModel
-from App.Models.SQLiteConnector import SQLiteConnector
 from App.Views.InterferenceView import InterferenceView
+
+from App.Models.SQLiteConnector import SQLiteConnector
+from App.Services.Message import Message
 
 
 class InterferenceController(Controller):
     def __init__(self, master: Any = None):
         self.get_logged_user()
         self.master = master
+        self.msg = Message
 
     def create_interference(self, file: IntereferenceRowModel, data: dict):
         subprocess.check_call([r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id), str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
@@ -29,3 +33,30 @@ class InterferenceController(Controller):
 
         files = cur.fetchall()
         InterferenceView(self, self.master, files)
+
+    def open_file_process_modal(self, f, param):
+        pass
+
+    def show_delete_modal(self, file: tuple) -> None:
+        """
+        show delete modal
+        :param file: GeneticFileModel object
+        :return: None
+        """
+        if self.msg.question("Do you really want to delete this file?", "Delete File"):
+            self.delete_file(file[0])
+
+    def delete_file(self, file_id: int) -> bool:
+        """
+        delete file with given file id
+        :param file_id: id of file to delete
+        :return: True if file deleted and False otherwise
+        """
+        try:
+            InterferenceModel.delete(str(file_id))
+            self.show_interference_view()
+            return True
+        except Exception as e:
+            print(str(e))
+            self.msg.warning("Warning. File not deleted")
+            return False
