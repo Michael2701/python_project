@@ -244,6 +244,3 @@ class GeneticFileController(Controller):
             print(str(e))
             self.msg.warning("Warning. File not deleted")
             return False
-
-    def aaa(self):
-        pass

@@ -1,7 +1,7 @@
 from textwrap import wrap
 from tkinter import *
 from tkinter import ttk
-from typing import Any, List
+from typing import List
 
 from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
@@ -26,7 +26,7 @@ class InterferenceView(Canvas):
 
         SettingsController().set_view_settings(self)
         
-        self.ctrl = ctrl # InterferenceController
+        self.ctrl = ctrl
         self.master = master
         self.files = files
         self.init_window()
@@ -140,4 +140,3 @@ class InterferenceView(Canvas):
     @ctrl.setter
     def ctrl(self, ctrl) -> None:
         self.__ctrl = ctrl
-

@@ -17,4 +17,3 @@ class InterferenceModel(Model):
         define table name
         """
         table = 'interference'
-
