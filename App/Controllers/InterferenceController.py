@@ -13,9 +13,7 @@ class InterferenceController(Controller):
         self.master = master
 
     def create_interference(self, file: IntereferenceRowModel, data: dict):
-        print("Log: In create_interference()")
         subprocess.check_call([r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id), str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
-        print("Log: Exit create_interference()")
 
     def show_interference_view(self):
         self.clear_view(self.master)

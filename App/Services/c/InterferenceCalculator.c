@@ -40,7 +40,6 @@ double lrScore[N];
 
 int main(int argc, char* argv[])
 {
-    printf("Log: In main C\n");
     FILE * fp;
     char * line = NULL;
     size_t len = 0;
@@ -177,7 +176,7 @@ int main(int argc, char* argv[])
         calculateXi();
         createOutputCSV(argv[1], argv[2]);
 
-        char python_command[100] = "python App/myscript.py ";
+        char python_command[100] = "python3 App/myscript.py ";
         int command_length = strlen(python_command);
 
         for(int f = 2, q = 0; f < argc; f++){
@@ -187,13 +186,10 @@ int main(int argc, char* argv[])
             python_command[command_length + q++] = ' ';
         }
 
-        printf("******\n");
-        system (python_command);
-        printf("--------\n");
+        system(python_command);
         exit(EXIT_SUCCESS);
     }
 
-        printf("Log: Exit main C\n");
     return 0;
 }
 
