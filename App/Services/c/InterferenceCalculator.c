@@ -176,9 +176,7 @@ int main(int argc, char* argv[])
         calculateXi();
         createOutputCSV(argv[1], argv[2]);
 
-        // TODO add trigger send SMS or/and EMAIL
-
-        char python_command[100] = "python App/myscript.py ";
+        char python_command[100] = "python3 App/myscript.py ";
         int command_length = strlen(python_command);
 
         for(int f = 2, q = 0; f < argc; f++){
@@ -188,7 +186,7 @@ int main(int argc, char* argv[])
             python_command[command_length + q++] = ' ';
         }
 
-        system (python_command);
+        system(python_command);
         exit(EXIT_SUCCESS);
     }
 

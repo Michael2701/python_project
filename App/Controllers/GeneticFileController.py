@@ -168,6 +168,7 @@ class GeneticFileController(Controller):
         Create .xlsx file of triples markers and add statistics to it
         :return: None
         """
+        print("Log: In create_markers_statistic_excel()")
         now = datetime.now()
         date_time = now.strftime("%d-%m-%Y_%H:%M:%S")
 
@@ -185,6 +186,7 @@ class GeneticFileController(Controller):
             row += 1
 
         workbook.close()
+        print("Log: Exit create_markers_statistic_excel()")
 
     def create_list_of_markers(self) -> list:
         """
