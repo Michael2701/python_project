@@ -7,7 +7,7 @@
     <node x="-17.0" y="-14.0">App.Controllers.Controller.Controller</node>
     <node x="23.0" y="570.0">App.Controllers.SettingsController.SettingsController</node>
     <node x="589.0" y="134.0">App.Controllers.UserController.UserController</node>
-    <node x="629.0" y="378.0">App.Controllers.AdminController.AdminController</node>
+    <node x="596.2536443148688" y="387.7026239067055">App.Controllers.AdminController.AdminController</node>
     <node x="539.0" y="570.0">App.Controllers.InterferenceController.InterferenceController</node>
   </nodes>
   <notes />
@@ -26,6 +26,8 @@
     </edge>
     <edge source="App.Controllers.AdminController.AdminController" target="App.Controllers.UserController.UserController" relationship="REALIZATION">
       <point x="-57.0" y="-16.5" />
+      <point x="771.2536443148688" y="358.0" />
+      <point x="804.0" y="358.0" />
       <point x="0.0" y="102.0" />
     </edge>
     <edge source="App.Controllers.GeneticFileController.GeneticFileController" target="App.Controllers.Controller.Controller" relationship="REALIZATION">
@@ -39,7 +41,7 @@
       <point x="-139.0" y="54.0" />
     </edge>
   </edges>
-  <settings layout="Compact" zoom="0.8245192307692307" showDependencies="false" x="543.0" y="392.0" />
+  <settings layout="Hierarchic" zoom="0.8245192307692307" showDependencies="false" x="1149.1603498542274" y="525.4110787172012" />
   <SelectedNodes>
     <node>App.Controllers.AdminController.AdminController</node>
   </SelectedNodes>

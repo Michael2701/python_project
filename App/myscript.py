@@ -5,7 +5,7 @@ from datetime import datetime
 
 import Models.SQLiteConnector
 
-
+print("hi")
 def save_interference():
     connection = Models.SQLiteConnector.SQLiteConnector.create_connection('App/DB/project.db')
     field_names = []
@@ -34,4 +34,5 @@ def save_interference():
 
 
 save_interference()
+# TODO add trigger send SMS or / and EMAIL
 

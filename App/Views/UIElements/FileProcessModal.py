@@ -3,6 +3,9 @@ from typing import Any
 from tkinter import Toplevel, Button, Label, Scale, HORIZONTAL
 
 from App.Controllers.InterferenceController import InterferenceController
+from App.Controllers.SettingsController import SettingsController
+# from App.Controllers.GeneticFileController import GeneticFileController
+
 from App.Models.GeneticFileModel import GeneticFileModel
 from App.Services.FileHelper import FileHelper
 from App.Services.Message import Message
@@ -83,8 +86,6 @@ class FileProcessModal:
 
     def on_submit(self) -> None:
         """
-        check if user exists and password is right
-        if password is good show ApplicationView window
         :return: None
         """
         file_triplet_name = 'App/triplet_of_genes.csv'
