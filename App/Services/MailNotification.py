@@ -54,4 +54,4 @@ class MailNotification:
 # Test
 # m = MailNotification({"From": "1hotlev@gmail.com", "To": "tamir.yur@gmail.com", "Subject": "Subject Mail"})
 # m.add_attachment("empty")
-# m.send_message('text message')
+# m.send_message('szojpvlaoewaoeyr')
