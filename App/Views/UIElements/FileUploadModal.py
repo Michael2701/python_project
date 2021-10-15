@@ -19,6 +19,7 @@ class FileUploadModal:
     __file_description_label: Label
     __file_description_entry: Entry
     __progress_value: IntVar
+    __separator: ttk.Separator
 
     @property
     def file_description_entry(self) -> Entry:
@@ -84,6 +85,14 @@ class FileUploadModal:
     def submit_button(self, button: Button) -> None:
         self.__submit_button = button
 
+    @property
+    def separator(self) -> ttk.Separator:
+        return self.__separator
+
+    @separator.setter
+    def separator(self, sep: ttk.Separator) -> None:
+        self.__separator = sep
+
     def __init__(self, ctrl: Any, master: Any):
         """
         :param ctrl: modal controller
@@ -111,7 +120,10 @@ class FileUploadModal:
         self.create_top_level_dialog()
 
         self.set_file_name_fields()
+        self.set_separator_line()
+
         self.set_file_description_field()
+        self.set_separator_line()
 
         self.set_submit_button()
         self.set_cancel_button()
@@ -219,10 +231,18 @@ class FileUploadModal:
         :return: None
         """
         self.file_description_label = ttk.Label(self.top_level_dialog, text="Description")
-        self.file_description_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.file_description_label.pack(fill=X, expand=False, padx=5)
 
         self.file_description_entry = Text(self.top_level_dialog, height=3, width=6)
         self.file_description_entry.pack(fill=X, expand=False, padx=5)
+
+    def set_separator_line(self) -> None:
+        """
+        create separator line on view
+        :return: None
+        """
+        self.separator = ttk.Separator(self.top_level_dialog)
+        self.separator.pack(fill=X, expand=False, padx=5, pady=(10, 10))
 
     def get_form_data(self) -> bool:
         """
