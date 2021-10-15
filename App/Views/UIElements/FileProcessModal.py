@@ -1,6 +1,7 @@
 import os
+import tkinter
 from typing import Any
-from tkinter import Toplevel, Button, Label, Scale, HORIZONTAL
+from tkinter import Toplevel, Button, Label, Scale, HORIZONTAL, ttk, X
 
 from App.Controllers.InterferenceController import InterferenceController
 from App.Controllers.SettingsController import SettingsController
@@ -13,14 +14,24 @@ from App.Services.Message import Message
 
 class FileProcessModal:
     top_level_dialog = None
+
+    step_label = None
+    step = None
+    step_value = None
+
+    min_distance_label = None
+    min_distance = None
+    min_distance_value = tkinter.IntVar
+
+    max_distance_label = None
+    max_distance = tkinter.IntVar
+    max_distance_value = None
+
     submit_button = None
     cancel_button = None
-    min_distance_label = None
-    min_distance_entry = None
-    max_distance_entry = None
-    max_distance_label = None
-    step_label = None
-    step_entry = None
+
+    separator = None
+
     file = None
     data = None
     is_excel = None
@@ -58,8 +69,13 @@ class FileProcessModal:
         self.create_top_level_dialog()
 
         self.set_step_field()
+        self.set_separator_line()
+
         self.set_min_distance_field()
+        self.set_separator_line()
+
         self.set_max_distance_field()
+        self.set_separator_line()
 
         self.set_submit_button()
         self.set_cancel_button()
@@ -106,55 +122,65 @@ class FileProcessModal:
             return False
         return True
 
-    def set_submit_button(self) -> None:
-        """
-        create submit button
-        :return: None
-        """
-        self.submit_button = Button(self.top_level_dialog, text='Submit', font=self.font, fg=self.fg,
-                                    command=self.on_submit)
-        self.submit_button.grid(row=6, column=0)
-
-    def set_cancel_button(self) -> None:
-        """
-        crete cancel button
-        :return: None
-        """
-        self.cancel_button = Button(self.top_level_dialog, text='Cancel', font=self.font, fg=self.fg,
-                                    command=self.close_modal)
-        self.cancel_button.grid(row=6, column=1)
-
     def set_step_field(self) -> None:
         """
         create email field and label
         :return: None
         """
-        self.step_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font, text="Step")
-        self.step_label.grid(row=0, column=0)
-        self.step_entry = Scale(self.top_level_dialog, from_=1, to=42, length=300, orient=HORIZONTAL)
-        self.step_entry.grid(row=0, column=1)
+        self.step_value = tkinter.IntVar()
+        self.step_label = ttk.Label(self.top_level_dialog, text="Step")
+        self.step_label.pack(fill=X, expand=False, padx=5)
+
+        self.step = ttk.LabeledScale(self.top_level_dialog, from_=1, to=40, variable=self.step_value)
+        self.step.pack(fill=X, expand=False, padx=5, pady=(5, 0))
 
     def set_min_distance_field(self) -> None:
         """
         create password field and label
         :return: None
         """
-        self.min_distance_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font,
-                                        text="Min distance")
-        self.min_distance_label.grid(row=1, column=0)
-        self.min_distance_entry = Scale(self.top_level_dialog, from_=1, to=25, length=300, orient=HORIZONTAL)
-        self.min_distance_entry.grid(row=1, column=1)
+        self.min_distance_value = tkinter.IntVar()
+        self.min_distance_label = ttk.Label(self.top_level_dialog, text="Minimal distance")
+        self.min_distance_label.pack(fill=X, expand=False, padx=5)
+
+        self.min_distance = ttk.LabeledScale(self.top_level_dialog, from_=1, to=25, variable=self.min_distance_value)
+        self.min_distance.pack(fill=X, expand=False, padx=5)
 
     def set_max_distance_field(self) -> None:
         """
         create password field and label
         :return: None
         """
-        self.max_distance_label = Label(self.top_level_dialog, bg=self.bg, fg=self.fg, font=self.font,
-                                        text="Max distance")
-        self.max_distance_label.grid(row=2, column=0)
-        self.max_distance_entry = Scale(self.top_level_dialog, from_=1, to=25, length=300, orient=HORIZONTAL)
-        self.max_distance_entry.grid(row=2, column=1)
+        self.max_distance_value = tkinter.IntVar()
+        self.max_distance_label = ttk.Label(self.top_level_dialog, text="Maximum distance")
+        self.max_distance_label.pack(fill=X, expand=False, padx=5)
+
+        self.max_distance = ttk.LabeledScale(self.top_level_dialog, from_=1, to=25, variable=self.max_distance_value)
+        self.max_distance.pack(fill=X, expand=False, padx=5)
+
+    def set_submit_button(self) -> None:
+        """
+        create submit button
+        :return: None
+        """
+        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.on_submit)
+        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+
+    def set_cancel_button(self) -> None:
+        """
+        crete cancel button
+        :return: None
+        """
+        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
+        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+
+    def set_separator_line(self) -> None:
+        """
+        create separator line on view
+        :return: None
+        """
+        self.separator = ttk.Separator(self.top_level_dialog)
+        self.separator.pack(fill=X, expand=False, padx=5, pady=(10, 10))
 
     def get_form_data(self) -> dict:
         """
@@ -163,8 +189,8 @@ class FileProcessModal:
         """
         self.data = {
             'id': self.file.id,
-            'step': self.step_entry.get(),
-            'max_distance': self.max_distance_entry.get(),
-            'min_distance': self.min_distance_entry.get()
+            'step': self.step_value.get(),
+            'max_distance': self.max_distance_value.get(),
+            'min_distance': self.min_distance_value.get()
         }
         return self.data
