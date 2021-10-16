@@ -5,7 +5,8 @@ from App.Controllers.Controller import Controller
 
 class SettingsController(Controller):
 
-    config_path = "App/config.json"
+    # config_path = "App/config.json"
+    config_path = "/home/ty/PycharmProjects/python_project/App/config.json"
 
     def set_view_settings(self, view: Any) -> None:
         """
@@ -28,26 +29,26 @@ class SettingsController(Controller):
         :param config: sms_status & email_status
         :return: None
         """
-        self.set_sms_config(config['sms_status'])
-        self.set_email_config(config['email_status'])
+        # self.set_sms_config(config['sms_status'])
+        # self.set_email_config(config['email_status'])
 
-    def get_sms_notification_status(self) -> bool:
+    def get_sms_notification_status(self) -> str:
         """
         get status on/off of sms notification in config file
         :return: true if active otherwise false
         """
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            return bool(config['sms_notification'])
+            return config['sms_notification']
 
-    def get_email_notification_status(self) -> bool:
+    def get_email_notification_status(self) -> str:
         """
         get status on/off of email notification in config file
         :return: true if active otherwise false
         """
         with open(self.config_path) as json_config:
             config = json.load(json_config)
-            return bool(config['email_notification'])
+            return config['email_notification']
 
     def set_sms_config(self, is_sms_notification_active: bool) -> None:
         """

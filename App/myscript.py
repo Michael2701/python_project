@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 
 import Models.SQLiteConnector
+from App.Services.UserNotificator import UserNotificator
 
 
 def save_interference():
@@ -33,5 +34,6 @@ def save_interference():
         connection.close()
 
 
-save_interference()
+# save_interference()
+UserNotificator("test")
 

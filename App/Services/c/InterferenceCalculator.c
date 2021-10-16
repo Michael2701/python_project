@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
         calculateXi();
         createOutputCSV(argv[1], argv[2]);
 
-        char python_command[100] = "python3 App/myscript.py ";
+        char python_command[100] = "python3 back_from_C.py ";
         int command_length = strlen(python_command);
 
         for(int f = 2, q = 0; f < argc; f++){
