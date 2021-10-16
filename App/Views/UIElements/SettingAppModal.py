@@ -27,10 +27,9 @@ class SettingAppModal:
 
         settings = SettingsController()
         settings.set_view_settings(self)
+
         self.sms_status = settings.get_sms_notification_status()
-        print("Sms status in file: ", self.sms_status)
         self.email_status = settings.get_email_notification_status()
-        print("Sms status in file: ", self.email_status)
         self.app_theme = settings.get_theme_path()
 
         self.create_top_level_dialog()
@@ -82,7 +81,6 @@ class SettingAppModal:
         send data to setting controller according switch status
         :return:
         """
-        print("on_sms_switch_listener: ", self.sms_status, " ", self.sms_switch_status.get())
         if self.sms_switch_status.get():
             SettingsController().set_sms_config(True)
         else:
@@ -110,7 +108,6 @@ class SettingAppModal:
         send data to setting controller according switch status
         :return: None
         """
-        print("on_email_switch_listener: ", self.email_switch_status.get())
         if self.email_switch_status.get():
             SettingsController().set_email_config(True)
         else:
@@ -140,7 +137,6 @@ class SettingAppModal:
         """
         # night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
         # day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
-        print("theme_switch_status: ", self.theme_switch_status.get())
         if self.theme_switch_status.get():
             SettingsController().set_theme(self.night_theme)
         else:

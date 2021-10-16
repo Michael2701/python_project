@@ -18,7 +18,7 @@ class Controller:
             for child in master_children:
                 child.destroy()
 
-    def get_logged_user(self):
+    def get_logged_user(self) -> dict:
         user = {}
         try:
             FileEncryptor("session.csv").decrypt_file()
@@ -29,6 +29,7 @@ class Controller:
             print(e)
         finally:
             self.user = user
+            return user
 
     @staticmethod
     def print_list(rows):

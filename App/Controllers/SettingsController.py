@@ -56,7 +56,6 @@ class SettingsController(Controller):
         :param is_sms_notification_active: tue if notification is active otherwise false
         :return: None
         """
-        print("In set_sms_config: ", is_sms_notification_active)
         with open(self.config_path) as json_config:
             config = json.load(json_config)
 

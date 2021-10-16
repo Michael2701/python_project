@@ -60,8 +60,7 @@ class SMSNotification(Notification):
                 "msg": self.message["msg"]}
 
         # Post Data
-        # response = requests.post(self.api_end_point, json=self.message)
-        response = 200
+        response = requests.post(self.api_end_point, json=self.message)
 
         print(response) #Should GET Status 200 (SUCCESS)
 

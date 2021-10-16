@@ -10,44 +10,49 @@ from App.Services.SMSNotification import SMSNotification
 
 class UserNotificator:
 
-    def __init__(self, message: str):
-        if self.is_sms_notification_on():
-            print("is_sms_notification_on = true")
-            print(self.send_sms_notification(message))
+    @staticmethod
+    def send_notification(message: str, user_email: str):
+        if UserNotificator.__is_sms_notification_on():
+            UserNotificator.__send_sms_notification(message)
 
-        if self.is_email_notification_on():
-            self.send_email_notification(message)
+        if UserNotificator.__is_email_notification_on():
+            UserNotificator.__send_email_notification(user_email, message)
 
-    def send_sms_notification(self, message: str) -> bool:
+    @staticmethod
+    def __send_sms_notification(message: str) -> bool:
         is_sms_send: bool
 
         sms = SMSNotification()
-        sms.add_attachment("Hi, calculation completed")
+        sms.add_attachment(message)
         is_sms_send = sms.send_notification()
         return is_sms_send
 
-    def send_email_notification(self, message: str) -> None:
+    @staticmethod
+    def __send_email_notification(email: str, message_text: str) -> None:
+        """
+        call to MailNotification to purpose send message
+        :return: return None
+        """
         message: dict = {'From': "1hotlev@gmail.com",
-                         'To': "a", # TODO add recipient
-                         'Subject': "Genetic App - Calculation Completed"}
+                         'To': email,
+                         'Subject': "Genetic App"}
 
         email = MailNotification(message)
-        email.add_attachment('Hi, Calculation Completed')
+        email.add_attachment(message_text)
         email.send_message('szojpvlaoewaoeyr')
 
-    def is_sms_notification_on(self) -> bool:
+    @staticmethod
+    def __is_sms_notification_on() -> bool:
         """
-
-        :return:
+        check if in settings enabled to send SMS notifications.
+        :return: True if enabled otherwise False.
         """
         return SettingsController().get_sms_notification_status() == "True"
 
-    def is_email_notification_on(self) -> bool:
+    @staticmethod
+    def __is_email_notification_on() -> bool:
         """
-
-        :return:
+        call to SettingsController and check email notification status is enabled.
+        :return: True if notification status enabled otherwise False.
         """
         return SettingsController().get_email_notification_status() == "True"
-
-
-UserNotificator("Default message")
