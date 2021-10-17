@@ -1,3 +1,5 @@
+""" This class help notify user by Email about some event. """
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText

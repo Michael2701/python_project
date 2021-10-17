@@ -1,3 +1,8 @@
+""" File describe Authorization controller.
+
+    This file has controller method.
+"""
+
 from tkinter.ttk import Notebook
 from typing import Any
 from App.Controllers.Controller import Controller
@@ -21,9 +26,18 @@ class AuthController(Controller):
         self.user = None
 
     def show_login_modal(self) -> None:
+        """
+        call to view class to purpose show login view
+        :return: None
+        """
         self.login_modal = LoginModal(self.master, self)
 
-    def check_password(self, login_data):
+    def check_password(self, login_data: dict):
+        """
+        check password in database by email
+        :param login_data: user login data inserted by user
+        :return: None
+        """
         self.login_data = login_data
         self.user = SimpleUser.select(SimpleUser.q.email == self.login_data['email'])
 

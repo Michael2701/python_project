@@ -1,3 +1,10 @@
+""" This class help notify user by SMS about some event.
+
+    In this version it can notify only one phone number. See PHONE_NUMBER variable.
+    Service is NOT FREE!
+"""
+
+
 # Import Requests for POST Method
 import requests
 
@@ -6,6 +13,8 @@ from App.Services.Notification import Notification
 
 class SMSNotification(Notification):
     api_end_point = "https://www.sms4free.co.il/ApiSMS/SendSMS"
+
+    PHONE_NUMBER: str = "0527332199"
 
     def __init__(self):
         self.message = {}
@@ -46,10 +55,10 @@ class SMSNotification(Notification):
         # Define The URL We Wanna Post to
 
         key = "pDrHzFaep"
-        user = "0527332199"
+        user = self.PHONE_NUMBER
         _pass = "16454004"
         sender = "Genetic App"
-        recipient = "0527332199"
+        recipient = self.PHONE_NUMBER
 
         # Object that have the data we wanna POST
         data = {"key": key,

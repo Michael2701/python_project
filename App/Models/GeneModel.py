@@ -1,3 +1,5 @@
+""" File describes Gene Model for objectSQL."""
+
 from App.Models.SQLiteConnector import SQLiteConnector
 from App.Models.Model import Model
 from sqlobject import *
@@ -7,7 +9,6 @@ class GeneModel(Model):
     """
     model for genes table
     """
-    # file_id = ForeignKey('GeneticFileModel')
     file_id = StringCol()
     name = StringCol()
     distance = StringCol()
@@ -22,7 +23,7 @@ class GeneModel(Model):
     @staticmethod
     def get_id_list(gene_id: str, file_id: str, min_dist: str, max_dist: str) -> []:
         """
-
+        build array of groups of genes by given criteria.
         :param gene_id: ID of gene (marker)
         :param file_id: ID of file
         :param min_dist: minimal dictation between genes

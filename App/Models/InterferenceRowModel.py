@@ -1,8 +1,10 @@
+""" File describes Interference Row (triplet of genes) Model for objectSQL."""
+
 from App.Models.Model import Model
 from sqlobject import *
 
 
-class IntereferenceRowModel(Model):
+class InterferenceRowModel(Model):
     """
     model for interference table
     """

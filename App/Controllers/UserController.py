@@ -1,3 +1,8 @@
+""" File describe User controller.
+
+    Basis control functions on App's user.
+"""
+
 from tkinter import *
 from typing import Any
 

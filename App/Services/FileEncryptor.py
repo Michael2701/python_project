@@ -1,5 +1,6 @@
+""" This class encrypt and decrypt csv file with password of current logged user. """
+
 from cryptography.fernet import Fernet
-from typing import Union
 from os import path
 
 

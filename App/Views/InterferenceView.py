@@ -6,7 +6,7 @@ from typing import List
 from App.Controllers.Controller import Controller
 from App.Controllers.SettingsController import SettingsController
 from App.Models.GeneticFileModel import GeneticFileModel
-from App.Models.InterferenceRowModel import IntereferenceRowModel
+from App.Models.InterferenceRowModel import InterferenceRowModel
 
 
 class InterferenceView(Canvas):
@@ -14,7 +14,7 @@ class InterferenceView(Canvas):
     __master: Tk
     __files: List[GeneticFileModel]
 
-    def __init__(self, ctrl: Controller, master: Tk, files: IntereferenceRowModel):
+    def __init__(self, ctrl: Controller, master: Tk, files: InterferenceRowModel):
         """
         :param ctrl: view controller
         :param master: parent view

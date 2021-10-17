@@ -1,3 +1,5 @@
+""" Abstract model of all Models."""
+
 from sqlobject import *
 
 

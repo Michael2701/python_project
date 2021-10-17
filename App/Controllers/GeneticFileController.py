@@ -1,3 +1,8 @@
+""" File describe Genetic File controller.
+
+    Genetic File this file contain genetic data from input file.
+"""
+
 from datetime import datetime
 from tkinter import *
 from typing import Any
@@ -37,7 +42,7 @@ class GeneticFileController(Controller):
     def display_files(self) -> None:
         """
         display all files as a table
-        :return:
+        :return: None
         """
         self.clear_view(self.master)
         if self.user['user_role'] == 'admin':
@@ -55,7 +60,7 @@ class GeneticFileController(Controller):
         if self.msg.question("Do you really want to delete this file?", "Delete File"):
             self.delete_file(file.id)
 
-    def show_update_file_modal(self, file=None):
+    def show_update_file_modal(self, file=None) -> None:
         """
         show file update modal
         :param file: None or GeneticFileModel object
@@ -114,10 +119,21 @@ class GeneticFileController(Controller):
             print(str(e))
             self.msg.warning("Warning. File not created")
 
-    def open_file_process_modal(self, file: GeneticFileModel, is_excel: bool):
+    def open_file_process_modal(self, file: GeneticFileModel, is_excel: bool) -> None:
+        """
+        call to another class to purpose show Interference creation view.
+        :param file: genetic file model object SQL
+        :param is_excel: flag create excel file only
+        :return: None
+        """
         self.file_process_dialog.show_top_level_dialog(file, is_excel)
 
     def process_file_genes(self, data: dict) -> None:
+        """
+        call to  calculate_markers_genes function
+        :param data: Gene File data
+        :return: None
+        """
         self.calculate_markers_genes(self.get_groups_of_markers(str(data["id"]), data))
 
     def calculate_markers_genes(self, gene_ids_groups) -> None:
@@ -186,12 +202,11 @@ class GeneticFileController(Controller):
             row += 1
 
         workbook.close()
-        print("Log: Exit create_markers_statistic_excel()")
 
     def create_list_of_markers(self) -> list:
         """
-
-        :return:
+        build list of markers for excel uses.
+        :return: list of markers
         """
         list_of_markers = []
         titles = ['marker 1', 'marker 2', 'marker 3', 'position 1', 'position 2', 'position 3']
@@ -212,20 +227,25 @@ class GeneticFileController(Controller):
 
     def get_groups_of_markers(self, file_id: str, data: dict) -> list:
         """
-        build group of three gene id's and return list of them
+        build all available group's of three gene id's by user inserted criteria.
         :param file_id: file ID
-        :param data:
+        :param data: interference data inserted by user
         :return: list of triple id's
         """
-        genes = [gene for gene in GeneModel.selectBy(file_id=file_id)]
+        genes = [gene for gene in GeneModel.selectBy(file_id=file_id)]  # create array of genes belongs same gene file.
         gene_ids_groups = []
-        for i in range(0, len(genes), data["step"]):
+
+        for i in range(0, len(genes), data["step"]):  # step help not check all genes (do process faster)
+            # create array of genes by criteria
             gene_ids = GeneModel.get_id_list(genes[i].id, str(data["id"]), data["min_distance"], data["max_distance"])
+
             if len(gene_ids) > 3:
+                # creating all available id's groups of 3 genes. Order is not important.
                 for x in range(len(gene_ids) - 2):
                     for y in range((x + 1), len(gene_ids) - 1):
                         for z in range((y + 1), len(gene_ids)):
                             gene_ids_groups.append([gene_ids[x], gene_ids[y], gene_ids[z]])
+
             elif len(gene_ids) == 3:
                 gene_ids_groups.append(gene_ids)
         return gene_ids_groups
