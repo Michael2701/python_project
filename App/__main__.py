@@ -1,3 +1,5 @@
+""" This file is entry point to the App. """
+
 import sys
 from App.Index import Index
 
