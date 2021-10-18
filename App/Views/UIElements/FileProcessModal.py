@@ -1,3 +1,8 @@
+""" File describe Admin File Process view.
+    
+    This view help to user start insert data and start interference calculation.
+"""
+
 import os
 import tkinter
 from typing import Any
