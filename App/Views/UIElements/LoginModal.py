@@ -1,3 +1,7 @@
+""" File describe Login user view.
+    
+    This view help to user or admin login to the App.
+"""
 
 from typing import Any
 import tkinter.ttk as ttk
