@@ -1,3 +1,8 @@
+""" File describe Updating or Creating User view.
+    
+    This view help to user add new user to data base or change exist.
+"""
+
 from tkinter import StringVar, Toplevel, X
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -25,7 +30,10 @@ class UpdateOrCreateUserModal:
     title = None
 
     def __init__(self, master: Any, controller: Any):
-
+        """
+        init method
+        :return: None
+        """
         SettingsController().set_view_settings(self)
         self.msg = Message()
 
@@ -40,6 +48,10 @@ class UpdateOrCreateUserModal:
         self.default_role.set('user')
 
     def set_user(self, user: SimpleUser) -> None:
+        """
+        set view title according input. If user not exists will be set title creating otherwise updating  
+        :return: None
+        """
         self.user = user
 
         if self.user is None:
@@ -50,11 +62,19 @@ class UpdateOrCreateUserModal:
     # if no user passed class will do create user
     # else will update passed user
     def show_top_level_dialog(self, user: SimpleUser = None) -> None:
+        """
+        show view
+        :return: None
+        """
         self.set_user(user)
         self.create_modal()
         self.set_fields_values()
 
     def create_modal(self) -> None:
+        """
+        call to view class to purpose show login view
+        :return: None
+        """
         self.create_top_level_dialog()
 
         self.set_first_name_field()
