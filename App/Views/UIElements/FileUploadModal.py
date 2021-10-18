@@ -1,3 +1,8 @@
+""" File describe File uploading view.
+    
+    This view help to user choose and start .
+"""
+
 import os
 from datetime import datetime
 import tkinter as tk
@@ -189,6 +194,10 @@ class FileUploadModal:
         self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
 
     def set_progress_bar(self) -> None:
+        """
+        set progress loading bar on view
+        :return: None
+        """
         self.progress_bar = ttk.Progressbar(self.top_level_dialog, value=0, variable=self.__progress_value, mode='determinate')
         self.progress_bar.pack(fill=X, expand=False, padx=5)
 
