@@ -1,6 +1,6 @@
 /*
- * This file contain mathematic genetic calculation on genetic data.
- * Logarithmic calculations, likelyhood calculation and statistic calculations.
+ * This file contain mathematics genetic calculation on genetic data.
+ * Logarithmic calculations, likelihood calculation and statistic calculations.
  * 
  * Language:  C
  */

@@ -1,3 +1,8 @@
+""" This file build Interference view.
+
+    This view contain user interference files and operation buttons with them.
+"""
+
 from textwrap import wrap
 from tkinter import *
 from tkinter import ttk

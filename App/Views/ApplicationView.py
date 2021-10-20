@@ -1,4 +1,4 @@
-""" File describe main Application View.
+""" File build main Application View.
 
     Show menu and dropdown menu.
 """

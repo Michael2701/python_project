@@ -1,3 +1,8 @@
+""" File build Files view.
+
+    This view contain user's files and operation buttons for work with them.
+"""
+
 from textwrap import wrap
 from tkinter import *
 import tkinter.ttk as ttk

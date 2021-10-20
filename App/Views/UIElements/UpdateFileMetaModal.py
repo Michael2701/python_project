@@ -25,7 +25,7 @@ class UpdateFileMetaModal:
     file_description_entry = None
 
     def __init__(self, master: Any, ctrl: Any) -> None:
-       
+
         SettingsController().set_view_settings(self)
         self.msg = Message()
 
@@ -92,7 +92,8 @@ class UpdateFileMetaModal:
         create submit button that saved data
         :return: None
         """
-        self.submit_button = Button(self.top_level_dialog, text='Submit', fg=self.fg, font=self.font, command=self.update)
+        self.submit_button = Button(self.top_level_dialog, text='Submit', fg=self.fg, font=self.font,
+                                    command=self.update)
         self.submit_button.grid(row=6, column=0)
 
     def set_cancel_button(self) -> None:
@@ -100,7 +101,8 @@ class UpdateFileMetaModal:
         close view without any changes
         :return: None
         """
-        self.cancel_button = Button(self.top_level_dialog, text='Cancel', fg=self.fg, font=self.font, command=self.close_modal)
+        self.cancel_button = Button(self.top_level_dialog, text='Cancel', fg=self.fg, font=self.font,
+                                    command=self.close_modal)
         self.cancel_button.grid(row=6, column=1)
 
     def set_file_name_field(self) -> None:
@@ -108,7 +110,8 @@ class UpdateFileMetaModal:
         create file name field in view
         :return: None
         """
-        self.file_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text='File Name')
+        self.file_name_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+                                     text='File Name')
         self.file_name_label.grid(row=0, column=0)
         self.file_name_entry = Entry(self.top_level_dialog)
         self.file_name_entry.grid(row=1, column=0)
@@ -118,24 +121,26 @@ class UpdateFileMetaModal:
         create 'created at' filed in view
         :return: None
         """
-        self.file_created_at_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="Created at")
+        self.file_created_at_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+                                           text="Created at")
         self.file_created_at_label.grid(row=0, column=1)
         self.file_created_at_entry = Entry(self.top_level_dialog, state='readonly')
-        self.file_created_at_entry.grid(row=1, create description file field 1)
+        self.file_created_at_entry.grid(row=1, column=1)
 
     def set_file_description_field(self) -> None:
         """
         create description file field 
         :return: None
         """
-        self.file_description_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font, text="File Description")
+        self.file_description_label = Label(self.top_level_dialog, bg=self.bg_modal, fg=self.fg, font=self.font,
+                                            text="File Description")
         self.file_description_label.grid(row=2, column=0)
         self.file_description_entry = Text(self.top_level_dialog, height=3, width=6)
-        self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W+tk.E)
+        self.file_description_entry.grid(row=3, column=0, columnspan=2, sticky=tk.W + tk.E)
 
     def set_fields_values(self) -> None:
         """
-        fill fields if file existes in data base
+        fill fields if file exists in data base
         :return: None
         """
         if self.file is not None:
@@ -145,7 +150,7 @@ class UpdateFileMetaModal:
 
     def set_file_name(self) -> None:
         """
-        fill file name field if file name existes
+        fill file name field if file name exists
         :return: None
         """
         if self.file.file_name is not None:
@@ -166,23 +171,23 @@ class UpdateFileMetaModal:
         fill file creation date if it exists
         :return: None
         """
-        if self.file.file_created_at  is not None:
+        if self.file.file_created_at is not None:
             self.file_created_at_entry.configure(state='normal')
             self.file_created_at_entry.delete(0, tk.END)
-            self.file_created_at_entry.insert(0, self.file.file_created_at )
+            self.file_created_at_entry.insert(0, self.file.file_created_at)
             self.file_created_at_entry.configure(state='readonly')
 
     def get_form_data(self) -> bool:
         """
         save data from fields to variable
-        :return: True ifdata was correct and saved to variable otherwise False
+        :return: True if data was correct and saved to variable otherwise False
         """
         if self.check_fields():
-            data =  {
-                'id' : self.file.id,
-                'user_id' : self.file.user_id,
+            data = {
+                'id': self.file.id,
+                'user_id': self.file.user_id,
                 'file_name': self.file_name_entry.get(),
-                'file_description': self.file_description_entry.get("1.0",tk.END).strip(),
+                'file_description': self.file_description_entry.get("1.0", tk.END).strip(),
                 'file_created_at': self.file.file_created_at
             }
 
@@ -193,7 +198,7 @@ class UpdateFileMetaModal:
 
     def check_fields(self) -> bool:
         """
-        check input filelds filled correct
+        check input fields filled correct
         :return: True if fields found filled correct otherwise False
         """
         return self.check_file_description() and self.check_file_name()
@@ -201,12 +206,12 @@ class UpdateFileMetaModal:
     def check_file_name(self) -> bool:
         """
         check that name field is not empty
-        :return: True if file name correct (not emty) otherwise False
+        :return: True if file name correct (not empty) otherwise False
         """
         try:
             if len(self.file_name_entry.get()) == 0:
                 return False
-            
+
             return True
 
         except Exception as e:
@@ -221,10 +226,9 @@ class UpdateFileMetaModal:
         try:
             if len(self.file_description_entry.get("1.0", tk.END).strip()) == 0:
                 return False
-            
+
             return True
 
         except Exception as e:
             print(str(e))
             return False
-
