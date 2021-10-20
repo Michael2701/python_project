@@ -8,6 +8,7 @@ from datetime import datetime
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter import Entry, Toplevel, Button, Label, Text, IntVar, X, LEFT
+from tkinter.scrolledtext import ScrolledText
 from typing import Any
 
 from App.Services.Message import Message
@@ -125,10 +126,7 @@ class FileUploadModal:
         self.create_top_level_dialog()
 
         self.set_file_name_fields()
-        self.set_separator_line()
-
         self.set_file_description_field()
-        self.set_separator_line()
 
         self.set_submit_button()
         self.set_cancel_button()
@@ -159,7 +157,7 @@ class FileUploadModal:
         :return: None
         """
         self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.on_submit)
-        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(10, 0))
 
     def on_submit(self) -> None:
         """
@@ -240,9 +238,9 @@ class FileUploadModal:
         :return: None
         """
         self.file_description_label = ttk.Label(self.top_level_dialog, text="Description")
-        self.file_description_label.pack(fill=X, expand=False, padx=5)
+        self.file_description_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
 
-        self.file_description_entry = Text(self.top_level_dialog, height=3, width=6)
+        self.file_description_entry = ScrolledText(self.top_level_dialog, height=3, width=6)
         self.file_description_entry.pack(fill=X, expand=False, padx=5)
 
     def set_separator_line(self) -> None:
