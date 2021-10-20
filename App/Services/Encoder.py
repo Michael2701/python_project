@@ -1,3 +1,5 @@
+""" This class encrypt user password with pbkdf2_sha256 encryption"""
+
 from passlib.context import CryptContext
 
 

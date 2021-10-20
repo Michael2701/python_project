@@ -1,3 +1,8 @@
+""" This file build user view.
+
+    View contain user's table and operation buttons.
+"""
+
 from tkinter import *
 from tkinter import ttk
 from typing import Any

@@ -1,3 +1,10 @@
+""" File describe Application Settings controller.
+    Currently implemented:
+    - SMS   user notification about end of genetic interference calculation.
+    - Email user notification about end of genetic interference calculation.
+    - Bright and Dark GUI mode.
+"""
+
 import json
 from typing import Any
 from App.Controllers.Controller import Controller
@@ -5,8 +12,7 @@ from App.Controllers.Controller import Controller
 
 class SettingsController(Controller):
 
-    # config_path = "App/config.json"
-    config_path = "/home/ty/PycharmProjects/python_project/App/config.json"
+    config_path = "App/config.json"
 
     def set_view_settings(self, view: Any) -> None:
         """

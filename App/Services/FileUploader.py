@@ -1,3 +1,5 @@
+""" Class helper upload gene file to data base. """
+
 import os
 from App.Models.GeneModel import GeneModel
 
@@ -7,16 +9,17 @@ class FileUploader:
 
     def __init__(self, file_path: str, file_id: str) -> None:
         """
-        
-        :param file_path: Files path in OS 
-        :param file_id: 
+        init function
+        :param file_path: path file in OS.
+        :param file_id: id of genetic file.
+        :return: None
         """
         self.file_id = file_id
         self.file_path = file_path
         self.line_number = 0
         self.line = ""
 
-        self.file = open(self.file_path)  # Why need this?
+        self.file = open(self.file_path)
 
     def upload_file(self) -> None:
         """

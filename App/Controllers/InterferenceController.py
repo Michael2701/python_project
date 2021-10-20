@@ -1,9 +1,14 @@
+""" File describe Interference controller.
+
+Interference this output data of our tool.
+"""
+
 import subprocess
 from typing import Any
 
 from App.Controllers.Controller import Controller
 from App.Models.InterferenceModel import InterferenceModel
-from App.Models.InterferenceRowModel import IntereferenceRowModel
+from App.Models.InterferenceRowModel import InterferenceRowModel
 from App.Views.InterferenceView import InterferenceView
 
 from App.Models.SQLiteConnector import SQLiteConnector
@@ -16,10 +21,14 @@ class InterferenceController(Controller):
         self.master = master
         self.msg = Message
 
-    def create_interference(self, file: IntereferenceRowModel, data: dict):
+    def create_interference(self, file: InterferenceRowModel, data: dict):
         subprocess.check_call([r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id), str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
 
-    def show_interference_view(self):
+    def show_interference_view(self) -> None:
+        """
+        call to interference view and show user research according user status (user/admin)
+        :return: None
+        """
         self.clear_view(self.master)
         connection = SQLiteConnector.create_connection('App/DB/project.db')
         cur = connection.cursor()
@@ -34,7 +43,13 @@ class InterferenceController(Controller):
         files = cur.fetchall()
         InterferenceView(self, self.master, files)
 
-    def open_file_process_modal(self, f, param):
+    def open_file_process_modal(self, f, param) -> None:
+        """
+        this function will be implemented in future versions.
+        :param f: Genetic file
+        :param param: parameters
+        :return: None
+        """
         pass
 
     def show_delete_modal(self, file: tuple) -> None:

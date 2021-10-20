@@ -1,3 +1,9 @@
+/*
+ * This file contain mathematics genetic calculation on genetic data.
+ * Logarithmic calculations, likelihood calculation and statistic calculations.
+ * 
+ * Language:  C
+ */
 #define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>

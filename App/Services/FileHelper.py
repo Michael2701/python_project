@@ -1,3 +1,5 @@
+""" Class helper for work with csv file. """
+
 import csv
 from os import path
 
@@ -45,12 +47,12 @@ class FileHelper:
         return False
 
     @staticmethod
-    def write_list_to_csv(file_path: str, list_of_triple_markers: list) -> None:
+    def write_list_to_csv(file_path: str, list_of_triple_markers: list) -> bool:
         """
-
+        write entire list of triplets of markers
         :param file_path:
         :param list_of_triple_markers:
-        :return:
+        :return: True if list was wrote at csv file otherwise False.
         """
 
         try:

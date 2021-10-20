@@ -1,3 +1,5 @@
+""" File create connection with data base. """
+
 import sqlite3
 from sqlite3 import Error
 

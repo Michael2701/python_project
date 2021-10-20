@@ -1,3 +1,5 @@
+""" This file build main App window, set size and theme for it. """
+
 from tkinter import BOTH, Tk, PhotoImage
 
 import tkinter.ttk as ttk

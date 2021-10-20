@@ -1,3 +1,5 @@
+""" File describes Interference Model for objectSQL."""
+
 from App.Models.Model import Model
 from sqlobject import *
 

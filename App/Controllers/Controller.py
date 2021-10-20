@@ -1,3 +1,8 @@
+""" File describe basic controller.
+
+    All Controller classes inherit from this class.
+"""
+
 from typing import Any
 from App.Services.FileEncryptor import FileEncryptor
 from App.Services.FileHelper import FileHelper
@@ -19,6 +24,10 @@ class Controller:
                 child.destroy()
 
     def get_logged_user(self) -> dict:
+        """
+        give information about currently logged user
+        :return: user credentials
+        """
         user = {}
         try:
             FileEncryptor("session.csv").decrypt_file()
@@ -30,8 +39,3 @@ class Controller:
         finally:
             self.user = user
             return user
-
-    @staticmethod
-    def print_list(rows):
-        for row in rows:
-            print(row)

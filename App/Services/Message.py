@@ -1,10 +1,9 @@
+""" Class helper wrapper for messagebox. """
+
 from tkinter import messagebox
 
 
 class Message:
-    """
-    wrapper for messagebox
-    """
 
     @staticmethod
     def info(message: str, title: str = "") -> None:

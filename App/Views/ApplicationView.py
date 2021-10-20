@@ -1,3 +1,7 @@
+""" File build main Application View.
+
+    Show menu and dropdown menu.
+"""
 from tkinter import *
 from tkinter import messagebox
 from tkinter.ttk import Notebook

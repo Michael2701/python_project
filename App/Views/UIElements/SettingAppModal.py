@@ -1,3 +1,8 @@
+""" File describe Settings App view.
+    
+    This view contain elements of settings App.
+"""
+
 from tkinter import Toplevel, IntVar, X
 import tkinter.ttk as ttk
 from typing import Any

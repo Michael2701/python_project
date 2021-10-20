@@ -1,4 +1,4 @@
-from App.Models.InterferenceRowModel import IntereferenceRowModel
+from App.Models.InterferenceRowModel import InterferenceRowModel
 
 
 class InterferenceRowMigration:
@@ -14,7 +14,7 @@ class InterferenceRowMigration:
         :return: None
         """
         try:
-            IntereferenceRowModel.createTable()
+            InterferenceRowModel.createTable()
 
         except Exception as e:
             print(str(e))
