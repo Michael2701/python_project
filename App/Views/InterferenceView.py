@@ -114,7 +114,7 @@ class InterferenceView(Canvas):
             label = ttk.Label(self.frame, text=file[5])
             label.grid(row=row, column=5, padx=3, pady=3)
 
-            button = ttk.Button(self.frame, text="Excel", command=lambda f=file: self.ctrl.open_file_process_modal(f, True), )
+            button = ttk.Button(self.frame, text="Excel", command=lambda f=file: self.ctrl.create_interference_excel())
             button.grid(row=row, column=6, padx=3, pady=3)
 
             button = ttk.Button(self.frame, text="Delete", command=lambda f=file: self.ctrl.show_delete_modal(f))

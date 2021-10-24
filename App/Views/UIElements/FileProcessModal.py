@@ -5,6 +5,7 @@
 
 import os
 import tkinter
+from builtins import print
 from typing import Any
 from tkinter import Toplevel, Button, Label, Scale, HORIZONTAL, ttk, X
 

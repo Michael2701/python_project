@@ -2,9 +2,13 @@
 
 Interference this output data of our tool.
 """
-
+import os
+from datetime import datetime
+from os import path
 import subprocess
 from typing import Any
+
+import xlsxwriter
 
 from App.Controllers.Controller import Controller
 from App.Models.InterferenceModel import InterferenceModel
@@ -22,7 +26,49 @@ class InterferenceController(Controller):
         self.msg = Message
 
     def create_interference(self, file: InterferenceRowModel, data: dict):
-        subprocess.check_call([r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id), str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
+        subprocess.check_call(
+            [r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id),
+             str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
+
+    #  TODO WIP
+    def create_interference_excel(self) -> None:
+        """
+
+        :return:
+        """
+        if self.__create_folders_for_interference_csv():
+            time_stamp = datetime.now()
+            date_time = time_stamp.strftime("%d-%m-%Y_%H:%M")
+
+            workbook = xlsxwriter.Workbook(date_time + '.xlsx')
+            worksheet = workbook.add_worksheet()
+
+            row = 0
+
+
+
+    def __create_folders_for_interference_csv(self) -> bool:
+        """
+        create main folder for all researches (interference excel files) and privet user folder
+        :return: True if all needed folders exists or created now otherwise False
+        """
+        user = Controller().get_logged_user()
+        dir_research_path = "App/../Researches"
+        dir_user_research_path = dir_research_path + '/' + user['first_name'] + ' ' + user['last_name']
+
+        if not path.exists(dir_research_path):
+            try:
+                os.mkdir(dir_research_path)
+            except OSError:
+                print("Can't create \"Researches\" directory")
+
+        if not path.exists(dir_user_research_path):
+            try:
+                os.mkdir(dir_user_research_path)
+            except OSError:
+                print("Can't create user directory in \"Researches\" directory")
+
+        return path.exists(dir_research_path) and path.exists(dir_user_research_path)
 
     def show_interference_view(self) -> None:
         """
@@ -38,7 +84,8 @@ class InterferenceController(Controller):
             cur.execute("select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id")
         else:
             user_file_ids = ",".join(cur.execute(f"SELECT id FROM WHERE user_id={self.user.id}"))
-            cur.execute(f"select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id WHERE f.user_id IN ({user_file_ids})")
+            cur.execute(
+                f"select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id WHERE f.user_id IN ({user_file_ids})")
 
         files = cur.fetchall()
         InterferenceView(self, self.master, files)
