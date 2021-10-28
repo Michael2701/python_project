@@ -31,30 +31,60 @@ class InterferenceController(Controller):
              str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
 
     #  TODO WIP
-    def create_interference_excel(self) -> None:
+    def create_interference_excel(self, file: tuple) -> None:
         """
-
-        :return:
+        create file and write to it interference calculations
+        :return: None
         """
-        if self.__create_folders_for_interference_csv():
+        if self.__create_folder_for_interference_excel():
             time_stamp = datetime.now()
             date_time = time_stamp.strftime("%d-%m-%Y_%H:%M")
 
-            workbook = xlsxwriter.Workbook(date_time + '.xlsx')
+            workbook = xlsxwriter.Workbook(self.dir_user_research_path + '/' + date_time + '_' + self.user['first_name'] + '.xlsx')
             worksheet = workbook.add_worksheet()
 
-            row = 0
+            self.__write_title_to_excel(worksheet)
 
+            row = 1
+            for lines in self.__get_interference_rows(file):
+                col = 0
+                for word in lines:
+                    worksheet.write(row, col, word)
+                    col += 1
+                row += 1
 
+            workbook.close()
 
-    def __create_folders_for_interference_csv(self) -> bool:
+    def __write_title_to_excel(self, worksheet: Any) -> None:
+        titles = (
+                'id', 'interference_id', 'marker 1', 'marker 2', 'marker 3', 'r1', 'r2', 'N_00', 'N_01', 'N_10', 'N_11', 'C max', 'log(C max)',
+                'log(C=1)', 'Xi')
+        row = 0
+        for title in titles:
+            worksheet.write(0, row, title)
+            row += 1
+
+    def __get_interference_rows(self, interference: tuple) -> list:
         """
-        create main folder for all researches (interference excel files) and privet user folder
+        pull interference rows from database
+        :param interference:
+        :return: rows - list of rows
+        """
+        connection = SQLiteConnector.create_connection('App/DB/project.db')
+        cur = connection.cursor()
+        cur.execute("SELECT * FROM interference_row where interference_id=" + str(interference[0]))
+
+        rows = cur.fetchall()
+        return rows
+
+    def __create_folder_for_interference_excel(self) -> bool:
+        """
+        create main folder for all researches (interference excel files) and private user folder
         :return: True if all needed folders exists or created now otherwise False
         """
         user = Controller().get_logged_user()
         dir_research_path = "App/../Researches"
-        dir_user_research_path = dir_research_path + '/' + user['first_name'] + ' ' + user['last_name']
+        self.dir_user_research_path = dir_research_path + '/' + user['first_name'] + ' ' + user['last_name']
 
         if not path.exists(dir_research_path):
             try:
@@ -62,13 +92,13 @@ class InterferenceController(Controller):
             except OSError:
                 print("Can't create \"Researches\" directory")
 
-        if not path.exists(dir_user_research_path):
+        if not path.exists(self.dir_user_research_path):
             try:
-                os.mkdir(dir_user_research_path)
+                os.mkdir(self.dir_user_research_path)
             except OSError:
                 print("Can't create user directory in \"Researches\" directory")
 
-        return path.exists(dir_research_path) and path.exists(dir_user_research_path)
+        return path.exists(dir_research_path) and path.exists(self.dir_user_research_path)
 
     def show_interference_view(self) -> None:
         """
