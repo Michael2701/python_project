@@ -30,7 +30,6 @@ class InterferenceController(Controller):
             [r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id),
              str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
 
-    #  TODO WIP
     def create_interference_excel(self, file: tuple) -> None:
         """
         create file and write to it interference calculations
@@ -40,15 +39,22 @@ class InterferenceController(Controller):
             time_stamp = datetime.now()
             date_time = time_stamp.strftime("%d-%m-%Y_%H:%M")
 
-            workbook = xlsxwriter.Workbook(self.dir_user_research_path + '/' + date_time + '_' + self.user['first_name'] + '.xlsx')
+            workbook = xlsxwriter.Workbook(self.dir_user_research_path +
+                                           '/' + date_time + '_' +
+                                           self.user['first_name'] + '.xlsx')
             worksheet = workbook.add_worksheet()
 
             self.__write_title_to_excel(worksheet)
 
             row = 1
-            for lines in self.__get_interference_rows(file):
+            for line in self.__get_interference_rows(file):
                 col = 0
-                for word in lines:
+
+                for word in line:
+                    if isinstance(word, str):
+                        word = word.replace('\n', '')
+
+                    print(word)
                     worksheet.write(row, col, word)
                     col += 1
                 row += 1
@@ -57,8 +63,8 @@ class InterferenceController(Controller):
 
     def __write_title_to_excel(self, worksheet: Any) -> None:
         titles = (
-                'id', 'interference_id', 'marker 1', 'marker 2', 'marker 3', 'r1', 'r2', 'N_00', 'N_01', 'N_10', 'N_11', 'C max', 'log(C max)',
-                'log(C=1)', 'Xi')
+                'id', 'interference_id', 'marker 1', 'marker 2', 'marker 3',
+                'r1', 'r2', 'N_00', 'N_01', 'N_10', 'N_11', 'C max', 'log(C max)', 'log(C=1)', 'Xi')
         row = 0
         for title in titles:
             worksheet.write(0, row, title)
