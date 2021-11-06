@@ -1,0 +1,3 @@
+
+cat *.py */*.py */*/*.py > python_code.py 
+cat */*/*.c */*/*.h  > c_code.c
