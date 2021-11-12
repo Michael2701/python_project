@@ -13,6 +13,7 @@ import xlsxwriter
 from App.Controllers.Controller import Controller
 from App.Models.InterferenceModel import InterferenceModel
 from App.Models.InterferenceRowModel import InterferenceRowModel
+from App.Services.GraphCreator import GraphCreator
 from App.Views.InterferenceView import InterferenceView
 
 from App.Models.SQLiteConnector import SQLiteConnector
@@ -54,7 +55,6 @@ class InterferenceController(Controller):
                     if isinstance(word, str):
                         word = word.replace('\n', '')
 
-                    print(word)
                     worksheet.write(row, col, word)
                     col += 1
                 row += 1
@@ -105,6 +105,15 @@ class InterferenceController(Controller):
                 print("Can't create user directory in \"Researches\" directory")
 
         return path.exists(dir_research_path) and path.exists(self.dir_user_research_path)
+
+    def create_interference_graph(self, file: tuple) -> None:
+        """
+
+        :param file:
+        :return:
+        """
+        graph = GraphCreator(self.__get_interference_rows(file))
+        graph.create()
 
     def show_interference_view(self) -> None:
         """
