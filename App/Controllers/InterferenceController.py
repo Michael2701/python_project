@@ -18,6 +18,7 @@ from App.Views.InterferenceView import InterferenceView
 
 from App.Models.SQLiteConnector import SQLiteConnector
 from App.Services.Message import Message
+from App.Views.UIElements.GraphModal import GraphModal
 
 
 class InterferenceController(Controller):
@@ -112,8 +113,9 @@ class InterferenceController(Controller):
         :param file:
         :return:
         """
-        graph = GraphCreator(self.__get_interference_rows(file))
-        graph.create()
+        GraphModal(self.master)
+        # graph = GraphCreator(self.__get_interference_rows(file))
+        # graph.create()
 
     def show_interference_view(self) -> None:
         """
