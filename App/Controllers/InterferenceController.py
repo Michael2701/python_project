@@ -3,9 +3,9 @@
 Interference this output data of our tool.
 """
 import os
+import subprocess
 from datetime import datetime
 from os import path
-import subprocess
 from typing import Any
 
 import xlsxwriter
@@ -13,11 +13,10 @@ import xlsxwriter
 from App.Controllers.Controller import Controller
 from App.Models.InterferenceModel import InterferenceModel
 from App.Models.InterferenceRowModel import InterferenceRowModel
-from App.Services.GraphCreator import GraphCreator
-from App.Views.InterferenceView import InterferenceView
-
 from App.Models.SQLiteConnector import SQLiteConnector
+from App.Services.GraphCreator import GraphCreator
 from App.Services.Message import Message
+from App.Views.InterferenceView import InterferenceView
 from App.Views.UIElements.GraphModal import GraphModal
 
 
@@ -113,7 +112,7 @@ class InterferenceController(Controller):
         :param file:
         :return:
         """
-        GraphModal(self.master)
+        GraphModal(self.master, self.__get_interference_rows(file))
         # graph = GraphCreator(self.__get_interference_rows(file))
         # graph.create()
 
