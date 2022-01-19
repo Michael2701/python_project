@@ -41,55 +41,43 @@ class GraphCreator:
             xi.append(float(line[-1]))
 
         if checkbox_values.get('r1') == 1:
-            p.line(x, r1, line_color="#7FFFD4", line_width=2)
+            p.line(x, r1, legend_label="R 1", line_color="#7FFFD4", line_width=2)
+            p.circle(x, r1, fill_color='red', size=5)
 
         if checkbox_values.get('r2') == 1:
-            p.line(x, r2, line_color="#008000", line_width=2)
+            p.line(x, r2, legend_label="R 2", line_color="#008000", line_width=2)
+            p.circle(x, r2, fill_color='red', size=5)
 
         if checkbox_values.get('n_00') == 1:
-            p.line(x, n_00, line_color="#CFF4D2", line_width=2)
+            p.line(x, n_00, legend_label="N 00", line_color="#CFF4D2", line_width=2)
+            p.circle(x, n_00, fill_color='red', size=5)
 
         if checkbox_values.get('n_01') == 1:
-            p.line(x, n_01, line_color="#CBE495", line_width=2)
+            p.line(x, n_01, legend_label="N 01", line_color="#CBE495", line_width=2)
+            p.circle(x, n_01, fill_color='red', size=5)
 
         if checkbox_values.get('n_10') == 1:
-            p.line(x, n_10, line_color="#56C596", line_width=2)
+            p.line(x, n_10, legend_label="N 10", line_color="#56C596", line_width=2)
+            p.circle(x, n_10, fill_color='red', size=5)
 
         if checkbox_values.get('n_11') == 1:
-            p.line(x, n_11, line_color="#329D9C", line_width=2)
+            p.line(x, n_11, legend_label="N 11", line_color="#329D9C", line_width=2)
+            p.circle(x, n_11, fill_color='red', size=5)
 
         if checkbox_values.get('c_max') == 1:
-            p.line(x, c_max, line_color="#DFFF00", line_width=2)
+            p.line(x, c_max, legend_label="C MAX", line_color="#DFFF00", line_width=2)
+            p.circle(x, c_max, fill_color='red', size=5)
 
         if checkbox_values.get('log_c_max') == 1:
-            p.line(x, log_c_max, line_color="#0000FF", line_width=2)
+            p.line(x, log_c_max, legend_label="Log C MAX", line_color="#0000FF", line_width=2)
+            p.circle(x, log_c_max, fill_color='red', size=5)
 
         if checkbox_values.get('log_c_1') == 1:
-            p.line(x, log_c_1, line_color="#FF4500", line_width=2)
+            p.line(x, log_c_1, legend_label="Log C 1", line_color="#FF4500", line_width=2)
+            p.circle(x, log_c_1, fill_color='red', size=5)
 
         if checkbox_values.get('xi') == 1:
-            p.line(x, xi, line_color="#8A2BE2", line_width=2)
+            p.line(x, xi, legend_label="Xi", line_color="#8A2BE2", line_width=2)
+            p.circle(x, xi, fill_color='red', size=5)
 
         show(p)
-
-        # show the results
-        # # generate some data (1-50 for x, random values for y)
-        # x = list(range(0, 51))
-        # y = random.sample(range(0, 100), 51)
-        #
-        # # create new plot
-        # p = figure(title="Box annotation example")
-        #
-        # # add line renderer
-        # line = p.line(x, y, line_color="blue", line_width=2)
-        #
-        # # add box annotations
-        # low_box = BoxAnnotation(top=20, fill_alpha=0.1, fill_color="red")
-        # mid_box = BoxAnnotation(bottom=20, top=80, fill_alpha=0.1, fill_color="green")
-        # high_box = BoxAnnotation(bottom=80, fill_alpha=0.1, fill_color="red")
-        #
-        # # add boxes to existing figure
-        # p.add_layout(low_box)
-        # p.add_layout(mid_box)
-        # p.add_layout(high_box)
-        # show(p)

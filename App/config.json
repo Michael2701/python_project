@@ -1,1 +1,1 @@
-{"background_color": "#fff", "modal_bg": "#d9d9d9", "font_color": "#111", "app_font": "Helvetica 11", "title_font": "Helvetica 11 bold", "sms_notification": "False", "email_notification": "False",  "theme": "App/Azure-ttk-theme/azure dark/azure dark.tcl"}
+{"background_color": "#fff", "modal_bg": "#d9d9d9", "font_color": "#111", "app_font": "Helvetica 11", "title_font": "Helvetica 11 bold", "sms_notification": "False", "email_notification": "False", "theme": "App/Azure-ttk-theme/azure/azure.tcl"}
