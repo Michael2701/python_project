@@ -117,8 +117,11 @@ class InterferenceView(Canvas):
             button = ttk.Button(self.frame, text="Excel", command=lambda f=file: self.ctrl.create_interference_excel(f))
             button.grid(row=row, column=6, padx=3, pady=3)
 
-            button = ttk.Button(self.frame, text="Delete", command=lambda f=file: self.ctrl.show_delete_modal(f))
+            button = ttk.Button(self.frame, text="Graph", command=lambda f=file: self.ctrl.create_interference_graph(f))
             button.grid(row=row, column=7, padx=3, pady=3)
+
+            button = ttk.Button(self.frame, text="Delete", command=lambda f=file: self.ctrl.show_delete_modal(f))
+            button.grid(row=row, column=8, padx=3, pady=3)
 
             row += 1
 
