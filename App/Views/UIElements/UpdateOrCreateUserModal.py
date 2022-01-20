@@ -299,9 +299,7 @@ class UpdateOrCreateUserModal:
         :return: True if email found correct otherwise False
         """
         email = self.email_entry.get()
-        if len(email) > 6 and \
-                '@' in email \
-                and '.com' in email:
+        if len(email) > 6 and '@' in email:
             return True
         return False
 
