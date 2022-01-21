@@ -82,7 +82,7 @@ class LoginModal:
         create frame in view. All content will be show in the frame.
         :return: None
         """
-        self.main_frame = ttk.LabelFrame(self.top_level_dialog, text='')
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
         self.main_frame.pack(fill=X, expand=False)
 
     def on_submit_login(self) -> None:

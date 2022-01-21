@@ -15,6 +15,7 @@ from App.Services.Message import Message
 
 class UpdateOrCreateUserModal:
     top_level_dialog = None
+    main_frame = None
     submit_button = None
     cancel_button = None
     first_name_label = None
@@ -28,6 +29,9 @@ class UpdateOrCreateUserModal:
     email_label = None
     email_entry = None
     title = None
+
+    PAD_X = 10
+    PAD_Y = 10
 
     def __init__(self, master: Any, controller: Any):
         """
@@ -76,6 +80,7 @@ class UpdateOrCreateUserModal:
         :return: None
         """
         self.create_top_level_dialog()
+        self.set_frame()
 
         self.set_first_name_field()
         self.set_last_name_field()
@@ -112,90 +117,98 @@ class UpdateOrCreateUserModal:
         create view
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
         self.top_level_dialog.minsize(300, 300)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_frame(self) -> None:
+        """
+        create frame in view. All content will be show in the frame.
+        :return: None
+        """
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
+        self.main_frame.pack(fill=X, expand=False)
 
     def set_submit_button(self) -> None:
         """
         create button on view
         :return: None
         """
-        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.do_create_or_update)
-        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.submit_button = ttk.Button(self.main_frame, text='Submit', command=self.do_create_or_update)
+        self.submit_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
     def set_cancel_button(self) -> None:
         """
         create button on view
         :return: None
         """
-        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
-        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.cancel_button = ttk.Button(self.main_frame, text='Cancel', command=self.close_modal)
+        self.cancel_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
 
     def set_first_name_field(self) -> None:
         """
         create name label and input field
         :return: None
         """
-        self.first_name_label = ttk.Label(self.top_level_dialog, text='First Name')
-        self.first_name_label.pack(fill=X, expand=False, padx=5)
-        self.first_name_entry = ttk.Entry(self.top_level_dialog)
-        self.first_name_entry.pack(fill=X, expand=False, padx=5)
+        self.first_name_label = ttk.Label(self.main_frame, text='First Name')
+        self.first_name_label.pack(fill=X, expand=False, padx=self.PAD_X)
+        self.first_name_entry = ttk.Entry(self.main_frame)
+        self.first_name_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_last_name_field(self) -> None:
         """
         create second name label input field
         :return: None
         """
-        self.last_name_label = ttk.Label(self.top_level_dialog, text="Last Name")
-        self.last_name_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.last_name_label = ttk.Label(self.main_frame, text="Last Name")
+        self.last_name_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.last_name_entry = ttk.Entry(self.top_level_dialog)
-        self.last_name_entry.pack(fill=X, expand=False, padx=5)
+        self.last_name_entry = ttk.Entry(self.main_frame)
+        self.last_name_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_email_field(self) -> None:
         """
         create email label and input field
         :return: None
         """
-        self.email_label = ttk.Label(self.top_level_dialog, text="Email")
-        self.email_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.email_label = ttk.Label(self.main_frame, text="Email")
+        self.email_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.email_entry = ttk.Entry(self.top_level_dialog)
-        self.email_entry.pack(fill=X, expand=False, padx=5)
+        self.email_entry = ttk.Entry(self.main_frame)
+        self.email_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_user_role_combobox(self) -> None:
         """
         create user combobox with role's
         :return: None
         """
-        self.user_role_label = ttk.Label(self.top_level_dialog, text="User Role")
-        self.user_role_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.user_role_label = ttk.Label(self.main_frame, text="User Role")
+        self.user_role_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
         state = 'disabled'
         if self.logged_user['user_role'] == 'admin':
             state = 'readonly'
 
         self.user_role_entry = ttk.Combobox(
-            self.top_level_dialog,
+            self.main_frame,
             values=self.roles,
             textvariable=self.default_role,
             state=state
         )
-        self.user_role_entry.pack(fill=X, expand=False, padx=5)
+        self.user_role_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_password_field(self) -> None:
         """
         create password label and field
         :return: None
         """
-        self.password_label = ttk.Label(self.top_level_dialog, text="Password")
-        self.password_label.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.password_label = ttk.Label(self.main_frame, text="Password")
+        self.password_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.password_entry = ttk.Entry(self.top_level_dialog)
-        self.password_entry.pack(fill=X, expand=False, padx=5)
+        self.password_entry = ttk.Entry(self.main_frame)
+        self.password_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_fields_values(self) -> None:
         """
