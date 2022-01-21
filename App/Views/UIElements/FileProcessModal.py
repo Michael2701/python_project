@@ -4,7 +4,7 @@
 """
 
 import os
-import tkinter
+import tkinter as tk
 from tkinter import Toplevel, ttk, X
 from typing import Any
 
@@ -29,10 +29,10 @@ class FileProcessModal:
 
     min_distance_label = None
     min_distance = None
-    min_distance_value = tkinter.IntVar
+    min_distance_value = tk.IntVar
 
     max_distance_label = None
-    max_distance = tkinter.IntVar
+    max_distance = tk.IntVar
     max_distance_value = None
 
     submit_button = None
@@ -113,7 +113,7 @@ class FileProcessModal:
         create frame in view. All content will be show in the frame.
         :return: None
         """
-        self.main_frame = ttk.LabelFrame(self.top_level_dialog, text='')
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
         self.main_frame.pack(fill=X, expand=False)
 
     def on_submit(self) -> None:
@@ -145,7 +145,7 @@ class FileProcessModal:
         create email field and label
         :return: None
         """
-        self.step_value = tkinter.IntVar()
+        self.step_value = tk.IntVar()
         self.step_label = ttk.Label(self.main_frame, text="Step")
         self.step_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
@@ -157,7 +157,7 @@ class FileProcessModal:
         create password field and label
         :return: None
         """
-        self.min_distance_value = tkinter.IntVar()
+        self.min_distance_value = tk.IntVar()
         self.min_distance_label = ttk.Label(self.main_frame, text="Minimal distance")
         self.min_distance_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
@@ -169,7 +169,7 @@ class FileProcessModal:
         create password field and label
         :return: None
         """
-        self.max_distance_value = tkinter.IntVar()
+        self.max_distance_value = tk.IntVar()
         self.max_distance_label = ttk.Label(self.main_frame, text="Maximum distance")
         self.max_distance_label.pack(fill=X, expand=False, padx=self.PAD_X)
 

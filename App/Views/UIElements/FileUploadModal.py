@@ -4,15 +4,15 @@
 """
 
 import os
-from datetime import datetime
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import Entry, Toplevel, Button, Label, Text, IntVar, X, LEFT
+from datetime import datetime
+from tkinter import Entry, Toplevel, Button, Label, IntVar, X, LEFT
+from tkinter import filedialog
 from tkinter.scrolledtext import ScrolledText
 from typing import Any
 
 from App.Services.Message import Message
-from tkinter import filedialog
 
 
 class FileUploadModal:
@@ -21,11 +21,15 @@ class FileUploadModal:
     __file_name_label: Label
     __file_name_entry: Entry
     __top_level_dialog: Toplevel
+    __main_frame: ttk.LabelFrame
     __file_dialog_button: Button
     __file_description_label: Label
     __file_description_entry: Entry
     __progress_value: IntVar
     __separator: ttk.Separator
+
+    PAD_X = 10
+    PAD_Y = 10
 
     @property
     def file_description_entry(self) -> Entry:
@@ -58,6 +62,14 @@ class FileUploadModal:
     @top_level_dialog.setter
     def top_level_dialog(self, top_level: Toplevel) -> None:
         self.__top_level_dialog = top_level
+
+    @property
+    def main_frame(self) -> ttk.LabelFrame:
+        return self.__main_frame
+
+    @main_frame.setter
+    def main_frame(self, main_frame: ttk.LabelFrame) -> None:
+        self.__main_frame = main_frame
 
     @property
     def file_name_entry(self) -> Entry:
@@ -101,6 +113,7 @@ class FileUploadModal:
 
     def __init__(self, ctrl: Any, master: Any):
         """
+        Init function
         :param ctrl: modal controller
         :param master: parent view
         """
@@ -109,6 +122,7 @@ class FileUploadModal:
         self.master = master
 
         self.title = "File upload"
+        self.__main_frame = None
         self.file_path = None
         self.file_name = None
         self.file_description = None
@@ -124,6 +138,7 @@ class FileUploadModal:
         :return: None
         """
         self.create_top_level_dialog()
+        self.set_frame()
 
         self.set_file_name_fields()
         self.set_file_description_field()
@@ -131,7 +146,7 @@ class FileUploadModal:
         self.set_submit_button()
         self.set_cancel_button()
 
-        self.set_progress_bar()
+        # self.set_progress_bar()
 
     def close_modal(self) -> None:
         """
@@ -145,19 +160,28 @@ class FileUploadModal:
         create top level dialog
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
+
         self.top_level_dialog.minsize(300, 100)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_frame(self) -> None:
+        """
+        create frame in view. All content will be show in the frame.
+        :return: None
+        """
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
+        self.main_frame.pack(fill=X, expand=False)
 
     def set_submit_button(self) -> None:
         """
         create submit button
         :return: None
         """
-        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.on_submit)
-        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.submit_button = ttk.Button(self.main_frame, text='Submit', command=self.on_submit)
+        self.submit_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
     def on_submit(self) -> None:
         """
@@ -188,16 +212,16 @@ class FileUploadModal:
         create cancel button
         :return: None
         """
-        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
-        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.cancel_button = ttk.Button(self.main_frame, text='Cancel', command=self.close_modal)
+        self.cancel_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
 
     def set_progress_bar(self) -> None:
         """
         set progress loading bar on view
         :return: None
         """
-        self.progress_bar = ttk.Progressbar(self.top_level_dialog, value=0, variable=self.__progress_value, mode='determinate')
-        self.progress_bar.pack(fill=X, expand=False, padx=5)
+        self.progress_bar = ttk.Progressbar(self.main_frame, value=0, variable=self.__progress_value, mode='determinate')
+        self.progress_bar.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def increment_progress_bar(self, step: int) -> None:
         """
@@ -220,36 +244,36 @@ class FileUploadModal:
         create file name field, label and button
         :return: None
         """
-        self.file_name_label = ttk.Label(self.top_level_dialog, text="File name")
-        self.file_name_label.pack(fill=X, expand=False, padx=5)
+        self.file_name_label = ttk.Label(self.main_frame, text="File name")
+        self.file_name_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
-        frame = tk.Frame(self.top_level_dialog)
+        frame = tk.Frame(self.main_frame)
         frame.pack(fill=tk.X)
 
         self.file_name_entry = ttk.Entry(frame, width=30, state='readonly')
-        self.file_name_entry.pack(side=LEFT, expand=False, padx=5)
+        self.file_name_entry.pack(side=LEFT, expand=False, padx=self.PAD_X)
 
         self.file_dialog_button = ttk.Button(frame, text='Choose file', command=self.open_file_dialog)
-        self.file_dialog_button.pack(fill=X, expand=False, padx=5)
+        self.file_dialog_button.pack(fill=X, expand=False, padx=(0, self.PAD_X))
 
     def set_file_description_field(self) -> None:
         """
         create file description filed and label
         :return: None
         """
-        self.file_description_label = ttk.Label(self.top_level_dialog, text="Description")
-        self.file_description_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.file_description_label = ttk.Label(self.main_frame, text="Description")
+        self.file_description_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.file_description_entry = ScrolledText(self.top_level_dialog, height=3, width=6)
-        self.file_description_entry.pack(fill=X, expand=False, padx=5)
+        self.file_description_entry = ScrolledText(self.main_frame, height=3, width=6)
+        self.file_description_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_separator_line(self) -> None:
         """
         create separator line on view
         :return: None
         """
-        self.separator = ttk.Separator(self.top_level_dialog)
-        self.separator.pack(fill=X, expand=False, padx=5, pady=(10, 10))
+        self.separator = ttk.Separator(self.main_frame)
+        self.separator.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, self.PAD_Y))
 
     def get_form_data(self) -> bool:
         """
