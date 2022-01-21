@@ -2,16 +2,18 @@
     
     This view help to user or admin login to the App.
 """
-
-from typing import Any
+import tkinter
 import tkinter.ttk as ttk
-from tkinter import Toplevel, X, IntVar
-from App.Models.SimpleUser import SimpleUser
+from tkinter import Toplevel, X
+from typing import Any
+
 from App.Controllers.Controller import Controller
+from App.Models.SimpleUser import SimpleUser
 
 
 class LoginModal:
     top_level_dialog = None
+    main_frame = None
     submit_button = None
     cancel_button = None
     password_label = None
@@ -20,8 +22,12 @@ class LoginModal:
     email_entry = None
     data = None
 
+    PAD_X = 10
+    PAD_Y = 10
+
     def __init__(self, master: Any, auth_ctrl: Controller) -> None:
         """
+        Init function
         :param master: ApplicationView window
         :param auth_ctrl: AuthController
         """
@@ -45,9 +51,11 @@ class LoginModal:
         :return: None
         """
         self.create_top_level_dialog()
+        self.set_frame()
 
         self.set_email_field()
         self.set_password_field()
+
         self.set_submit_button()
 
     def close_modal(self) -> None:
@@ -62,12 +70,20 @@ class LoginModal:
         create top level dialog
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
 
         self.top_level_dialog.minsize(300, 150)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_frame(self) -> None:
+        """
+        create frame in view. All content will be show in the frame.
+        :return: None
+        """
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
+        self.main_frame.pack(fill=X, expand=False)
 
     def on_submit_login(self) -> None:
         """
@@ -82,19 +98,19 @@ class LoginModal:
         create submit button
         :return: None
         """
-        button = ttk.Button(self.top_level_dialog, text='Submit', command=self.on_submit_login)
-        button.pack(fill=X, expand=False, padx=5, pady=10)
+        button = ttk.Button(self.main_frame, text='Submit', command=self.on_submit_login)
+        button.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
 
     def set_email_field(self) -> None:
         """
         create email field and label
         :return: None
         """
-        self.email_label = ttk.Label(self.top_level_dialog, text="Email")
-        self.email_label.pack(fill=X, expand=False, padx=5)
+        self.email_label = ttk.Label(self.main_frame, text="Email")
+        self.email_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
-        self.email_entry = ttk.Entry(self.top_level_dialog)
-        self.email_entry.pack(fill=X, expand=False, padx=5)
+        self.email_entry = ttk.Entry(self.main_frame)
+        self.email_entry.pack(fill=X, expand=False, padx=self.PAD_X)
         # for dev
         self.email_entry.insert(0, 'email')
 
@@ -103,18 +119,18 @@ class LoginModal:
         create password field and label
         :return: None
         """
-        self.password_label = ttk.Label(self.top_level_dialog, text="Password")
-        self.password_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.password_label = ttk.Label(self.main_frame, text="Password")
+        self.password_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.password_entry = ttk.Entry(self.top_level_dialog, show='*')
-        self.password_entry.pack(fill=X, expand=False, padx=5)
+        self.password_entry = ttk.Entry(self.main_frame, show='*')
+        self.password_entry.pack(fill=X, expand=False, padx=self.PAD_X)
         # for dev
         self.password_entry.insert(0, '123')
 
     def get_form_data(self) -> dict:
         """
-        take form data and put it in self.data dictionary
-        :return: dict self.data
+        take form data and put it in data dictionary
+        :return: dict data
         """
         self.data = {
             'email': self.email_entry.get(),

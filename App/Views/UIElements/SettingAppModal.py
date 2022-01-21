@@ -12,6 +12,7 @@ from App.Controllers.SettingsController import SettingsController
 
 class SettingAppModal:
     top_level_dialog = None
+    main_frame = None
     sms_radio_button = None
     email_radio_button = None
     sms_switch_status = None
@@ -19,12 +20,15 @@ class SettingAppModal:
     theme_switch_status = None
     app_theme = None
 
+    PAD_X = 10
+    PAD_Y = 10
+
     night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
     day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
 
     def __init__(self, master: Any):
         """
-        called by INIT
+        Init function
         :param master: ApplicationView window
         """
         self.master = master
@@ -38,6 +42,7 @@ class SettingAppModal:
         self.app_theme = settings.get_theme_path()
 
         self.create_top_level_dialog()
+        self.set_frame()
         self.set_sms_switch()
         self.set_email_switch()
         self.set_themes_switch()
@@ -47,9 +52,6 @@ class SettingAppModal:
         close setting modal
         :return: None
         """
-        # config = {"sms_status": self.sms_switch_status,
-        #           "email_status": self.email_switch_status}
-        # SettingsController().set_notifications_config(config)
         self.top_level_dialog.destroy()
 
     def create_top_level_dialog(self) -> None:
@@ -57,12 +59,20 @@ class SettingAppModal:
         create top level dialog
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
-        self.top_level_dialog.minsize(210, 150)
+        # self.top_level_dialog.minsize(210, 150)
         self.top_level_dialog.maxsize(210, 150)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_frame(self) -> None:
+        """
+        create frame in view. All content will be show in the frame.
+        :return: None
+        """
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
+        self.main_frame.pack(fill=X, expand=False)
 
     def set_sms_switch(self):
         """
@@ -76,9 +86,10 @@ class SettingAppModal:
         else:
             self.sms_switch_status.set(1)  # Set switch to OFF position
 
-        switch = ttk.Checkbutton(self.top_level_dialog, text='SMS Notification', style='Switch',
-                                 variable=self.sms_switch_status, offvalue=0, onvalue=1, command=self.on_sms_switch_listener)
-        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch = ttk.Checkbutton(self.main_frame, text='SMS Notification', style='Switch',
+                                 variable=self.sms_switch_status, offvalue=0, onvalue=1,
+                                 command=self.on_sms_switch_listener)
+        switch.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
         switch.invoke()
 
     def on_sms_switch_listener(self) -> None:
@@ -103,9 +114,10 @@ class SettingAppModal:
         else:
             self.email_switch_status.set(1)  # Set switch to OFF position
 
-        switch = ttk.Checkbutton(self.top_level_dialog, text='EMAIL Notification', style='Switch',
-                                 variable=self.email_switch_status, offvalue=0, onvalue=1,  command=self.on_email_switch_listener)
-        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch = ttk.Checkbutton(self.main_frame, text='EMAIL Notification', style='Switch',
+                                 variable=self.email_switch_status, offvalue=0, onvalue=1,
+                                 command=self.on_email_switch_listener)
+        switch.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
         switch.invoke()
 
     def on_email_switch_listener(self) -> None:
@@ -130,9 +142,10 @@ class SettingAppModal:
         else:
             self.theme_switch_status.set(1)  # Set switch to ON position
 
-        switch = ttk.Checkbutton(self.top_level_dialog, text='Night Theme', style='Switch',
-                                 variable=self.theme_switch_status, offvalue=0, onvalue=1, command=self.on_theme_switch_listener)
-        switch.pack(fill=X, expand=False, padx=15, pady=(10, 0))
+        switch = ttk.Checkbutton(self.main_frame, text='Night Theme', style='Switch',
+                                 variable=self.theme_switch_status, offvalue=0, onvalue=1,
+                                 command=self.on_theme_switch_listener)
+        switch.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
         switch.invoke()
 
     def on_theme_switch_listener(self) -> None:

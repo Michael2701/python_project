@@ -16,6 +16,8 @@ from App.Services.Message import Message
 class UpdateFileMetaModal:
     file = None
     top_level_dialog = None
+    main_frame = None
+
     submit_button = None
     cancel_button = None
     file_name_label = None
@@ -25,8 +27,15 @@ class UpdateFileMetaModal:
     file_description_label = None
     file_description_entry = None
 
-    def __init__(self, master: Any, ctrl: Any) -> None:
+    PAD_X = 10
+    PAD_Y = 10
 
+    def __init__(self, master: Any, ctrl: Any) -> None:
+        """
+        Init function
+        :param master: ApplicationView window
+        :param ctrl: Controller
+        """
         SettingsController().set_view_settings(self)
         self.msg = Message()
 
@@ -51,6 +60,7 @@ class UpdateFileMetaModal:
         :return: None
         """
         self.create_top_level_dialog()
+        self.set_frame()
 
         self.set_file_name_field()
         self.set_file_description_field()
@@ -68,7 +78,7 @@ class UpdateFileMetaModal:
 
     def update(self) -> None:
         """
-        update file in data base according user input
+        update file in database according user input
         :return: None
         """
         if self.get_form_data():
@@ -82,60 +92,68 @@ class UpdateFileMetaModal:
         create view
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
         self.top_level_dialog.minsize(300, 100)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_frame(self) -> None:
+        """
+        create frame in view. All content will be show in the frame.
+        :return: None
+        """
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog)
+        self.main_frame.pack(fill=X, expand=False)
 
     def set_file_name_field(self) -> None:
         """
         create file name field in view
         :return: None
         """
-        self.file_name_label = ttk.Label(self.top_level_dialog, text='File Name')
-        self.file_name_label.pack(fill=X, expand=False, padx=5)
+        self.file_name_label = ttk.Label(self.main_frame, text='File Name')
+        self.file_name_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
-        self.file_name_entry = ttk.Entry(self.top_level_dialog)
-        self.file_name_entry.pack(fill=X, expand=False, padx=5)
+        self.file_name_entry = ttk.Entry(self.main_frame)
+        self.file_name_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_file_description_field(self) -> None:
         """
         create description file field
         :return: None
         """
-        self.file_description_label = ttk.Label(self.top_level_dialog, text="File Description")
-        self.file_description_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.file_description_label = ttk.Label(self.main_frame, text="File Description")
+        self.file_description_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.file_description_entry = ScrolledText(self.top_level_dialog, height=3, width=6)
-        self.file_description_entry.pack(fill=X, expand=False, padx=5)
+        self.file_description_entry = ScrolledText(self.main_frame, height=5, width=6)
+        self.file_description_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_file_created_at_field(self) -> None:
         """
         create 'created at' filed in view
         :return: None
         """
-        self.file_created_at_label = ttk.Label(self.top_level_dialog, text="Created at")
-        self.file_created_at_label.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.file_created_at_label = ttk.Label(self.main_frame, text="Created at")
+        self.file_created_at_label.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
-        self.file_created_at_entry = ttk.Entry(self.top_level_dialog, state='readonly')
-        self.file_created_at_entry.pack(fill=X, expand=False, padx=5)
+        self.file_created_at_entry = ttk.Entry(self.main_frame, state='readonly')
+        self.file_created_at_entry.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_submit_button(self) -> None:
         """
         create submit button that saved data
         :return: None
         """
-        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.update)
-        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(10, 0))
+        self.submit_button = ttk.Button(self.main_frame, text='Submit', command=self.update)
+        self.submit_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=(self.PAD_Y, 0))
 
     def set_cancel_button(self) -> None:
         """
         close view without any changes
         :return: None
         """
-        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
-        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=5)
+        self.cancel_button = ttk.Button(self.main_frame, text='Cancel', command=self.close_modal)
+        self.cancel_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
 
     def set_fields_values(self) -> None:
         """
