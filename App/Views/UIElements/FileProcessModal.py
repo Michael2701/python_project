@@ -5,14 +5,12 @@
 
 import os
 import tkinter
-from builtins import print
+from tkinter import Toplevel, ttk, X
 from typing import Any
-from tkinter import Toplevel, Button, Label, Scale, HORIZONTAL, ttk, X
 
+from App.Controllers.Controller import Controller
 from App.Controllers.InterferenceController import InterferenceController
 from App.Controllers.SettingsController import SettingsController
-from App.Controllers.Controller import Controller
-
 from App.Models.GeneticFileModel import GeneticFileModel
 from App.Services.FileHelper import FileHelper
 from App.Services.Message import Message
@@ -20,6 +18,10 @@ from App.Services.Message import Message
 
 class FileProcessModal:
     top_level_dialog = None
+    main_frame = None
+
+    PAD_X = 10
+    PAD_Y = 10
 
     step_label = None
     step = None
@@ -44,6 +46,7 @@ class FileProcessModal:
 
     def __init__(self, master: Any, genetic_file_ctrl: Controller) -> None:
         """
+        Init function
         :param master: ApplicationView window
         :param genetic_file_ctrl: GeneticFileController
         """
@@ -73,6 +76,7 @@ class FileProcessModal:
         :return: None
         """
         self.create_top_level_dialog()
+        self.set_frame()
 
         self.set_step_field()
         self.set_separator_line()
@@ -98,11 +102,19 @@ class FileProcessModal:
         create top level dialog
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=5, pady=5)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
         self.top_level_dialog.minsize(300, 100)
         self.top_level_dialog.transient(self.master)
         self.top_level_dialog.protocol("WM_DELETE_WINDOW", self.close_modal)
+
+    def set_frame(self) -> None:
+        """
+        create frame in view. All content will be show in the frame.
+        :return: None
+        """
+        self.main_frame = ttk.LabelFrame(self.top_level_dialog, text='')
+        self.main_frame.pack(fill=X, expand=False)
 
     def on_submit(self) -> None:
         """
@@ -134,11 +146,11 @@ class FileProcessModal:
         :return: None
         """
         self.step_value = tkinter.IntVar()
-        self.step_label = ttk.Label(self.top_level_dialog, text="Step")
-        self.step_label.pack(fill=X, expand=False, padx=5)
+        self.step_label = ttk.Label(self.main_frame, text="Step")
+        self.step_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
-        self.step = ttk.LabeledScale(self.top_level_dialog, from_=1, to=40, variable=self.step_value)
-        self.step.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.step = ttk.LabeledScale(self.main_frame, from_=1, to=40, variable=self.step_value)
+        self.step.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_min_distance_field(self) -> None:
         """
@@ -146,11 +158,11 @@ class FileProcessModal:
         :return: None
         """
         self.min_distance_value = tkinter.IntVar()
-        self.min_distance_label = ttk.Label(self.top_level_dialog, text="Minimal distance")
-        self.min_distance_label.pack(fill=X, expand=False, padx=5)
+        self.min_distance_label = ttk.Label(self.main_frame, text="Minimal distance")
+        self.min_distance_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
-        self.min_distance = ttk.LabeledScale(self.top_level_dialog, from_=1, to=25, variable=self.min_distance_value)
-        self.min_distance.pack(fill=X, expand=False, padx=5)
+        self.min_distance = ttk.LabeledScale(self.main_frame, from_=1, to=25, variable=self.min_distance_value)
+        self.min_distance.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_max_distance_field(self) -> None:
         """
@@ -158,40 +170,40 @@ class FileProcessModal:
         :return: None
         """
         self.max_distance_value = tkinter.IntVar()
-        self.max_distance_label = ttk.Label(self.top_level_dialog, text="Maximum distance")
-        self.max_distance_label.pack(fill=X, expand=False, padx=5)
+        self.max_distance_label = ttk.Label(self.main_frame, text="Maximum distance")
+        self.max_distance_label.pack(fill=X, expand=False, padx=self.PAD_X)
 
-        self.max_distance = ttk.LabeledScale(self.top_level_dialog, from_=1, to=25, variable=self.max_distance_value)
-        self.max_distance.pack(fill=X, expand=False, padx=5)
+        self.max_distance = ttk.LabeledScale(self.main_frame, from_=1, to=25, variable=self.max_distance_value)
+        self.max_distance.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_submit_button(self) -> None:
         """
         create submit button
         :return: None
         """
-        self.submit_button = ttk.Button(self.top_level_dialog, text='Submit', command=self.on_submit)
-        self.submit_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.submit_button = ttk.Button(self.main_frame, text='Submit', command=self.on_submit)
+        self.submit_button.pack(fill=X, expand=False, padx=self.PAD_X)
 
     def set_cancel_button(self) -> None:
         """
         crete cancel button
         :return: None
         """
-        self.cancel_button = ttk.Button(self.top_level_dialog, text='Cancel', command=self.close_modal)
-        self.cancel_button.pack(fill=X, expand=False, padx=5, pady=(5, 0))
+        self.cancel_button = ttk.Button(self.main_frame, text='Cancel', command=self.close_modal)
+        self.cancel_button.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
 
     def set_separator_line(self) -> None:
         """
         create separator line on view
         :return: None
         """
-        self.separator = ttk.Separator(self.top_level_dialog)
-        self.separator.pack(fill=X, expand=False, padx=5, pady=(10, 10))
+        self.separator = ttk.Separator(self.main_frame)
+        self.separator.pack(fill=X, expand=False, padx=self.PAD_X, pady=self.PAD_Y)
 
     def get_form_data(self) -> dict:
         """
-        take form data and put it in self.data dictionary
-        :return: dict self.data
+        take form data and put it in data dictionary
+        :return: dict data
         """
         self.data = {
             'id': self.file.id,

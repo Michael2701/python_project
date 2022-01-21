@@ -3,11 +3,12 @@
     This view help to user or admin login to the App.
 """
 
-from typing import Any
 import tkinter.ttk as ttk
-from tkinter import Toplevel, X, IntVar
-from App.Models.SimpleUser import SimpleUser
+from tkinter import Toplevel, X
+from typing import Any
+
 from App.Controllers.Controller import Controller
+from App.Models.SimpleUser import SimpleUser
 
 
 class LoginModal:
@@ -26,6 +27,7 @@ class LoginModal:
 
     def __init__(self, master: Any, auth_ctrl: Controller) -> None:
         """
+        Init function
         :param master: ApplicationView window
         :param auth_ctrl: AuthController
         """
@@ -50,8 +52,10 @@ class LoginModal:
         """
         self.create_top_level_dialog()
         self.set_frame()
+
         self.set_email_field()
         self.set_password_field()
+
         self.set_submit_button()
 
     def close_modal(self) -> None:
@@ -66,7 +70,7 @@ class LoginModal:
         create top level dialog
         :return: None
         """
-        self.top_level_dialog = Toplevel(self.master, padx=self.PAD_X, pady=self.PAD_X)
+        self.top_level_dialog = Toplevel(self.master)
         self.top_level_dialog.title(self.title)
 
         self.top_level_dialog.minsize(300, 150)
@@ -75,7 +79,7 @@ class LoginModal:
 
     def set_frame(self) -> None:
         """
-
+        create frame in view. All content will be show in the frame.
         :return: None
         """
         self.main_frame = ttk.LabelFrame(self.top_level_dialog, text='')
@@ -125,8 +129,8 @@ class LoginModal:
 
     def get_form_data(self) -> dict:
         """
-        take form data and put it in self.data dictionary
-        :return: dict self.data
+        take form data and put it in data dictionary
+        :return: dict data
         """
         self.data = {
             'email': self.email_entry.get(),
