@@ -50,7 +50,9 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-/* */
+/**
+* Fill n_xx array with values. Each group n_00, n_01, n_10, n_11 will receive values according calculations.
+*/
 void fill_n_xx(int argc, char* argv[])
 {
     FILE * fp;
