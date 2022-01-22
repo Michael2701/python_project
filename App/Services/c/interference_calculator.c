@@ -8,11 +8,14 @@
 #include "interference_calculator.h"
 #include "utils.h"
 
-/*** Variables ***/
+/*** Constants ***/
+#define N 10000
+#define M 2
+
 double marker_differences[N][M];
 long markers_counter = 0;
 
-TripleGenes N_xx[N];
+TripleGenes n_xx[N];
 
 double likelyHood[N];
 double likelyHoodMaximum[N];
@@ -62,83 +65,83 @@ int main(int argc, char* argv[])
                     if(i > 5){
                         // === COUNTERS ===
 
-                        // N_00: AAA, BBB
+                        // n_00: AAA, BBB
                         if(i == 6 || i == 19)
-                            // N_00: AAA, BBB
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]);
+                            // n_00: AAA, BBB
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]);
 
-                        // N_10: ABB, BAA
+                        // n_10: ABB, BAA
                         if(i == 10 || i == 15)
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]);
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]);
 
-                        // # N_01: AAB, BBA
+                        // # n_01: AAB, BBA
                         if(i == 7 || i == 15)
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]);
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]);
 
-                        // N_11: ABA, BAB
+                        // n_11: ABA, BAB
                         if(i == 9 || i == 16)
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]);
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]);
 
                         // === DISTRIBUTION ===
 
                         // AAH, BBH: 00, 01
                         if(i == 8 || i == 20){
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 2.0;
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 2.0;
                         }
 
                         // HAA, HBB: 00, 10
                         if(i == 24 || i == 28){
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 2.0;
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 2.0;
                         }
 
                         // ABH, BAH: 10, 11
                         if(i == 11 || i == 17){
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 2.0;
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 2.0;
                         }
 
                         // AHA, BHB: 00, 11
                         if(i == 12 || i == 22){
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 2.0;
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 2.0;
                         }
 
                         // AHB, BHA: 01, 10
                         if(i == 13 || i == 21){
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 2.0;
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 2.0;
                         }
 
                         // HAB, HBA: 01, 11
                         if(i == 25 || i == 27){
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 2.0;
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 2.0;
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 2.0;
                         }
 
                         // HAH, HBH:  00, 01, 10, 11
                         if(i == 26 || i == 29){
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 4.0;
                         }
 
                         // AHH, BHH, HHA, HHB: 00, 01, 10, 11
                         if(i == 11 || i == 20 || i == 21 || i == 28){
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 4.0;
                         }
 
                         // HHH: 00, 01, 10, 11
                         if(i == 29){
-                            N_xx[markers_counter - 1].N_00 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_01 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_10 += atof(chunks[i]) / 4.0;
-                            N_xx[markers_counter - 1].N_11 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 4.0;
+                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 4.0;
                         }
                     }
 
@@ -198,7 +201,7 @@ void calculateLikelyHoodGradient()
             P_10 = marker_differences[i][0] - coefficient * marker_differences[i][0] * marker_differences[i][1];
             P_11 = coefficient * marker_differences[i][0] * marker_differences[i][1];
 
-            temp_log_value = log(P_00) * N_xx[i].N_00 + log(P_01) * N_xx[i].N_01 + log(P_10) * N_xx[i].N_10 + log(P_11) * N_xx[i].N_11;
+            temp_log_value = log(P_00) * n_xx[i].n_00 + log(P_01) * n_xx[i].n_01 + log(P_10) * n_xx[i].n_10 + log(P_11) * n_xx[i].n_11;
 
             if(fabs(coefficient - 1) < 0.001) // Mean: coefficient == 1 (double numbers version)
             {
@@ -243,7 +246,7 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
 
     if(tripletOfGensFile && interferenceFile)
     {
-        fprintf(interferenceFile, "marker 1,marker 2,marker 3,r1,r2,N_00,N_01,N_10,N_11,C max,log(C max),log(C=1),Xi\n"); // Print Header
+        fprintf(interferenceFile, "marker 1,marker 2,marker 3,r1,r2,n_00,n_01,n_10,n_11,C max,log(C max),log(C=1),Xi\n"); // Print Header
         read = getline(&line, &len, tripletOfGensFile); // skip results from first line
 
         int i;
@@ -253,9 +256,9 @@ void createOutputCSV(char* tripletOfGensFileName, char* interferenceFileName)
             fprintf(interferenceFile, "%s,%s,%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
                 cells[0], cells[1], cells[2],
                 marker_differences[i][0], marker_differences[i][1],
-                N_xx[i].N_00, N_xx[i].N_01, N_xx[i].N_10, N_xx[i].N_11,
+                n_xx[i].n_00, n_xx[i].n_01, n_xx[i].n_10, n_xx[i].n_11,
                 max_coefficients[i], likelyHoodMaximum[i],
-                likelyHood[i], lrScore[i]); // markers * 3, r1, r2, N_00, N_01, N_10, N_11, C max, log(C max), log(C=1), Xi
+                likelyHood[i], lrScore[i]); // markers * 3, r1, r2, n_00, n_01, n_10, n_11, C max, log(C max), log(C=1), Xi
         }
 
         fclose(interferenceFile);

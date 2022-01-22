@@ -12,8 +12,6 @@
 #include <limits.h>
 
 /* Constants */
-#define N 10000
-#define M 2
 #define TRUE 1
 #define FALSE 0
 
