@@ -16,6 +16,7 @@
 #define FALSE 0
 
 /* Function declarations */
+void fill_n_xx(int argc, char* argv[]);
 void calculateLikelyHood();
 void calculateLikelyHoodGradient();
 void calculateXi();
@@ -24,10 +25,10 @@ FILE *openFile(char* fileName, char* mode);
 
 typedef struct
 {
-    double N_00;
-    double N_01;
-    double N_10;
-    double N_11;
+    double n_00;
+    double n_01;
+    double n_10;
+    double n_11;
 } TripleGenes;
 
 #endif

@@ -12,6 +12,10 @@
 #define N 10000
 #define M 2
 
+#define TWO 2.0
+#define FOUR 4.0
+#define ONE_HUNDRED 100
+
 double marker_differences[N][M];
 long markers_counter = 0;
 
@@ -24,6 +28,31 @@ double lrScore[N];
 
 int main(int argc, char* argv[])
 {
+    if(argc >= 3)
+    {
+        fill_n_xx(argc, argv);
+        calculateLikelyHoodGradient();
+        calculateXi();
+        createOutputCSV(argv[1], argv[2]);
+
+        char python_command[ONE_HUNDRED] = "python3 back_from_C.py ";
+        int command_length = strlen(python_command);
+
+        for(int f = 2, q = 0; f < argc; f++){
+            for(int x = strlen(argv[f]), d = 0; x ; x--, d++, q++){
+                python_command[command_length+q] = argv[f][d];
+            }
+            python_command[command_length + q++] = ' ';
+        }
+        system(python_command);
+        exit(EXIT_SUCCESS);
+    }
+    return 0;
+}
+
+/* */
+void fill_n_xx(int argc, char* argv[])
+{
     FILE * fp;
     char * line = NULL;
     size_t len = 0;
@@ -35,34 +64,39 @@ int main(int argc, char* argv[])
         fp = openFile(argv[1], "r");
         read = getline(&line, &len, fp); // skip results from first line
 
-        while ((read = getline(&line, &len, fp)) != -1) {
+        while ((read = getline(&line, &len, fp)) != EOF) {
 
             chunks = str_split(line, ',');
 
             if (chunks)
             {
+                // i - this is position in array:
+                // marker 1,marker 2,marker 3,position 1,position 2,position 3,AAA,AAB,AAH,ABA,ABB,ABH,AHA,AHB,AHH,BAA,BAB,BAH,BBA,BBB,BBH,BHA,BHB,BHH,HAA,HAB,HAH,HBA,HBB,HBH,HHA,HHB,HHH
+                float temp;
                 int i;
-                for (i = 0; *(chunks + i); i++)
+                for (i = 3; *(chunks + i); i++) // we start from i = 3 (position 1)
                 {
-                    if(i > 2 && i < 6) //
+                    if(i >= 3 && i <= 5) //
                     {
-
-                        if(i == 3)
-                            marker_differences[markers_counter][0] = -1 * strtof(chunks[i], &ptr) / 100;
-
-                        if(i == 4){
-                            marker_differences[markers_counter][0] += strtof(chunks[i], &ptr) / 100;
-                            marker_differences[markers_counter][1] = -1 * strtof(chunks[i], &ptr) / 100;
+                        if(i == 3) // position 1
+                        {
+                            marker_differences[markers_counter][0] = -1 * strtof(chunks[i], &ptr) / ONE_HUNDRED;
                         }
 
-                        if(i == 5){
-                            marker_differences[markers_counter][1] += strtof(chunks[i], &ptr) / 100;
+                        else if(i == 4) // position 2
+                        {
+                            marker_differences[markers_counter][0] += strtof(chunks[i], &ptr) / ONE_HUNDRED;
+                            marker_differences[markers_counter][1] = -1 * strtof(chunks[i], &ptr) / ONE_HUNDRED;
+                        }
+
+                        else if(i == 5) // position 3
+                        {
+                            marker_differences[markers_counter][1] += strtof(chunks[i], &ptr) / ONE_HUNDRED;
                             markers_counter++;
                         }
                     }
-
-
-                    if(i > 5){
+                    else
+                    {
                         // === COUNTERS ===
 
                         // n_00: AAA, BBB
@@ -76,7 +110,7 @@ int main(int argc, char* argv[])
 
                         // # n_01: AAB, BBA
                         if(i == 7 || i == 15)
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]);
+                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]);
 
                         // n_11: ABA, BAB
                         if(i == 9 || i == 16)
@@ -86,63 +120,82 @@ int main(int argc, char* argv[])
 
                         // AAH, BBH: 00, 01
                         if(i == 8 || i == 20){
-                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 2.0;
-                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 2.0;
+                            temp = atof(chunks[i]) / TWO;
+                            n_xx[markers_counter - 1].n_01 += temp;
+                            n_xx[markers_counter - 1].n_00 += temp;
                         }
 
                         // HAA, HBB: 00, 10
-                        if(i == 24 || i == 28){
-                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 2.0;
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 2.0;
+                        else if(i == 24 || i == 28){
+                            temp = atof(chunks[i]) / TWO;
+                            n_xx[markers_counter - 1].n_00 += temp;
+                            n_xx[markers_counter - 1].n_10 += temp;
                         }
 
                         // ABH, BAH: 10, 11
-                        if(i == 11 || i == 17){
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 2.0;
-                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 2.0;
+                        else if(i == 11 || i == 17){
+                            temp = atof(chunks[i]) / TWO;
+                            n_xx[markers_counter - 1].n_10 += temp;
+                            n_xx[markers_counter - 1].n_11 += temp;
                         }
 
                         // AHA, BHB: 00, 11
-                        if(i == 12 || i == 22){
-                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 2.0;
-                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 2.0;
+                        else if(i == 12 || i == 22){
+                            temp = atof(chunks[i]) / TWO;
+                            n_xx[markers_counter - 1].n_11 += temp;
+                            n_xx[markers_counter - 1].n_00 += temp;
                         }
 
                         // AHB, BHA: 01, 10
-                        if(i == 13 || i == 21){
-                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 2.0;
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 2.0;
+                        else if(i == 13 || i == 21){
+                            temp = atof(chunks[i]) / TWO;
+                            n_xx[markers_counter - 1].n_01 += temp;
+                            n_xx[markers_counter - 1].n_10 += temp;
                         }
 
                         // HAB, HBA: 01, 11
-                        if(i == 25 || i == 27){
-                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 2.0;
-                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 2.0;
+                        else if(i == 25 || i == 27){
+                            temp = atof(chunks[i]) / TWO;
+                            n_xx[markers_counter - 1].n_01 += temp;
+                            n_xx[markers_counter - 1].n_11 += temp;
                         }
 
-                        // HAH, HBH:  00, 01, 10, 11
-                        if(i == 26 || i == 29){
-                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 4.0;
+                         // HAH, HBH:  00, 01, 10, 11
+                         // AHH, BHH, HHA, HHB: 00, 01, 10, 11
+                         // HHH: 00, 01, 10, 11
+                        else
+                        {
+                            temp = atof(chunks[i]) / FOUR;
+                            n_xx[markers_counter - 1].n_00 += temp;
+                            n_xx[markers_counter - 1].n_01 += temp;
+                            n_xx[markers_counter - 1].n_10 += temp;
+                            n_xx[markers_counter - 1].n_11 += temp;
                         }
 
-                        // AHH, BHH, HHA, HHB: 00, 01, 10, 11
-                        if(i == 11 || i == 20 || i == 21 || i == 28){
-                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 4.0;
-                        }
-
-                        // HHH: 00, 01, 10, 11
-                        if(i == 29){
-                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / 4.0;
-                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / 4.0;
-                        }
+//                        // HAH, HBH:  00, 01, 10, 11
+//                        if(i == 26 || i == 29)
+//                        {
+//                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / FOUR;
+//                        }
+//
+//                        // AHH, BHH, HHA, HHB: 00, 01, 10, 11
+//                        if(i == 11 || i == 20 || i == 21 || i == 28){
+//                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / FOUR;
+//                        }
+//
+//                        // HHH: 00, 01, 10, 11
+//                        if(i == 29){
+//                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / FOUR;
+//                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / FOUR;
+//                        }
                     }
 
                     free(*(chunks + i));
@@ -155,26 +208,9 @@ int main(int argc, char* argv[])
         fclose(fp);
         if (line)
             free(line);
-
-        calculateLikelyHoodGradient();
-        calculateXi();
-        createOutputCSV(argv[1], argv[2]);
-
-        char python_command[100] = "python3 back_from_C.py ";
-        int command_length = strlen(python_command);
-
-        for(int f = 2, q = 0; f < argc; f++){
-            for(int x = strlen(argv[f]), d = 0; x ; x--, d++, q++){
-                python_command[command_length+q] = argv[f][d];
-            }
-            python_command[command_length + q++] = ' ';
-        }
-
-        system(python_command);
-        exit(EXIT_SUCCESS);
     }
 
-    return 0;
+    return;
 }
 
 /**
