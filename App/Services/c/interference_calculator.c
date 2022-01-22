@@ -160,9 +160,9 @@ void fill_n_xx(int argc, char* argv[])
                             n_xx[markers_counter - 1].n_11 += temp;
                         }
 
-                         // HAH, HBH:  00, 01, 10, 11
+                         // HAH, HBH:           00, 01, 10, 11
                          // AHH, BHH, HHA, HHB: 00, 01, 10, 11
-                         // HHH: 00, 01, 10, 11
+                         // HHH:                00, 01, 10, 11
                         else
                         {
                             temp = atof(chunks[i]) / FOUR;
@@ -171,31 +171,6 @@ void fill_n_xx(int argc, char* argv[])
                             n_xx[markers_counter - 1].n_10 += temp;
                             n_xx[markers_counter - 1].n_11 += temp;
                         }
-
-//                        // HAH, HBH:  00, 01, 10, 11
-//                        if(i == 26 || i == 29)
-//                        {
-//                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / FOUR;
-//                        }
-//
-//                        // AHH, BHH, HHA, HHB: 00, 01, 10, 11
-//                        if(i == 11 || i == 20 || i == 21 || i == 28){
-//                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / FOUR;
-//                        }
-//
-//                        // HHH: 00, 01, 10, 11
-//                        if(i == 29){
-//                            n_xx[markers_counter - 1].n_00 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_01 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_10 += atof(chunks[i]) / FOUR;
-//                            n_xx[markers_counter - 1].n_11 += atof(chunks[i]) / FOUR;
-//                        }
                     }
 
                     free(*(chunks + i));

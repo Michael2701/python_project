@@ -18,13 +18,13 @@ class Index:
         self.root.iconphoto(True, PhotoImage(file="App/Storage/Images/logo.png"))
 
         # Place the window in the center of the screen
-        windowWidth = 1250
-        windowHeight = 500
-        screenWidth = self.root.winfo_screenwidth()
-        screenHeight = self.root.winfo_screenheight()
-        x_coordinate = int((screenWidth/2) - (windowWidth/2))
-        y_coordinate = int((screenHeight/2) - (windowHeight/2))
-        self.root.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, x_coordinate, y_coordinate))
+        window_width = 1240
+        window_height = 940
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
+        x_coordinate = int((screen_width/2) - (window_width/2))
+        y_coordinate = int((screen_height/2) - (window_height/2))
+        self.root.geometry("{}x{}+{}+{}".format(window_width, window_height, x_coordinate, y_coordinate))
 
         self.enable_app_theme()
 
