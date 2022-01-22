@@ -28,7 +28,7 @@ class InterferenceController(Controller):
 
     def create_interference(self, file: InterferenceRowModel, data: dict):
         subprocess.check_call(
-            [r"App/Services/c/InterferenceCalculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id),
+            [r"App/Services/c/interference_calculator", "App/triplet_of_genes.csv", "Interference.csv", str(file.id),
              str(data["step"]), str(data["min_distance"]), str(data["max_distance"])])
 
     def create_interference_excel(self, file: tuple) -> None:

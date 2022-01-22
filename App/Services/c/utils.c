@@ -1,11 +1,6 @@
 /* Helper C file with string split function  */
 
-#define _GNU_SOURCE
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <math.h>
+#include "utils.h"
 
 /* This function remove commas from string. */
 char** str_split(char* a_str, const char a_delim)
