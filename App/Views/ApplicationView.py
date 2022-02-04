@@ -2,6 +2,7 @@
 
     Show menu and dropdown menu.
 """
+import os
 import webbrowser
 from tkinter import *
 from tkinter import messagebox
@@ -185,8 +186,6 @@ class ApplicationView (Frame):
         show help user information
         :return:
         """
-        path = '~/PycharmProjects/python_project/guide.pdf'
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        path = f'{dir_path}/../../guide.pdf'
         webbrowser.open_new(path)
-        # help_message = "Welcome to Genetic Interference Program!\n" \
-        #                "Here you can find useful guid program"
-        # messagebox.showinfo(title="Help", message=help_messag
