@@ -26,7 +26,7 @@ class GraphCreator:
         log_c_max = list()
         log_c_1 = list()
         xi = list()
-        p = figure(title="Interference Graph")
+        p = figure(title="Interference Graph", plot_height=800, plot_width=1500)
 
         for line in self.rows:
             r1.append(float(line[-10]))
