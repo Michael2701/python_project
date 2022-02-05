@@ -4,8 +4,10 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from App.Services.Notification import Notification
 
-class MailNotification:
+
+class MailNotification(Notification):
 
     def __init__(self, msg: dict):
         """
@@ -32,7 +34,7 @@ class MailNotification:
         """
         self.message.attach(MIMEText(text, 'plain'))
 
-    def send_message(self, sender_pass: str) -> None:
+    def send_notification(self, sender_pass: str) -> None:
         """
         Create SMTP session for sending the mail
         :param sender_pass:

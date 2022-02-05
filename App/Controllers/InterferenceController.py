@@ -124,14 +124,15 @@ class InterferenceController(Controller):
         self.clear_view(self.master)
         connection = SQLiteConnector.create_connection('App/DB/project.db')
         cur = connection.cursor()
-        cur.execute("select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id")
 
         if self.user['user_role'] == 'admin':
-            cur.execute("select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id")
+            cur.execute("select i.*, f.file_name name from interference i "
+                        "LEFT JOIN files f ON i.file_id=f.id ORDER BY i.id DESC")
         else:
             user_file_ids = ",".join(cur.execute(f"SELECT id FROM WHERE user_id={self.user.id}"))
             cur.execute(
-                f"select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id WHERE f.user_id IN ({user_file_ids})")
+                f"select i.*, f.file_name name from interference i LEFT JOIN files f ON i.file_id=f.id WHERE "
+                f"f.user_id IN ({user_file_ids}) ORDER BY i.id DESC")
 
         files = cur.fetchall()
         InterferenceView(self, self.master, files)

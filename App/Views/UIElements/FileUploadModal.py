@@ -189,7 +189,7 @@ class FileUploadModal:
         :return: None
         """
         if self.get_form_data():
-            self.animate_progress_bar()
+            # self.animate_progress_bar()
             self.ctrl.create_file(self.data)
             self.close_modal()
         else:
@@ -237,7 +237,7 @@ class FileUploadModal:
         :param step: interval defaults to 50 milliseconds (20 steps/second) if omitted.
         :return: None
         """
-        self.progress_bar.start(step)
+        # self.progress_bar.start(step)
 
     def set_file_name_fields(self) -> None:
         """

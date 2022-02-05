@@ -41,7 +41,7 @@ class UserNotificator:
 
         email = MailNotification(message)
         email.add_attachment(message_text)
-        email.send_message('szojpvlaoewaoeyr')
+        email.send_notification('szojpvlaoewaoeyr')
 
     @staticmethod
     def __is_sms_notification_on() -> bool:

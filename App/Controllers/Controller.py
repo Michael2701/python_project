@@ -39,6 +39,3 @@ class Controller:
         finally:
             self.user = user
             return user
-
-    def create_interference_excel(self, f):
-        pass

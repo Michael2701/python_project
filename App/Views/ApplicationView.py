@@ -5,7 +5,7 @@
 import os
 import webbrowser
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from tkinter.ttk import Notebook
 from typing import Any
 from App.Controllers.UserController import UserController
@@ -100,10 +100,10 @@ class ApplicationView (Frame):
 
         self.create_menu()
         self.create_file_cascade()
+        self.create_interference_cascade()
         self.create_user_cascade()
         self.create_settings_cascade()
         self.create_help_cascade()
-        self.create_interference_cascade()
 
     def create_menu(self) -> None:
         """
@@ -130,8 +130,7 @@ class ApplicationView (Frame):
         :return: None
         """
         self.interference_menu = Menu(self.menu, tearoff=0)
-        self.interference_menu.add_command(label='Show interference', command=self.inctrl.show_interference_view)
-        self.menu.add_cascade(label='Interference', font=self.title_font, menu=self.interference_menu)
+        self.menu.add_command(label='Interference', font=self.title_font, command=self.inctrl.show_interference_view)
 
     def create_user_cascade(self) -> None:
         """

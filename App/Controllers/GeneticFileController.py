@@ -46,9 +46,9 @@ class GeneticFileController(Controller):
         """
         self.clear_view(self.master)
         if self.user['user_role'] == 'admin':
-            files = GeneticFileModel.select('id > 0')
+            files = GeneticFileModel.select(orderBy='id', reversed=True)
         else:
-            files = GeneticFileModel.select(GeneticFileModel.q.user_id == self.user['id'])
+            files = GeneticFileModel.select(GeneticFileModel.q.user_id == self.user['id'], orderBy='id', reversed=True)
         self.notebook = GeneticFilesView(self, self.master, files)
 
     def show_delete_modal(self, file: GeneticFileModel) -> None:
@@ -257,6 +257,7 @@ class GeneticFileController(Controller):
         """
         try:
             GeneticFileModel.delete(file_id)
+            GeneModel.deleteBy(file_id=str(file_id))
             self.display_files()
             return True
         except Exception as e:
