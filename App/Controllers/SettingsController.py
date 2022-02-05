@@ -67,7 +67,7 @@ class SettingsController(Controller):
 
         with open(self.config_path, 'w') as json_config:
             config['sms_notification'] = str(is_sms_notification_active)
-            json.dump(config, json_config)
+            json.dump(config, json_config, indent=4)
 
     def set_email_config(self, is_email_notification_active: bool) -> None:
         """
@@ -80,7 +80,7 @@ class SettingsController(Controller):
 
         with open(self.config_path, 'w') as json_config:
             config['email_notification'] = str(is_email_notification_active)
-            json.dump(config, json_config)
+            json.dump(config, json_config, indent=4)
 
     def get_theme_path(self) -> str:
         """
@@ -102,4 +102,4 @@ class SettingsController(Controller):
 
         with open(self.config_path, 'w') as json_config:
             config['theme'] = theme_path
-            json.dump(config, json_config)
+            json.dump(config, json_config, indent=4)

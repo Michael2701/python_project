@@ -153,8 +153,6 @@ class SettingAppModal:
         called when theme switch changed
         :return: None
         """
-        # night_theme = "App/Azure-ttk-theme/azure dark/azure dark.tcl"
-        # day_theme = "App/Azure-ttk-theme/azure/azure.tcl"
         if self.theme_switch_status.get():
             SettingsController().set_theme(self.night_theme)
         else:
